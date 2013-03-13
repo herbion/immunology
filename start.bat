@@ -1,0 +1,1 @@
+start play run --%%prod

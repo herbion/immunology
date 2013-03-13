@@ -1,0 +1,24 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('anamnesisdetailvalue.edit') /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'anamnesisdetailvalue.edit'}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{crud.form fields:['anamnesisDetailValueName', 'anamnesisDetailValueValue', 'anamnesisDetail'] /}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'anamnesisdetailvalue.delete'}" onclick="return confirm('&{'anamnesisdetailvalue.delete'}')"/>
+        </p>
+    #{/form}
+
+</div>

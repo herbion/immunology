@@ -1,0 +1,102 @@
+<style>
+.nosology {
+	display: table;
+	position: relative;
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	background-color: #E1EEF4;
+}
+
+.nosologyName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.nosologyDescription {
+    color: #00557F;
+    text-align: center;
+    width: 60%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.nosologiesSelect {
+	width: 250px;
+	font-size: 12px !important;
+	font-family: 'Helvetica', 'Arial', 'Sans' !important;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+</style>
+
+<script>
+var saveNosology = function () {
+	var jsonObject = "";
+	var surveyId = $("#hidden-survey-id").val();
+	var medicineCardId = $("#hidden-med-card-id").val();
+	var syndromeId = $("input[name='synd_radio']:checked").attr('value');
+	var id = $(".nosologiesSelect option:selected").val();
+	if(id == 0 || id == "" || id == undefined){
+		id = null;
+	}
+
+	jsonObject = jsonObject + "{'surveyId':" + surveyId + ",";
+	jsonObject = jsonObject + "'medicineCardId':" + medicineCardId + ",";
+	jsonObject = jsonObject + "'syndromeId':" + syndromeId + ",";
+	jsonObject = jsonObject + "'nosologyId':" + id + "}";
+
+	$.ajax({
+		type : "POST",
+		url : "/surveyView/saveNosology",
+		data : jsonObject,
+		dataType : "json",
+		contentType : "application/json",
+		success : function(id) {
+			$("#hidden-survey-id").val(id);
+			noty({
+				text: "&{'nosology.save.success'}",
+				layout: "topRight",
+				type: "success"
+			});
+		},
+		error : function(e) {
+			noty({
+				text: "&{'nosology.save.error'}",
+				layout: "topRight",
+				type: "error"
+			});
+		}
+	});
+}
+</script>
+
+<div id="nosology-info">
+	#{if syndrome != null}
+		<div class="nosology">
+			<div class="nosologyName">&{'survey.nosology'}</div>
+			<div class="nosologyDescription">
+				#{select 'nosologies', class:"nosologiesSelect"}
+					#{option 0} &{'select.nosology'} #{/option}
+					#{list items:models.Nosology.find("bySyndrome", syndrome).fetch(), as:'nosology'}
+						#{option nosology.nosologyId}
+							${nosology.nosologyName}
+						#{/option}
+			   		#{/list}
+				#{/select}
+			</div>
+		</div>		
+		<div class="editButtonDiv">
+			<input type="submit" class="editButton" onclick="saveNosology();" id="editAnalysesButton" value="&{'save'}">
+		</div>
+	#{/if}
+</div>

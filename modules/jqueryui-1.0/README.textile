@@ -1,0 +1,26 @@
+h2. Integrate jQuery UI widgets with your Play application
+
+The jQuery UI module provides working examples of "jQuery UI":http://jqueryui.com/ widgets, integrated with a Play appliction.
+
+This module includes code samples for several widgets:
+
+* Accordion - collapsible content sections that are loaded via Ajax when opened.
+* Autocomplete - Ajax suggest-while-you-type for form controls.
+* Date picker - date selector pop-up that uses the application date format and language.
+* Dialog - dialogue box that can be used as a selector pop-up for form values.
+* Progressbar - progress indicator that uses web sockets to report a job’s completion percentage.
+* Tabs - content sections that are loaded via Ajax when selected.
+
+This is not a Play module in the normal sense, providing additional server-side functionality that your application will directly depend on. Instead, this module provides re-usable view template and JavaScript snippets that you can use, as well us sample controller actions for the server-side parts.
+
+h2. Getting started.
+
+Download the module and run it as a Play application, to browse the examples:
+
+bc. git clone https://github.com/hilton/jqueryui-module.git
+play run jqueryui-module
+open http://localhost:9000/
+
+Documentation is included as views in the module itself, referencing the code. Follow the usage instrutions below to access the documentation.
+
+Either copy sections of code to your application, or install the module as a dependency of your application.

@@ -1,0 +1,26 @@
+# jQuery UI module routes
+# import these routes in the main app as :
+# *   /				module:jqueryui
+
+GET   /           jqueryui.Demo.index
+
+GET   /accordion  jqueryui.Accordion.index
+GET   /region		jqueryui.Accordion.region
+
+GET   /autocomplete			jqueryui.Autocomplete.index
+GET   /autocomplete/label	jqueryui.Autocomplete.label
+GET   /autocomplete/value	jqueryui.Autocomplete.value
+
+GET   /datepicker					jqueryui.DatePicker.index
+GET   /datepicker/language	   jqueryui.DatePicker.changeLanguage
+
+GET   /dialog					jqueryui.Dialog.index
+GET   /dialog/timezones		jqueryui.Dialog.timeZones
+
+GET   /progressbar				jqueryui.Progressbar.index
+POST  /progressbar				jqueryui.Progressbar.startJob
+WS    /progressbar/progress	jqueryui.ProgressSocket.progress
+
+GET   /tabs		jqueryui.Tabs.index
+
+GET   /public/		staticDir:public

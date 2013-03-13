@@ -1,0 +1,41 @@
+#{extends 'jqueryui/layout.html'/}
+#{set title:'Accordion'/}
+
+
+<h2>Accordion - lazy loading</h2>
+
+<p>Use an <a href="http://jqueryui.com/demos/accordion/">accordion</a> to define content sections and lazily load the
+content when the section is opened.</p>
+
+
+<h3>Demo</h3>
+
+#{include 'jqueryui/Accordion/div.html'/}
+
+
+<h3>Client</h3>
+
+<p>The widget is based on a <code>DIV</code> that contains headings, using the <code>data-url</code> attribute value for the
+server-side data source.</p>
+
+<pre class="prettyprint"><code>#{includeVerbatim 'jqueryui/Accordion/div.html'/}</code></pre>
+
+<p>The <code>accordion.js</code> JavaScript applies the jQuery UI accordion plug-in to this <code>DIV</code>.</p>
+
+<pre class="prettyprint"><code>#{includeVerbatim '/public/javascripts/accordion.js'/}</code></pre>
+
+<p>Note the empty action method parameter value, in the <code>DIV</code> element, which generates the query string part of the URL.
+It would be straightforward to modify <code>accordion.js</code> to use a <code>data-url</code> attribute on each <code>h3</code>
+element to specify the URL for each section.</p>
+
+
+<h3>Server</h3>
+
+<p>The server-side starts with a trivial controller that simply renders a view for one location..</p>
+
+<pre class="prettyprint"><code>#{includeVerbatim 'app/controllers/jqueryui/Accordion.java'/}</code></pre>
+
+<p>The <code>region(String header)</code> action renders an HTML content section for the clicked header (e.g. ‘Africa’), from
+the template <code>region.html</code>, whose output is simply a comma-separated list of region names:</p>
+
+<pre class="prettyprint"><code>#{includeVerbatim 'jqueryui/Accordion/region.html'/}</code></pre>

@@ -1,0 +1,92 @@
+#{extends 'main.html' /}
+#{set title:messages.get('survey.edit.title') /}
+
+<style>
+#hidden-survey-id {
+	display: none;
+}
+
+#selectSyndromeBlock {
+	float: right;
+    margin: 0px;
+}
+
+.syndromeLabel {
+	float: right;
+	width: 220px;
+	height: 25px;
+	font-size: 12px;
+}
+</style>
+
+<script>
+$(function() {
+	$("#tabs").tabs();
+
+	$("input[name='synd_radio']").change(function() {
+		var selectAction = #{jsAction @editComplaints(':syndromeId', ':surveyId') /};
+	    $('#tabs-1').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @editAnalysis(':syndromeId', ':surveyId') /};
+	    $('#tabs-2').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @editClinicalManifestations(':syndromeId', ':surveyId') /};
+	    $('#tabs-3').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @editTreatments(':syndromeId', ':surveyId') /};
+	    $('#tabs-4').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @editNosology(':syndromeId', ':surveyId') /};
+	    $('#tabs-5').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+	});
+	
+	var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');
+	var patientAnchor = $('<a></a>').text("${survey.medicineCard.patient.lastName}" + " " +
+										  "${survey.medicineCard.patient.firstName}" + " " +
+										  "${survey.medicineCard.patient.middleName}")
+									.attr('href', '@{PatientView.show(survey.medicineCard.patient.patientId)}');
+	var surveyAnchor = $('<a></a>').text("&{'surveys'}").attr('href', '@{SurveyView.show(survey.surveyId)}');
+	$('#breadcrumb').append(signRightNav.clone()).append(patientAnchor).append(signRightNav).append(surveyAnchor);
+});
+</script>
+
+
+<div id="surveyEditTitleContainer">
+	<h2 id="surveyEditTitleContainer">&{'survey.edit.title'}</h2>
+	<div id="selectSyndromeBlock">
+		#{list items:syndromes, as:'synd'}
+   			<div class="radio">
+		        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
+		        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
+			</div>
+		#{/list}
+	</div>
+</div>
+
+<div id="survey-edit-tabs">
+	<input id="hidden-survey-id" type="text" value="${survey.surveyId}">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">&{'complaints'}</a></li>
+			<li><a href="#tabs-2">&{'survey.laboratory'}</a></li>
+			<li><a href="#tabs-3">&{'survey.clinic'}</a></li>
+			<li><a href="#tabs-4">&{'survey.treatment'}</a></li>
+			<li><a href="#tabs-5">&{'survey.nosology'}</a></li>
+		</ul>
+		<div id="tabs-1">
+			#{include 'tags/survey/complaintsEditTab.html' /}
+		</div>
+		<div id="tabs-2">
+			#{include 'tags/survey/analysesEditTab.html' /}
+		</div>
+		<div id="tabs-3">
+			#{include 'tags/survey/clinicsEditTab.html' /}
+		</div>
+		<div id="tabs-4">
+			#{include 'tags/survey/treatmentsEditTab.html' /}
+		</div>
+		<div id="tabs-5">
+			#{include 'tags/survey/nosologyEditTab.html' /}
+		</div>
+	</div>
+</div> 

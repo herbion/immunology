@@ -1,0 +1,57 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.anamnesiss') /}
+
+<script>
+$(document).ready(function() {
+	$("tbody tr").each(function() {
+		$(this).removeClass("odd").removeClass("even");
+		$(this).find("td").each(function() {
+			var link = $(this).find('.hiddenLinks').text();
+			$(this).click(function() {
+				$(location).attr("href", link);
+			});
+			$(this).hover(
+			  function () {
+			    $(this).addClass("hover");
+			  },
+			  function () {
+			    $(this).removeClass("hover");
+			  });
+		});	
+	});
+});
+</script>
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'objects.anamnesiss'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['anamnesisName', 'syndrome'] }
+           #{crud.custom 'anamnesisName'}
+           	  <span class="hiddenLinks">@{Anamnesiss.show(object.anamnesisId)}</span>
+		      ${object.anamnesisName}
+		   #{/crud.custom}
+           #{crud.custom 'syndrome'}
+              #{if object.syndrome != null}
+	           	  <span class="hiddenLinks">@{Syndromes.show(object.syndrome.syndromeId)}</span>
+			      ${object.syndrome.name}
+		      #{/if}
+		   #{/crud.custom}
+		#{/ crud.table}
+    </div>
+
+    <div id="crudListPagination">
+    	&{'total', models.Anamnesis.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'anamnesis.add'}</a>
+    </p>
+
+</div>

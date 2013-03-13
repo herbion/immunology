@@ -1,0 +1,451 @@
+.footer {
+	height: 35px;
+	width: 1024px;
+	background: url("/public/images/elements/windowHeaderBlue.png") repeat-x scroll 50% 50% #2191C0;
+	line-height: 35px;
+	text-align: center;
+	font-size: 80%;
+}
+
+.header {
+	background: url(/public/images/elements/immunologyHeaderLine.png) repeat-x;
+	position: relative;
+}
+
+.header a {
+	float: left;
+	font-size: 30px;
+	text-decoration: none;
+	color: darkRed;
+	margin: 20px 0px 20px 10px;
+}
+
+#navigation {
+	height: 15px;
+	padding: 5px 20px;
+	border-bottom: 1px solid #DDD;
+}
+
+#navigation div {
+	font-size: 80%;
+}
+
+#breadcrumb {
+	float: left;
+}
+
+#breadcrumb ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#breadcrumb li {
+	display: inline;
+}
+
+#breadcrumb li:last-child a {
+	color: #888;
+	text-decoration: none;
+}
+
+#logout {
+	float: right;
+	margin-left: 10px;
+}
+
+.nonUnderlined {
+	text-decoration: none;
+}
+
+.nonUnderlined:hover {
+	font-weight: bold;
+}
+
+.hidden {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.hover {
+	font-weight: bold;
+	background-color: #F9F9F9;
+	cursor: pointer;
+}
+
+.hiddenLinks {
+	display: none;
+}
+
+.logoutLink {
+	background: url('/public/images/elements/logout.png') no-repeat;
+	padding-left: 20px;
+}
+
+#loggedUser {
+    background: url('/public/images/elements/user.png') no-repeat;
+    float: right;
+	padding: 0px 10px 0px 20px;
+	border-right: 1px solid black;
+}
+
+#loggedUser a {
+	color: #444444;	
+}
+
+#content {
+    padding: 0px 20px 20px 20px;
+}
+
+#immunology {
+	margin: 0 auto;
+	padding: 0;
+	font-family: 'Helvetica', 'Arial', 'Sans';
+	font-size: 90%;
+	color: #444444;
+	border: 1px solid #2191C0;
+	border-width: 0px 1px 1px 1px;
+	border-radius: 5px;
+	width: 1024px;
+}
+
+#patientsTitleContainer, 
+#patientTitleContainer,
+#surveyShowTitleContainer,
+#surveyEditTitleContainer,
+#userInfoContainer {
+	display: table;
+    width: 100%;
+    padding: 10px 0px;
+    margin: 0px;
+    font-size: 20px;
+}
+
+.listTitle {
+	float: left;
+	margin: 0px;
+	font-size: 20px;
+}
+
+#patientsSwitcher {
+	float: right;
+	margin: 0px;
+}
+
+.switcher {
+	margin-left: 10px;
+}
+
+#table {
+	background: #FFFFFF;
+	border-collapse: collapse;
+	border: 1px solid #DDDDDD;
+}
+
+#patientTableRow {
+	display: table;
+	width: 100%;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.patientColumn {
+	float: left;
+	width: 147px;
+	padding: 5px;
+	border-left: 1px solid #EEEEEE;
+}
+
+.actionsButtons {
+	float: left;
+	padding: 5px;
+	background-color: #EEEEEE;
+	text-align: center;
+	width: 80px;
+}
+
+.surveyDelete {
+	background: #C00;
+	padding: 3px 10px;
+	font: normal 12px Arial;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	color: white !important;
+	text-decoration: none;
+}
+
+.surveyShow {
+	background: #54BD06;
+	padding: 3px 10px;
+	font: normal 12px Arial;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	color: white !important;
+	text-decoration: none;
+}
+
+.button {
+	font: normal 12px Arial;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: white !important;
+	text-decoration: none;
+	margin: 2px;
+}
+
+.button:hover {
+	opacity: 0.7;
+}
+
+.buttonShow {
+	background: #54BD06;
+}
+
+.buttonDelete {
+	background: #C00;
+}
+
+.tableHeaderColumn {
+	background-color: #2191C0;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+#totalPatientsArea {
+	background-color: #EEEEEE;
+	float: right;
+    padding: 5px;
+    width: 182px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.showPatientSubmitButton, .deletePatientSubmitButton {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.buttonLink {
+	background: #54BD06;
+	padding: 3px 10px;
+	font-size: 90%;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	color: white !important;
+	text-decoration: none;
+}
+
+.buttonLink:hover {
+	opacity: .8;
+}
+
+#tabs {
+	background: none;
+    border: none;
+    font-size: 12px;
+	font-family: 'Helvetica', 'Arial', 'Sans';
+}
+
+#tabs-1, #tabs-2, #tabs-3, #tabs-4, #tabs-5 {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding: 5px;
+	border: 1px solid #4297D7
+} 
+
+.surveyTableHeader {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.surveyNumberColumn {
+	border-left: 1px solid #EEEEEE;
+    float: left;
+    padding: 5px;
+    width: 70px;
+}
+
+.surveyColumn {
+    border-left: 1px solid #EEEEEE;
+    float: left;
+    padding: 5px;
+    width: 170px;
+}
+
+.surveyColumn_150 {
+	border-left: 1px solid #EEEEEE;
+    float: left;
+    padding: 5px;
+    width: 150px;
+}
+
+.surveyColumn_180 {
+	border-left: 1px solid #EEEEEE;
+    float: left;
+    padding: 5px;
+    width: 180px;
+}
+
+#totalSurveysArea {
+	background-color: #EEEEEE;
+    float: right;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    text-decoration: underline;
+    width: 180px;
+}
+
+#surveyAddLink, #patientAddLink {
+	background: url("/public/images/elements/addButton.png") no-repeat scroll 0 0 transparent;
+	margin-bottom: 5px;
+    padding-left: 20px;
+    font-size: 12px;
+    font-family: 'Helvetica','Arial','Sans';
+    float: right;
+}
+
+#surveyAddLink a, #patientAddLink a {
+	text-decoration: none;	
+	color: #444444;	
+}
+
+#surveyAddLink a:hover, #patientAddLink a:hover {
+	text-decoration: underline;	
+}
+
+#surveyTableRow {
+    border-bottom: 1px solid #EEEEEE;
+    display: table;
+    width: 100%;
+}
+
+.showSurveyButton, .deleteSurveyButton {
+	color: white !important;
+	text-decoration: none;
+}
+
+.button_85X13 {
+	width: 83px;
+	font: normal 12px Arial;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: white !important;
+	text-decoration: none;
+	text-align: center;
+	margin: 1px;
+    padding: 3px;
+    display: inline-block;
+}
+
+.button_85X13:hover {
+	opacity: .8;	
+}
+
+#patientTableHeader, #patientTableRow {
+	font-family: 'Helvetica', 'Arial', 'Sans';
+	font-size: 12px;
+}
+
+.patientLabel label, .medecineCardLabel label {
+	color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    text-align: right;
+}
+
+.medecineCardLabelValue textarea, 
+.medecineCardLabelValue input {
+    width: 100%;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+}
+
+.patientLabel, .medecineCardLabel {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px 10px;
+    width: 200px;
+    float: left;
+}
+
+.medecineCardValue {
+	width: 300px;
+	float: left;
+	margin-bottom: 4px;
+    padding: 2px 10px;
+}
+
+.patientLabelValue, .medecineCardLabelValue {
+	display: table;
+    position: relative;
+}
+
+.syndromeType {
+	font-family: 'Helvetica';
+	font-size: 16px;
+	color: #222222;
+	padding: 0;
+	float: left;
+}
+
+.complaintTypeName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+#patientsTable, #surveysTable {
+	border: 1px solid #77D5F7;
+	border-bottom: none;
+	font-size: 12px;
+	margin: 0px;
+}
+
+#patientsTable_wrapper {
+	font-family: 'Helvetica','Arial','Sans';
+    font-size: 12px;
+}
+
+#patientsTable_length label, #patientsTable_filter label,
+#surveysTable_length label, #surveysTable_filter label {
+	width: 300px;
+	color: #FFFFFF;
+}
+
+#patientsTable_paginate,
+#surveysTable_paginate {
+	height: 29px;
+}
+
+#patientsTable_info,
+#surveysTable_info {
+	padding: 5px;
+}
+
+#surveysTable_wrapper .ui-widget-header {
+	background: url("../jquery/images/ui-bg_gloss-wave_75_2191c0_500x100.png") repeat-x scroll 50% 50% #2191C0 !important;
+    border: 1px solid #4297D7;
+    color: #EAF5F7;
+}
+
+.signRightNav {
+	padding: 2px 5px;
+	vertical-align: middle;
+}

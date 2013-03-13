@@ -1,0 +1,93 @@
+<style>
+table.dataTable td {
+	padding: 1px 2px; 
+} 
+</style>
+
+<script>
+$(document).ready(function() {
+	$('#patientsTable').dataTable({
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"oLanguage": {
+            "sUrl": "/public/jquery/dataTable.localize/dataTable." + "${lang}" + ".txt"
+        },
+        "aoColumns": [
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { },
+            { "bSortable": false },
+            { "bSortable": false },
+            { "bSortable": false },
+        ]
+	});
+	
+	$("tbody tr td").each(function() {
+		if($(this).hasClass("tableRow")) {
+			$(this).hover(function () {
+			    $(this).closest('tr').find('.tableRow').addClass("hover");
+			  },
+			  function () {
+				  $(this).closest('tr').find('.tableRow').removeClass("hover");
+			});
+			
+			$(this).click(function() {
+				window.location.href = $(this).closest('tr').find('.showPatientSubmitButton').attr('href');
+			});
+		}
+	});
+	
+	$('.deletePatientSubmitButton').click(function() {
+		if (window.confirm("&{'delete.confirmation'}")) {
+			window.location.href = "/patientview/delete?patientId=" + $(this).attr('id');
+		};
+	});
+	
+});
+</script>
+<table id="patientsTable">
+	<thead>
+		<tr>
+			<th>&{'patient.abbreviation'}</th>
+			<th>&{'gender'}</th>
+			<th>&{'birthday'}</th>
+			<th>&{'country'}</th>
+			<th>&{'city'}</th>
+			<th>&{'street'}</th>
+			<th>&{'house'}</th>
+			<th>&{'flat'}</th>
+			<th style="display: none"></th>
+			<th style="display: none"></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody align="center">
+		#{list _userPatients, as:'patient'}
+		<tr>
+			<td align="left" style="width: 160px" class="tableRow">${patient.lastName} ${patient.firstName} ${patient.middleName}</td>
+			<td style="width: 55px" class="tableRow">${patient.gender.name() == 'MALE' ? messages.get('gender.male'): messages.get('gender.female')}</td>
+			<td style="width: 80px" class="tableRow">${patient.birthday.format()}</td>
+   			<td style="width: 55px" class="tableRow">${patient.country}</td>
+   			<td style="width: 100px" class="tableRow">${patient.city}</td>
+   			<td style="width: 80px" class="tableRow">${patient.street}</td>
+   			<td style="width: 30px" class="tableRow">${patient.house}</td>
+   			<td style="width: 20px" class="tableRow">${patient.flat}</td>
+			<td style="width: 185px" align="center">
+				<div class="button_85X13 buttonShow">
+	   				<a href="@{PatientView.show(patient.patientId)}" class="showPatientSubmitButton">&{'edit'}</a>
+   				</div>
+   				<div class="button_85X13 buttonDelete">
+  					<a href="#" id="${patient.patientId}" class="deletePatientSubmitButton">&{'delete'}</a>
+  				</div>
+   			</td>
+   			<td style="width: 0px; display: none">${patient.district}</td>
+   			<td style="width: 0px; display: none">${patient.region}</td>
+		</tr>
+		#{/list}
+	</tbody>
+</table>

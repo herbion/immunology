@@ -1,0 +1,56 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('survey.add', type.modelName) /}
+
+<script type="text/javascript">
+var date;
+$(document).ready(function() {
+	date = $('#object_surveyDate').val();
+	var datepicker = '#object_surveyDate';
+	$.datepicker.setDefaults($.extend({
+		minDate: new Date(1900,0,1),
+		maxDate: new Date(),
+		yearRange: '1900:+00',
+		changeMonth: true,
+		changeYear: true},
+		$.datepicker.regional['']));
+	$(datepicker).datepicker();
+	%{
+		currentLanguage = play.i18n.Lang.get();
+	}%
+	$(datepicker).datepicker('option', $.datepicker.regional['&{currentLanguage}'.lenght == 0 ? 'en' : '&{currentLanguage}']);
+	$(datepicker).datepicker('option', 'dateFormat', 'dd-mm-yy');
+	$('#object_surveyDate').val(date);
+});
+</script>
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'survey.add', type.modelName}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+        #{crud.form fields:['syndrome', 'user', 'medicineCard', 'surveyDate', 'alergeticDifficultyDegree', 
+        'alergeticInsufficiencyDegree', 'autoimmunoDifficultyDegree', 'autoimmunoInsufficiencyDegree', 
+        'immunodefDifficultyDegree', 'immunodefInsufficiencyDegree']}
+        
+        	#{crud.custom 'medicineCard'}
+        		<label for="${medicineCard}">&{'medicineCard'}</label>
+        		%{patients = models.Patient.findAll()}%
+        		#{select 'object.medicineCard.medicineCardId', id:'object_medicineCard', 
+        			value:object.medicineCard, valueProperty:'medicineCardId'}
+        			#{list items:patients, as:'patient'}
+        				#{option patient.medicineCard.medicineCardId} ${patient} #{/option}
+        			#{/list}
+        		#{/select}
+					
+        	#{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

@@ -1,0 +1,64 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('survey.edit.title') /}
+
+<script type="text/javascript">
+var date;
+$(document).ready(function() {
+	date = $('#object_surveyDate').val();
+	var datepicker = '#object_surveyDate';
+	$.datepicker.setDefaults($.extend({
+		minDate: new Date(1900,0,1),
+		maxDate: new Date(),
+		yearRange: '1900:+00',
+		changeMonth: true,
+		changeYear: true},
+		$.datepicker.regional['']));
+	$(datepicker).datepicker();
+	%{
+		currentLanguage = play.i18n.Lang.get();
+	}%
+	$(datepicker).datepicker('option', $.datepicker.regional['&{currentLanguage}'.lenght == 0 ? 'en' : '&{currentLanguage}']);
+	$(datepicker).datepicker('option', 'dateFormat', 'dd-mm-yy');
+	$('#object_surveyDate').val(date);
+});
+</script>
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'survey.edit.title'}</h2>
+    
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{crud.form fields:['syndrome', 'user', 'medicineCard', 'surveyDate', 'alergeticDifficultyDegree', 
+        	'alergeticInsufficiencyDegree', 'autoimmunoDifficultyDegree', 'autoimmunoInsufficiencyDegree', 
+        	'immunodefDifficultyDegree', 'immunodefInsufficiencyDegree', 'surveyAnswers', 'surveyAnalyses',
+        	'surveyClinicalManifestations', 'surveyTreatments']}
+        	#{crud.custom 'user'}
+        	   <label for="${user}">&{'user'}</label>
+		       #{select 'users', items:models.User.findAll(), valueProperty:'userId', 
+		       		 value:object.user.userId, id:'userSelector' /}
+        	#{/crud.custom}
+        	#{crud.custom 'medicineCard'}
+        	   <label for="${medicineCard}">&{'medicineCard'}</label>
+		       <a href="@{MedicineCards.show(object.medicineCard.medicineCardId)}">&{'title.edit'}</a>
+        	#{/crud.custom}
+        	#{crud.custom 'surveyAnswers'}
+        	   <label>&{'surveyAnswers'}</label>
+        	   <label>//TODO Implement me!</label><br>
+		       *{<a href="@{MedicineCards.show(object.medicineCard.medicineCardId)}">&{'title.edit'}</a>}*
+        	#{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'survey.delete'}" onclick="return confirm('&{'survey.delete'}')"/>
+        </p>
+    #{/form}
+
+</div>

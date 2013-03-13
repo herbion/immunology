@@ -1,0 +1,675 @@
+#{extends 'main.html' /}
+#{set title:messages.get('patient.edit.title') /}
+
+<style>
+#hidden-med-card-id {
+	display: none;
+}
+
+.hidden-anamnesis-value {
+	display: none;
+}
+
+.hidden-anamnesis-description {
+	display: none;
+}
+
+.anamnesis-description {
+	width: 400px;
+	font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.requiredField {
+	font-size: 10px;
+    margin-left: 10px;
+    color: #222222;
+}
+
+.patientValue {
+	float: left;
+	margin-bottom: 4px;
+    padding: 2px 10px;
+}
+
+.patientValue input {
+ 	width: 300px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+    margin: 0px;
+}
+
+.patientValue select {
+ 	width: 300px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+    margin: 0px 0px 2px 0px;
+}
+
+.hasError {
+	color: #C00;
+}
+
+#patient_gender {
+	width: 305px;
+}
+
+.cancelButton, .saveButton {
+	background: #54BD06;
+    border-radius: 8px 8px 8px 8px;
+    color: white !important;
+    padding: 3px 10px;
+    text-decoration: none;
+}
+
+.cancelButton:hover {
+	opacity: 0.8;
+}
+
+#surveysTable_length select {
+	width: 50px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+}
+
+.crudButtons {
+    background: #EFEFEF;
+    border-radius: 10px 10px 10px 10px;
+    margin: 0px;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px !important;
+    font-family: 'Helvetica','Arial','Sans';
+}
+
+.crudButtons input {
+	background: #54BD06;
+	border-radius: 8px 8px 8px 8px;
+	color: white !important;
+	padding: 2px 10px;
+	text-decoration: none;
+	cursor: pointer;
+    font-size: 12px;
+    font-family: 'Helvetica','Arial','Sans';
+} 
+
+.anamnesis-data {
+	font-family: 'Helvetica';
+	font-weight: bold;
+	text-align: center;
+	font-size: 18px;
+	color: #00557F;
+	padding: 0px 0px 5px 0px;
+}
+
+.anamnesisDescription {
+	color: #00557F;
+	text-align: center;
+	width: 100%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.anamnesisTypeName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-align: right;
+    width: 200px;
+    float: left;
+}
+
+.anamnesis {
+	display: table;
+	position: relative;
+	width: 100%;
+	margin: 0px 0px 4px 0px;
+	height: 25px;
+	background-color: #E2EDFB;
+}
+
+#medicineCard_otherInfo {
+	height: 16px;
+	overflow: hidden;
+}
+
+.anamnesisFields {
+	margin: 5px 5px 5px 300px;
+	display: table;
+	color: #00557F;
+}
+
+.anamnesisDetailName {
+	font-weight: bold; 
+}
+
+.anamnesisDetailValueContainer {
+	display: table;
+	width: 100%;
+	line-height: 25px;
+}
+
+.anamnesis-checkbox {
+	float: left;
+	margin-top: 6px;
+}
+
+.anamnesisDetailValueName {
+	float: left;
+	width: 200px;
+}
+
+.anamnesisSelect {
+    width: 180px;
+    margin: 3px 20px 0px 20px;
+    font-size: 12px !important;
+	font-family: 'Helvetica', 'Arial', 'Sans' !important;
+}
+
+.anamnesisSelectDesease {
+	margin: 3px 10px 0px 10px;
+}
+
+.anamnesisDeseaseDetailValueContainer {
+	line-height: 25px;
+	margin: 5px 5px 5px 300px;
+	display: table;
+	color: #00557F;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.anamnesis-desease-detail-name {
+	float: left;
+    width: 200px;
+}
+</style>
+
+<script>
+var date;
+$(document).ready(function() {
+	$("#tabs").tabs();
+	
+	$('#medicineCard_otherInfo').addClass("autogrow-short").autogrow();
+	
+	var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');
+	var patientAnchor = $('<a></a>').text("${patient.lastName}" + " " +
+			  							  "${patient.firstName}" + " " +
+										  "${patient.middleName}")
+									.attr('href', '@{PatientView.show(patient.patientId)}');
+	
+	$('#breadcrumb').append(signRightNav).append(patientAnchor);
+	
+	date = $('#patient_birthday').val();
+	var datepicker = '#patient_birthday';
+	$.datepicker.setDefaults($.extend({
+		minDate: new Date(1900,0,1),
+		maxDate: new Date(),
+		yearRange: '1900:+00',
+		changeMonth: true,
+		changeYear: true},
+		$.datepicker.regional['']));
+	$(datepicker).datepicker();
+	%{
+		currentLanguage = play.i18n.Lang.get();
+	}%
+	$(datepicker).datepicker('option', $.datepicker.regional['&{currentLanguage}'.lenght == 0 ? 'en' : '&{currentLanguage}']);
+	$(datepicker).datepicker('option', 'dateFormat', 'dd-mm-yy');
+	$('#patient_birthday').val(date);
+
+	setCheckboxChecked();
+
+	addCheckboxClickListener();
+	
+});
+
+var setCheckboxChecked = function () {
+	var id = null;
+	$hidden = null;
+	$(".anamnesis-checkbox").each(function() {
+		$hidden = $(this).prev(".hidden-id");
+		if($hidden != undefined){
+			id = $hidden.val();
+		}
+		if(id != null){
+			$(this).attr("checked", true);
+			$select = $(this).parent().find(".anamnesisSelect");
+			if($select != undefined){
+				$(this).parent().find(".anamnesisSelect option[value=" + id + "]").attr("selected", "selected");
+			} 
+			setEnabled($(this).parent().find(".anamnesis-description"));			
+		}else{
+			setDisabled($(this).parent().find(".anamnesisSelect"));
+		}
+	});
+}
+
+var addCheckboxClickListener = function () {
+	$(".anamnesis-checkbox").click(function () {
+		if($(this).is(":checked")) {
+			setEnabled($(this).nextAll(".anamnesis-description:first"));
+			setEnabled($(this).parent().find(".anamnesisSelect"));
+		} else {
+			setDisabled($(this).nextAll(".anamnesis-description:first"));
+			setDisabled($(this).parent().find(".anamnesisSelect"));
+		}		
+	});
+}
+
+var setEnabled = function (element) {
+	$(element).removeAttr('disabled');
+	$(element).closest('.anamnesis').find('.anamnesisTypeName').css('background', '#FF8732');
+}
+
+var setDisabled = function (element) {
+	$(element).attr('disabled', 'disabled');
+	var isAnyChecked = false;
+	$(element).closest(".anamnesis").find(".anamnesis-checkbox").each(function(){
+		if($(this).is(":checked")){
+			isAnyChecked = true;
+		}
+	});
+	if(!isAnyChecked){
+		$(element).closest('.anamnesis').find('.anamnesisTypeName').css('background', '#2191C0');
+	}
+}
+
+var saveMedicineCard = function () {
+	var jsonObject = "";
+	var surveyId = $("#hidden-survey-id").val();
+	var medicineCardId = $("#hidden-med-card-id").val();
+	var medicineCardInfo = null;
+
+	if($("#medicineCard_otherInfo").val() != "" && $("#medicineCard_otherInfo").val() != undefined) {
+		medicineCardInfo = "'" + $("#medicineCard_otherInfo").val() + "'";
+	}
+	
+	jsonObject = jsonObject + "{'medicineCardId':" + medicineCardId + ",";
+	jsonObject = jsonObject + "'medicineCardInfo':" + medicineCardInfo + ",";
+	jsonObject = jsonObject + "'anamneses':[";
+
+	$(".anamnesis-checkbox:not(.desease)").each(function() {
+		var id = null;
+		var checked = "false";
+		var description = null;
+
+		id = $(this).val();
+		if(id == undefined || id == ""){
+			id = $(this).parent().find(".anamnesisSelect option:selected").val();
+		}
+		if($(this).is(":checked")){
+			checked = "true";
+			description = "'" + $(this).nextAll(".anamnesis-description:first").val() + "'";
+			if(description == "" || description == undefined) {
+				description = null;
+			} 
+		}
+		jsonObject = jsonObject + "{'id':" + id + ",";
+		jsonObject = jsonObject + "'isChecked':" + checked + ",";
+		jsonObject = jsonObject + "'description':" + description + "},";
+	});
+	jsonObject = jsonObject.substring(0, jsonObject.length - 1);
+	jsonObject = jsonObject + "],";
+
+	jsonObject = jsonObject + "'anamnesisDeseases':[";
+	$(".desease").each(function() {
+		var id = null;
+		var checked = "false";
+		var description = null;
+
+		id = $(this).val();
+		if(id == undefined || id == ""){
+			id = $(this).parent().find(".anamnesisSelect option:selected").val();
+		}
+		if($(this).is(":checked")){
+			checked = "true";
+			description = "'" + $(this).nextAll(".anamnesis-description:first").val() + "'";
+			if(description == "" || description == undefined) {
+				description = null;
+			} 
+		}
+		jsonObject = jsonObject + "{'id':" + id + ",";
+		jsonObject = jsonObject + "'isChecked':" + checked + ",";
+		jsonObject = jsonObject + "'description':" + description + "},";
+	});
+	jsonObject = jsonObject.substring(0, jsonObject.length - 1);
+	jsonObject = jsonObject + "]}";
+
+	$.ajax({
+		type : "POST",
+		url : "/medicineCardView/saveMedicineCard",
+		data : jsonObject,
+		dataType : "json",
+		contentType : "application/json",
+		success : function(id) {
+			noty({
+				text: "&{'anamnesis.save.success'}",
+				layout: "topRight",
+				type: "success"
+			});
+		},
+		error : function(e){
+			noty({
+				text: "&{'anamnesis.save.error'}",
+				layout: "topRight",
+				type: "error"
+			});
+		}
+	});
+}
+</script>
+
+#{if flash.success}
+    <div class="crudFlash flashSuccess">
+        ${flash.success}
+    </div>
+#{/if}
+#{if flash.error || error}
+   <div class="crudFlash flashError">
+       ${error ?: flash.error}
+   </div>
+#{/if}
+<h2 id="patientTitleContainer">${patient.lastName} ${patient.firstName} ${patient.middleName}</h2>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">&{'patient'}</a></li>
+		<li><a href="#tabs-2">&{'medicineCard'}</a></li>
+		<li><a href="#tabs-3">&{'surveys'}</a></li>
+		<li><a href="#tabs-4">&{'charts'}</a></li>
+		<li><a href="#tabs-5">TODO:FIXME:</a></li>
+	</ul>
+	<div id="tabs-1">
+	#{form action:@updatePatient(), id:'updateForm', enctype:'multipart/form-data' }
+		<input id="patient_patientId" type="hidden" name="patient.patientId" value=${patient.patientId}>
+		#{field 'patient.lastName'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_lastName">&{'lastName'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+				<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.firstName'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_firstName">&{'firstName'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+    			<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.middleName'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_middleName">&{'middleName'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.gender'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_gender">&{'gender'}</label>
+			</div>
+			<div class="patientValue">
+				#{select 'patient.gender', id:'patient_gender', value:patient.gender}
+					#{option 'MALE'}&{'gender.male'}#{/option}
+					#{option 'FEMALE'}&{'gender.female'}#{/option}
+				#{/select}
+				<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.birthday'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_birthday">&{'birthday'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value?.format()}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.country'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_country">&{'country'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.region'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_region">&{'region'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.district'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_district">&{'district'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.city'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_city">&{'city'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.street'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_street">&{'street'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.house'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_house">&{'house'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.required'}</span>
+			</div>
+		</div>
+		#{/}
+		#{field 'patient.flat'}
+		<div class="patientLabelValue">
+			<div class="patientLabel">
+				<label for="patient_flat">&{'flat'}</label>
+			</div>
+			<div class="patientValue">
+				<input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+		    	<span class="requiredField">&{'validation.numeric'}</span>
+			</div>
+		</div>
+		#{/}
+		<p class="crudButtons">
+	         <input type="submit" name="_save" value="&{'crud.save'}" class="saveButton"/>
+	         <a href="@{PatientView.show(patient.patientId)}" class="cancelButton">&{'crud.cancel'}</a>
+	     </p>
+	#{/form}
+	</div>
+	<div id="tabs-2">
+		%{medicineCard = models.MedicineCard.find("byMedicineCardId", patient.medicineCard.medicineCardId).first()}%
+		<input id="hidden-med-card-id" type="text" value="${medicineCard.medicineCardId}">
+		<div class="medecineCardLabelValue">
+			<div class="medecineCardLabel">
+				<label for="medicineCard_creationDate">&{'creationDate'}</label>
+			</div>
+			<div class="medecineCardValue">
+				<input id="medicineCard_creationDate" type="text" name="medicineCard.creationDate" value=${medicineCard.creationDate.format()} disabled="disabled">
+			</div>
+		</div>
+		<div class="medecineCardLabelValue">
+			<div class="medecineCardLabel">
+				<label for="medicineCard_otherInfo">&{'otherInfo'}</label>
+			</div>
+			<div class="medecineCardValue">
+				<textarea id="medicineCard_otherInfo" name="medicineCard.otherInfo">${medicineCard.otherInfo}</textarea>
+			</div>
+		</div>
+		<div id="anamneses-info">
+			<input id="hidden-med-card-id" type="text" value="${medicineCard.medicineCardId}">
+			<div class="anamnesis-data">&{'anamnesis.data'}</div>
+			#{list items: models.Anamnesis.findAll(), as:'anamnesis'}
+				<div class="anamnesis">
+					<div class="anamnesisTypeName">${anamnesis.anamnesisName}</div>
+					#{list items: anamnesis.anamnesisDetails, as:'anamnesisDetail'}
+						<div class="anamnesisFields">
+							#{if anamnesisDetail.type.name() == 'DROPDOWN'}
+								%{
+									descriptionText = "";
+								}%
+								<div class="anamnesisDetailValueContainer">
+									#{list items:anamnesisDetail.anamnesisDetailValues, as:'anamnesisDetailValue'}
+										#{if contentMap != null && !contentMap.isEmpty() && contentMap.keySet().contains(anamnesisDetailValue)}
+											<input class="hidden-id" value="${anamnesisDetailValue.anamnesisDetailValueId}" style="display: none;">
+											%{
+												descriptionText = contentMap.get(anamnesisDetailValue);
+											}% 
+										#{/if}
+									#{/list}
+									<input class="anamnesis-checkbox" type="checkbox" value="">
+									<div class="anamnesisDetailName">${anamnesisDetail.anamnesisDetailName}</div>
+						  			#{select 'anamnesisDetailValues', class:"anamnesisSelect"}
+										#{list items:anamnesisDetail.anamnesisDetailValues, as:'anamnesisDetailValue'}
+											#{option anamnesisDetailValue.anamnesisDetailValueId}
+												${anamnesisDetailValue.anamnesisDetailValueName}
+											#{/option}
+							   			#{/list}
+									#{/select}
+									<input class="anamnesis-description" value="${descriptionText}" type="text" disabled="disabled">
+								</div>
+							#{/if}
+							#{elseif anamnesisDetail.type.name() == 'CHECKBOX'}
+								<div class="anamnesisDetailName">${anamnesisDetail.anamnesisDetailName}</div>
+								#{list items:anamnesisDetail.anamnesisDetailValues, as:'anamnesisDetailValue'}
+									%{
+										descriptionText = "";
+									}%
+									<div class="anamnesisDetailValueContainer">
+										#{if contentMap != null && !contentMap.isEmpty() && contentMap.keySet().contains(anamnesisDetailValue)}
+											<input class="hidden-id" value="${anamnesisDetailValue.anamnesisDetailValueId}" style="display: none;">
+											%{
+												descriptionText = contentMap.get(anamnesisDetailValue);
+											}% 
+										#{/if}
+										<input class="anamnesis-checkbox" type="checkbox" value="${anamnesisDetailValue.anamnesisDetailValueId}">
+										<div class="anamnesisDetailValueName">${anamnesisDetailValue.anamnesisDetailValueName}</div>
+										<input class="anamnesis-description" value="${descriptionText}" type="text" disabled="disabled">
+									</div>
+						   		#{/list}
+							#{/elseif}
+						</div>
+					#{/list}
+				</div>
+			#{/list}
+		</div>
+		<div id="anamnesis-disease-info">
+			<div class="anamnesis-data">&{'anamnesis.disease'}</div>
+			#{list items: models.AnamnesisDisease.findAll(), as:'anamnesisDesease'}
+				<div class="anamnesis">
+					<div class="anamnesisTypeName">${anamnesisDesease.anamnesisDiseaseName}</div>
+					#{if anamnesisDesease.type.name() == 'DROPDOWN'}
+						%{
+							descriptionText = "";
+						}%
+						<div class="anamnesisDeseaseDetailValueContainer">
+							#{list items:anamnesisDesease.anamnesisDiseaseDetails, as:'anamnesisDiseaseDetail'}
+								#{if diseaseContentMap != null && !diseaseContentMap.isEmpty() && diseaseContentMap.keySet().contains(anamnesisDiseaseDetail)}
+									<input class="hidden-id" value="${anamnesisDiseaseDetail.anamnesisDiseaseDetailId}" style="display: none;">
+									%{
+										descriptionText = diseaseContentMap.get(anamnesisDiseaseDetail);
+									}% 
+								#{/if}
+							#{/list}
+							<input class="anamnesis-checkbox desease" type="checkbox" value="">
+					  		#{select 'anamnesisDiseaseDetails', class:"anamnesisSelect anamnesisSelectDesease"}
+								#{list items:anamnesisDesease.anamnesisDiseaseDetails, as:'anamnesisDiseaseDetail'}
+									#{option anamnesisDiseaseDetail.anamnesisDiseaseDetailId}
+										${anamnesisDiseaseDetail.anamnesisDiseaseDetailName}
+									#{/option}
+						  		#{/list}
+							#{/select}
+							<input class="anamnesis-description" value="${descriptionText}" type="text" disabled="disabled">
+						</div>
+					#{/if}
+					#{elseif anamnesisDesease.type.name() == 'CHECKBOX'}
+						#{list items:anamnesisDesease.anamnesisDiseaseDetails, as:'anamnesisDiseaseDetail'}
+							%{
+								descriptionText = "";
+							}%
+							<div class="anamnesisDeseaseDetailValueContainer">
+								#{if diseaseContentMap != null && !diseaseContentMap.isEmpty() && diseaseContentMap.keySet().contains(anamnesisDiseaseDetail)}
+									<input class="hidden-id" value="${anamnesisDiseaseDetail.anamnesisDiseaseDetailId}" style="display: none;">
+									%{
+										descriptionText = diseaseContentMap.get(anamnesisDiseaseDetail);
+									}% 
+								#{/if}
+								<input class="anamnesis-checkbox desease" type="checkbox" value="${anamnesisDiseaseDetail.anamnesisDiseaseDetailId}">
+								<div class="anamnesis-desease-detail-name">${anamnesisDiseaseDetail.anamnesisDiseaseDetailName}</div>
+								<input class="anamnesis-description" value="${descriptionText}" type="text" disabled="disabled">
+							</div>
+					  	#{/list}
+					#{/elseif}
+				</div>
+			#{/list}
+		</div>
+		<p class="crudButtons">
+	        <a class="saveButton" href="#" onclick="saveMedicineCard()">&{'save'}</a>
+	        <span>&nbsp;</span>
+	        <a href="@{PatientView.show(patient.patientId)}" class="cancelButton">&{'crud.cancel'}</a>
+	    </p>
+	</div>
+	<div id="tabs-3">
+		#{surveyTable patient: patient /}
+	</div>
+	<div id="tabs-4">
+		#{include 'tags/survey/charts.html' /}
+	</div>
+	<div id="tabs-5">
+		<h1>
+			Nothing TODO here
+		</h1>
+	</div>
+	
+</div>

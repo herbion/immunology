@@ -1,0 +1,30 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('nosologycomplainttype.edit') /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'nosologycomplainttype.edit'}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{crud.form fields:['complaintTypeId', 'multyplier', 'nosology']}
+        	#{crud.custom 'complaintTypeId'}
+	        	<label for="${complaintTypeId}">&{'complaintTypeId'}</label>
+ 		     	#{select 'object.complaintTypeId', items:models.ComplaintType.findAll(), valueProperty:'complaintTypeId', 
+		       		labelProperty:'complaintTypeName', value:object.complaintTypeId, id:'complaintSelector' /}
+		   #{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'nosologycomplainttype.delete'}" onclick="return confirm('&{'nosologycomplainttype.delete'}')"/>
+        </p>
+    #{/form}
+
+</div>

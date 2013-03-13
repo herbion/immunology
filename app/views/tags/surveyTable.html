@@ -1,0 +1,70 @@
+<script type="text/javascript" >
+$(document).ready(function() {
+	$('#surveysTable').dataTable({
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"oLanguage": {
+            "sUrl": "/public/jquery/dataTable.localize/dataTable." + "${lang}" + ".txt"
+        },
+        "aoColumns": [ { }, { }, { }, { }, { }, { bSortable: false } ]
+	});
+
+	
+	$('.deleteSurveyButton').click(function() {
+		if (window.confirm("&{'delete.confirmation'}")) {
+			var id = this.id;
+		    $.ajax({
+				type : "POST",
+				url : "/surveyView/delete",
+				data : id,
+				success : function(d){
+					location.reload();
+				},
+				error : function(e){
+					alert("Error");
+				}
+			});
+		};
+	});
+	
+});
+
+</script>
+
+%{surveys = _patient.medicineCard.surveys}%
+%{medicineCardId = _patient.medicineCard.medicineCardId}%
+
+<div id="surveyAddLink">
+  	<a href="@{surveyView.add(medicineCardId)}">&{'survey.add'}</a>
+</div>
+<table id="surveysTable">
+	<thead>
+		<tr>
+			<th style="width: 50px">&{'number'}</th>
+			<th style="width: 150px">&{'surveyDate'}</th>
+			<th style="width: 145px">&{'difficultyDegree'} %</th>
+			<th style="width: 155px">&{'insufficiencyDegree'} %</th>
+			<th style="width: 150px">&{'doctor'}</th>
+			<th style="width: 180px"></th>
+		</tr>
+	</thead>
+	<tbody>
+		#{list surveys, as:'survey'}
+		<tr>
+			<td>${survey_index}</td>
+			<td>${survey.surveyDate.format()}</td>
+			<td>${survey.alergeticDifficultyDegree}</td>
+			<td>${survey.alergeticInsufficiencyDegree}</td>
+			<td>${survey.user.firstName} ${survey.user.lastName}</td>
+			<td align="center">
+				<div class="button_85X13 buttonShow">
+	   				<a class="showSurveyButton" href="@{surveyView.show(survey.surveyId)}">&{'view'}</a>
+   				</div>
+   				<div class="button_85X13 buttonDelete">
+  					<a href="#" class="deleteSurveyButton" id="&{survey.surveyId}">&{'delete'}</a>
+  				</div>
+   			</td>
+		</tr>
+		#{/list}
+	</tbody>
+</table>

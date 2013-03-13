@@ -1,0 +1,44 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('anamnesis.edit') /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'anamnesis.edit'}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{crud.form fields:['anamnesisName', 'syndrome', 'anamnesisDetails']}
+        	#{crud.custom 'anamnesisDetails'}
+	    		<label for="anamnesisDetails"><a href="@{AnamnesisDetails.list()}" class="nonUnderlined">&{'objects.anamnesisdetails'}</a></label>
+	    		%{anamnesisDetails = models.AnamnesisDetail.find("byAnamnesis", object).fetch()}%
+	    		#{if anamnesisDetails != null && !anamnesisDetails.isEmpty()}
+	    		<div class="list">
+					#{list items:anamnesisDetails, as:'detail'}
+			           	<li>
+			           		<span id="${detail.anamnesisDetailId}" class="hiddenLinks">
+								@{AnamnesisDetails.show(detail.anamnesisDetailId)}
+			        		</span>
+			        		${detail.anamnesisDetailName}
+		        		</li>
+				    #{/list}
+				</div>
+				#{/if}
+	    		#{else}
+					&{'crud.list.empty'}
+				#{/else}
+        	#{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'anamnesis.delete'}" onclick="return confirm('&{'anamnesis.delete'}')"/>
+        </p>
+    #{/form}
+
+</div>

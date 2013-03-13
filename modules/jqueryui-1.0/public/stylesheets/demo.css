@@ -1,0 +1,29 @@
+/* Page template */
+.wrapper { width:90%; }
+.demo { background-color: white; padding: 1em; }
+h1 a { text-decoration: none; }
+a:hover { color:blue; text-decoration:underline; }
+h2 { border-top: 4px solid #E0E0E0; margin-top:1.5em; padding-top:0.5em; }
+.ui-widget-content { font-size: 90%; }
+pre, code { background-color: ghostWhite; }
+code { font-family: Consolas,Inconsolata,Monaco,monospace; }
+pre { border-left: 4px solid #E0E0E0; padding: 0.5em; }
+pre.prettyprint { border:none; }
+p code { color: #444; border: 1px solid #E0E0E0; padding: 0 0.2em!important; }
+p.note { background: #FFF9D8!important; padding: 10px!important; color: #333!important; border-left: 6px solid #F3E378!important; }
+
+/* Datepicker */
+input.date { margin-right:0.5em; }
+
+/* Dialog */
+div.dialog table { font-size:90%; border-collapse:collapse; width:100%; }
+div.dialog tr.odd { background-color:#eee; }
+div.dialog tr:hover td { background-color:#33c; color:white; }
+div.dialog th { text-align:left;  }
+
+/* Progress bar */
+body.progressbar div.demo { width:50%; }
+
+/* Google Prettify colour overrides */
+.prettyprint .com {color:#080;}
+.prettyprint .atv, .prettyprint .str {color:#800;}
