@@ -1,0 +1,49 @@
+<style>
+.nosology {
+	display: table;
+	position: relative;
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	background-color: #E1EEF4;
+}
+
+.nosologyName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.nosologyDescription {
+    color: #00557F;
+    text-align: center;
+    width: 60%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.nosologiesSelect {
+	width: 250px;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+</style>
+
+<div id="nosology-info">
+	#{if nosology != null}
+		<div class="nosology">
+			<div class="nosologyName">&{'survey.nosology'}</div>
+			<div class="nosologyDescription">
+				${nosology.nosologyName}
+			</div>
+		</div>		
+	#{/if}
+</div>

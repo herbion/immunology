@@ -1,0 +1,25 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.analysisdetails') /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'objects.analysisdetails'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['analysisDetailName']/}
+    </div>
+
+    <div id="crudListPagination">
+        &{'total', models.AnalysisDetail.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'analysisdetail.add'}</a>
+    </p>
+
+</div>

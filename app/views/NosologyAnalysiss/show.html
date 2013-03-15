@@ -1,0 +1,30 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('nosologyanalysis.edit') /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'nosologyanalysis.edit'}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{crud.form fields:['analysisId', 'multyplier', 'nosology']}
+        	#{crud.custom 'analysisId'}
+	        	<label for="${analysisId}">&{'analysisId'}</label>
+ 		     	#{select 'object.analysisId', items:models.Analysis.findAll(), valueProperty:'analysisId', 
+		       		labelProperty:'analysisName', value:object.analysisId, id:'analysisSelector' /}
+		   #{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'nosologyanalysis.delete'}" onclick="return confirm('&{'nosologyanalysis.delete'}')"/>
+        </p>
+    #{/form}
+
+</div>

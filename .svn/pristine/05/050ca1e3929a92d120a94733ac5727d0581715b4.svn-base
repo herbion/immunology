@@ -1,0 +1,99 @@
+#{extends 'main.html' /}
+#{set title:messages.get('survey.new') /}
+
+<style>
+#hidden-survey-id {
+	display: none;
+}
+
+#hidden-med-card-id {
+	display: none;
+}
+
+#selectSyndromeBlock {
+	float: right;
+    margin: 0px;
+}
+
+.syndromeLabel {
+	float: right;
+	width: 220px;
+	height: 25px;
+	font-size: 12px;
+}
+</style>
+
+<script>
+$(function() {
+	$("#tabs").tabs();
+
+	$(".radio").each(function() {
+		$(this).buttonset();
+	});
+
+	$("input[name='synd_radio']").change(function () {
+		var selectAction = #{jsAction @reloadComplaints(':syndromes') /};
+	    $('#tabs-1').load(selectAction({syndromes: $(this).val()}));
+	    
+	    selectAction = #{jsAction @reloadAnalysis(':syndromes') /};
+	    $('#tabs-2').load(selectAction({syndromes: $(this).val()}));
+	    
+	    selectAction = #{jsAction @reloadClinicalManifestations(':syndromes') /};
+	    $('#tabs-3').load(selectAction({syndromes: $(this).val()}));
+
+	    selectAction = #{jsAction @reloadTreatments(':syndromes') /};
+	    $('#tabs-4').load(selectAction({syndromes: $(this).val()}));
+
+	    selectAction = #{jsAction @reloadNosology(':syndromes') /};
+	    $('#tabs-5').load(selectAction({syndromes: $(this).val()}));
+	});
+
+	var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');
+	var patientAnchor = $('<a></a>').text("${medicineCard.patient.lastName}" + " " +
+										  "${medicineCard.patient.firstName}" + " " +
+										  "${medicineCard.patient.middleName}")
+									.attr('href', '@{PatientView.show(medicineCard.patient.patientId)}');
+	$('#breadcrumb').append(signRightNav.clone()).append(patientAnchor);
+});
+</script>
+
+<div id="surveyEditTitleContainer">
+	<h2 class="listTitle">&{'survey.new'}</h2>
+	<div id="selectSyndromeBlock">
+		#{list items:syndromes, as:'synd'}
+   			<div class="radio">
+		        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
+		        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
+			</div>
+		#{/list}
+	</div>
+</div>
+
+<div id="survey-add-tabs">
+	<input id="hidden-survey-id" type="text" value="-1">
+	<input id="hidden-med-card-id" type="text" value="${medicineCard.medicineCardId}">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">&{'complaints'}</a></li>
+			<li><a href="#tabs-2">&{'survey.laboratory'}</a></li>
+			<li><a href="#tabs-3">&{'survey.clinic'}</a></li>
+			<li><a href="#tabs-4">&{'survey.treatment'}</a></li>
+			<li><a href="#tabs-5">&{'survey.nosology'}</a></li>
+		</ul>
+		<div id="tabs-1">
+			#{include 'tags/survey/complaintsAddTab.html' /}
+		</div>
+		<div id="tabs-2">
+			#{include 'tags/survey/analysesAddTab.html' /}
+		</div>
+		<div id="tabs-3">
+			#{include 'tags/survey/clinicsAddTab.html' /}
+		</div>
+		<div id="tabs-4">
+			#{include 'tags/survey/treatmentsAddTab.html' /}
+		</div>
+		<div id="tabs-5">
+			#{include 'tags/survey/nosologyAddTab.html' /}
+		</div>
+	</div>
+</div>

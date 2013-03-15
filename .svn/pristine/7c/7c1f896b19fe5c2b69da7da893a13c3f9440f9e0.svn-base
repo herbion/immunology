@@ -1,0 +1,124 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('syndrome.edit.title') /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'syndrome.edit.title'}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+        #{crud.form fields:['name', 'complaintTypes', 'analyzes', 'clinicalManifestations', 'anamnezes', 'nosologyTypes']}
+        	#{crud.custom 'complaintTypes'}
+	    		<label for="${complaintTypes}"><a href="@{ComplaintTypes.list()}" class="nonUnderlined">&{'objects.complainttypes'}</a></label>
+	    		%{complaintTypes = models.ComplaintType.find("bySyndrome", object).fetch()}%
+	    		#{if complaintTypes != null && !complaintTypes.isEmpty() }
+    			<div class="list">
+					#{list items:complaintTypes, as:'complaintType'}
+						<li>
+							<span id="${complaintType.complaintTypeId}" class="hiddenLinks">
+								@{ComplaintTypes.show(complaintType.complaintTypeId)}
+					        </span>
+				        	${complaintType.complaintTypeName}
+				        </li>
+				    #{/list}
+			    </div>
+	    		#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'analyzes'}
+	    		<label for="${analyzes}"><a href="@{Analysiss.list()}" class="nonUnderlined">&{'objects.analysiss'}</a></label>
+	    		%{analyses = models.Analysis.find("bySyndrome", object).fetch()}%
+	    		#{if analyses != null && !analyses.isEmpty()}
+    			<div class="list">
+					#{list items:analyses, as:'analysis'}
+			           	<li>
+				           	<span id="${analysis.analysisId}" class="hiddenLinks">
+								@{Analysiss.show(analysis.analysisId)}
+				        	</span>
+				        	${analysis.analysisName}
+				        </li>
+				    #{/list}
+				</div>
+	    		#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'clinicalManifestations'}
+	    		<label for="${clinicalManifestations}"><a href="@{ClinicalManifestations.list()}" class="nonUnderlined">&{'objects.clinicalmanifestations'}</a></label>
+	    		%{manifestations = models.ClinicalManifestation.find("bySyndrome", object).fetch()}%
+	    		#{if manifestations != null && !manifestations.isEmpty()}
+    			<div class="list">
+					#{list items:manifestations, as:'manifestation'}
+			           	<li>
+				           	<span id="${manifestation.id}" class="hiddenLinks">
+								@{ClinicalManifestations.show(manifestation.id)}
+				        	</span>
+				        	${manifestation.name}
+				        </li>
+				    #{/list}
+				</div>
+	    		#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'anamnezes'}
+	    		<label for="anamnezes"><a href="@{Anamnesiss.list()}" class="nonUnderlined">&{'objects.anamnesiss'}</a></label>
+	    		%{anamneses = models.Anamnesis.find("bySyndrome", object).fetch()}%
+	    		#{if anamneses != null && !anamneses.isEmpty()}
+	    		<div class="list">
+					#{list items:anamneses, as:'anamnesis'}
+			           	<li>
+			           		<span id="${anamnesis.anamnesisId}" class="hiddenLinks">
+								@{Anamnesiss.show(anamnesis.anamnesisId)}
+			        		</span>
+			        		${anamnesis.anamnesisName}
+		        		</li>
+				    #{/list}
+				</div>
+				#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'nosologyTypes'}
+	    		<label for="nosologyTypes"><a href="@{NosologyTypes.list()}" class="nonUnderlined">&{'objects.nosologytypes'}</a></label>
+	    		%{nosologyTypes = models.NosologyType.find("bySyndrome", object).fetch()}%
+	    		#{if nosologyTypes != null && !nosologyTypes.isEmpty()}
+	    		<div class="list">
+					#{list items:nosologyTypes, as:'nosologyType'}
+			           	<li>
+			           		<span id="${nosologyType.nosologyTypeId}" class="hiddenLinks">
+								@{NosologyTypes.show(nosologyType.nosologyTypeId)}
+			        		</span>
+			        		${nosologyType.nosologyTypeName}
+		        		</li>
+				    #{/list}
+				</div>
+				#{/if}
+	    		#{else}
+					&{'crud.list.empty'}
+				#{/else}
+        	#{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+	
+    #{form @delete(object._key())}
+        <p class="crudDelete">
+            <input type="submit" value="&{'syndrome.delete'}" onclick="return confirm('&{'syndrome.delete'}')"/>
+        </p>
+    #{/form}
+
+</div>

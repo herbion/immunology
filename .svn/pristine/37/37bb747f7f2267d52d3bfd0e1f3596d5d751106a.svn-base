@@ -1,0 +1,106 @@
+#{extends 'main.html' /}
+#{set title:messages.get('survey.show') /}
+
+<style>
+#edit-button-div {
+	display: none;
+}
+
+#selectSyndromeBlock {
+	float: right;
+    margin: 0px;
+}
+
+.syndromeLabel {
+	float: right;
+	width: 220px;
+	height: 25px;
+	font-size: 12px;
+}
+</style>
+
+<script>
+$(function() {
+	$("#tabs").tabs();
+
+	$(".radio").each(function() {
+		$(this).buttonset();
+	});
+
+	$("input[name='synd_radio']").change(function() {
+
+		if($(this).val() != 0){
+			$("#edit-button-div").show();
+		} else {
+			$("#edit-button-div").hide();
+		}
+		
+		var selectAction = #{jsAction @showComplaints(':syndromeId', ':surveyId') /};
+	    $('#tabs-1').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @showAnalysis(':syndromeId', ':surveyId') /};
+	    $('#tabs-2').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @showClinicalManifestations(':syndromeId', ':surveyId') /};
+	    $('#tabs-3').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @showTreatments(':syndromeId', ':surveyId') /};
+	    $('#tabs-4').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+
+	    var selectAction = #{jsAction @showNosology(':syndromeId', ':surveyId') /};
+	    $('#tabs-5').load(selectAction({syndromeId: $(this).val(), surveyId: ${survey.surveyId}}));
+	});
+	
+	var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');
+	var patientAnchor = $('<a></a>').text("${survey.medicineCard.patient.lastName}" + " " +
+										  "${survey.medicineCard.patient.firstName}" + " " +
+										  "${survey.medicineCard.patient.middleName}")
+									.attr('href', '@{PatientView.show(survey.medicineCard.patient.patientId)}');
+	var surveyAnchor = $('<a></a>').text("&{'surveys'}").attr('href', '@{SurveyView.show(survey.surveyId)}');
+	$('#breadcrumb').append(signRightNav.clone()).append(patientAnchor).append(signRightNav).append(surveyAnchor);
+});	
+</script>
+
+
+<div id="surveyEditTitleContainer">
+	<h2 id="surveyShowTitleContainer" class="listTitle">&{'survey.show'}</h2>
+	<div id="selectSyndromeBlock">
+		#{list items:syndromes, as:'synd'}
+   			<div class="radio">
+		        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
+		        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
+			</div>
+		#{/list}
+	</div>
+</div>
+
+<div class="syndromeTitleContainer">
+	<a class="editButton" href="@{surveyView.edit(survey.surveyId)}">&{'title.edit'}</a>
+</div>
+
+<div id="survey-show-tabs">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">&{'complaints'}</a></li>
+			<li><a href="#tabs-2">&{'survey.laboratory'}</a></li>
+			<li><a href="#tabs-3">&{'survey.clinic'}</a></li>
+			<li><a href="#tabs-4">&{'survey.treatment'}</a></li>
+			<li><a href="#tabs-5">&{'survey.nosology'}</a></li>
+		</ul>
+		<div id="tabs-1">
+			#{include 'tags/survey/complaintsShowTab.html' /}
+		</div>
+		<div id="tabs-2">
+			#{include 'tags/survey/analysesShowTab.html' /}
+		</div>
+		<div id="tabs-3">
+			#{include 'tags/survey/clinicsShowTab.html' /}
+		</div>
+		<div id="tabs-4">
+			#{include 'tags/survey/treatmentsShowTab.html' /}
+		</div>
+		<div id="tabs-5">
+			#{include 'tags/survey/nosologyShowTab.html' /}
+		</div>
+	</div>
+</div>

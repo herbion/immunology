@@ -1,0 +1,32 @@
+#{extends 'jqueryui/layout.html'/}
+#{set title:'Tabs'/}
+
+<h2>Tabs - lazy loading</h2>
+
+<p>Use <a href="http://jqueryui.com/demos/tabs/">tabs</a> to define content sections and lazily load the content when the
+tab is selected, in the same way as for the accordion.</p>
+
+
+<h3>Demo</h3>
+
+<div class="demo">
+#{include 'jqueryui/Tabs/tabs.html'/}
+</div>
+
+
+<h3>Client</h3>
+
+<p>The widget is based on a a list of links to the Ajax content that will populate them.</p>
+
+<pre class="prettyprint"><code>#{includeVerbatim 'jqueryui/Tabs/tabs.html'/}</code></pre>
+
+<p>The <code>tabs.js</code> JavaScript applies the jQuery UI tabs plug-in to a list of links to the content. Note that this
+JavaScript has very little to do, because the tabs plug-in supports Ajax loading out of the box.</p>
+
+<pre class="prettyprint"><code>#{includeVerbatim '/public/javascripts/tabs.js'/}</code></pre>
+
+
+<h3>Server</h3>
+
+<p>The tabs use the same <code>jqueryui.Accordion.region(String header)</code> action
+and <code>jqueryui/Accordion/region.html</code> template as the <a href="@{jqueryui.Accordion.index()}">accordion</a>.</p>

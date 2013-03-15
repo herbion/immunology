@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>#{get 'title' /}</title>
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/admin.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery-ui-1.8.20.custom.css'}">
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery-overrides.css'}">
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery.dataTables.css'}">
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery.dataTables_themeroller.css'}">
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jqPlot/jquery.jqplot.css'}">
+	<script type="text/javascript" src="@{'/public/jquery/jquery-1.7.2.min.js'}"></script>
+	<script type="text/javascript" src="@{'/public/jquery/jquery.dataTables.js'}"></script>
+	<script type="text/javascript" src="/public/jquery/jquery-ui-1.8.20.custom.min.js"></script>
+	<script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-uk.js"></script>
+	<script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-ru.js"></script>
+	<script type="text/javascript" src="/public/jquery/noty/jquery.noty.js"></script>
+	<script type="text/javascript" src="/public/jquery/noty/layouts/topRight.js"></script>
+	<script type="text/javascript" src="/public/jquery/noty/themes/default.js"></script>
+	
+	<script type="text/javascript" src="/public/jquery/jqPlot/jquery.jqplot.min.js"></script>
+	<script type="text/javascript" src="/public/jquery/jqPlot/excanvas.js"></script>
+	<script type="text/javascript" src="/public/jquery/jqPlot/plugins/jqplot.highlighter.min.js"></script>
+	<script type="text/javascript" src="/public/jquery/jqPlot/plugins/jqplot.cursor.min.js"></script>
+	<script type="text/javascript" src="/public/jquery/jqPlot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+	
+	<script type="text/javascript" src="/public/jquery/textarea_resizable/resizable-textArea.js"></script>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+	#{get 'moreStyles' /}
+	#{get 'moreScripts' /}
+</head>
+<body id="immunology">
+	#{header /}
+	#{breadcrumb user: user/}
+	
+	<div id="content">
+		#{doLayout /}
+	</div>
+</body>
+</html>

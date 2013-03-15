@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>immunology</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.playframework.playclipse.playNature</nature>
+	</natures>
+	<linkedResources><link><name>secure</name><type>2</type><location>d:/JAVA/play-1.2.4/modules/secure/app</location></link>
+<link><name>conf/secure</name><type>2</type><location>d:/JAVA/play-1.2.4/modules/secure/conf</location></link>
+<link><name>public/secure</name><type>2</type><location>d:/JAVA/play-1.2.4/modules/secure/public</location></link>
+<link><name>jqueryui-1.0</name><type>2</type><location>D:/workspace/immunology-play/modules/jqueryui-1.0/app</location></link>
+<link><name>conf/jqueryui-1.0</name><type>2</type><location>D:/workspace/immunology-play/modules/jqueryui-1.0/conf</location></link>
+<link><name>public/jqueryui-1.0</name><type>2</type><location>D:/workspace/immunology-play/modules/jqueryui-1.0/public</location></link>
+<link><name>crud</name><type>2</type><location>d:/JAVA/play-1.2.4/modules/crud/app</location></link>
+<link><name>conf/crud</name><type>2</type><location>d:/JAVA/play-1.2.4/modules/crud/conf</location></link>
+<link><name>public/crud</name><type>2</type><location>d:/JAVA/play-1.2.4/modules/crud/public</location></link>
+</linkedResources>
+</projectDescription>

@@ -1,0 +1,46 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.medicinecardnosologys') /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'objects.medicinecardnosologys'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['description', 'beginDate', 'endDate' , 'active', 'nosology'] }
+           #{crud.custom 'description'}
+           	  <span class="hiddenLinks">@{MedicineCardNosologys.show(object.medicineCardNosologyId)}</span>
+		      ${object.description}
+		   #{/crud.custom}
+		   #{crud.custom 'beginDate'}
+           	  <span class="hiddenLinks">@{MedicineCardNosologys.show(object.medicineCardNosologyId)}</span>
+		      ${object.beginDate.format()}
+		   #{/crud.custom}
+		   #{crud.custom 'endDate'}
+           	  <span class="hiddenLinks">@{MedicineCardNosologys.show(object.medicineCardNosologyId)}</span>
+		      ${object.endDate.format()}
+		   #{/crud.custom}
+		   #{crud.custom 'active'}
+           	  <span class="hiddenLinks">@{MedicineCardNosologys.show(object.medicineCardNosologyId)}</span>
+		      ${object.active}
+		   #{/crud.custom}
+		   #{crud.custom 'nosology'}
+           	  <span class="hiddenLinks">@{Nosologys.show(object.nosology.nosologyId)}</span>
+		      ${object.nosology.nosologyName}
+		   #{/crud.custom}
+		#{/ crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        &{'total', models.MedicineCardNosology.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'medicinecardnosology.add'}</a>
+    </p>
+
+</div>

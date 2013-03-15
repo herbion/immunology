@@ -1,0 +1,199 @@
+<style>
+.analysis {
+	display: table;
+    position: relative;
+    width: 100%;
+    margin: 0px 0px 5px 0px;
+    background-color: #E1EEF4;
+}
+
+.analysisName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.analysis-norm-id {
+	visibility: hidden; 
+	width: 0px;
+}
+
+.analysisNormsSelect {
+	width: 250px;
+}
+
+.analysisDescription {
+    color: #00557F;
+    text-align: center;
+    width: 60%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.analysis-description {
+	border-width: 1px;
+    float: right;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+    margin-right: 40px;
+    padding: 1px;
+    width: 200px;
+}
+
+.analysis-norm-checked {
+	visibility: hidden; 
+	width: 0px;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+	$(".analysis-checkbox").click(function(){
+		setDisabled($(this).next(".analysisDescription").find(".analysisNormsSelect"));
+		setDisabled($(this).next(".analysisDescription").find(".analysis-description"));
+	});
+
+	var isChecked = null;
+	$(".analysis").each(function() {
+		isChecked =  $(this).children(".analysis-norm-checked").val();
+		if(isChecked == "true"){
+			$(this).children(".analysis-checkbox").attr("checked", "checked");
+			setEnabled($(this).children(".analysisDescription").find(".analysisNormsSelect"));
+			setEnabled($(this).children(".analysisDescription").find(".analysis-description"));
+		}
+		var analysesNormId = $(this).find(".analysis-norm-id").val();
+		$(this).find("select option[value=" + analysesNormId + "]").attr("selected", "selected");
+	});
+});
+
+$(".analysis-checkbox").click(function(){
+	if($(this).is(":checked")){
+		setEnabled($(this).next(".analysisDescription").find(".analysisNormsSelect"));
+		setEnabled($(this).next(".analysisDescription").find(".analysis-description"));
+	} else{
+		setDisabled($(this).next(".analysisDescription").find(".analysisNormsSelect"));
+		setDisabled($(this).next(".analysisDescription").find(".analysis-description"));
+	}
+});
+
+var setEnabled = function (element) {
+	$(element).removeAttr('disabled');
+	$(element).closest('.analysis').find('.analysisName').css('background', '#FF8732');
+}
+
+var setDisabled = function (element) {
+	$(element).attr('disabled', 'disabled');
+	$(element).closest('.analysis').find('.analysisName').css('background', '#2191C0');
+}
+
+var updateAnalyses = function () {
+	var id = null;
+	var isChecked = null;
+	var description = null;
+	var jsonObject = "";
+	var surveyId = $("#hidden-survey-id").val();
+
+	jsonObject = jsonObject + "{'surveyId':" + surveyId + ",";
+	jsonObject = jsonObject + "'analysesNorms':[";
+
+	$(".analysis-checkbox").each(function() {
+		isChecked = $(this).is(":checked");
+		id = $(this).next(".analysisDescription").find(".analysisNormsSelect option:selected").val();
+		if(id == "" || id == undefined) {
+			id = $(this).next(".analysisDescription").find(".analysis-description").attr("name");
+		}
+		description = $(this).next(".analysisDescription").find(".analysis-description").val();
+		if(description != "" && description != undefined) {
+			description = "'" + description + "'";
+		}else{
+			description = null;
+		}
+		jsonObject = jsonObject + "{'id':" + id;
+		jsonObject = jsonObject + ",'isChecked': " + isChecked;
+		jsonObject = jsonObject + ",'description': " + description + "},";
+	});
+	
+	jsonObject = jsonObject.substring(0, jsonObject.length - 1);
+	jsonObject = jsonObject + "]}";
+
+	console.log(jsonObject);
+
+	$.ajax({
+		type : "POST",
+		url : "/surveyView/updateAnalyses",
+		data : jsonObject,
+		dataType : "json",
+		contentType : "application/json",
+		success : function(surveyId) {
+			noty({
+				text: "&{'laboratory.save.success'}",
+				layout: "topRight",
+				type: "success"
+			});
+		},
+		error : function(e) {
+			noty({
+				text: "&{'laboratory.save.error'}",
+				layout: "topRight",
+				type: "error"
+			});
+		}
+	});
+}
+</script>
+
+<div id="analyses-info">
+	#{if surveyAnalyses != null && !surveyAnalyses.isEmpty()}
+		#{list items:surveyAnalyses, as:'surveyAnalysis'}
+			<div class="analysis">
+				<div class="analysisName">${surveyAnalysis.analysisNorm.analysis.analysisName}</div>
+				<input class="analysis-norm-checked" type="text" value="${surveyAnalysis.isChecked}" size="3"/>
+				<input class="analysis-checkbox" type="checkbox">
+				<div class="analysisDescription">
+					<input class="analysis-norm-id" type="text" value="${surveyAnalysis.analysisNorm.analysisNormId}" size="3"/>
+					#{if surveyAnalysis.analysisNorm.analysis.analysisType.name() == 'DROPDOWN'}
+			   			#{select 'analysisNorms', class:"analysisNormsSelect"}
+							#{list items:surveyAnalysis.analysisNorm.analysis.analysisNorms, as:'analysisNorm'}
+								#{option analysisNorm.analysisNormId}
+									${analysisNorm.description}
+									#{if analysisNorm.minValue == null && analysisNorm.maxValue != null}
+										&{'<'}
+										${analysisNorm.maxValue}
+									#{/if}
+									#{elseif analysisNorm.minValue != null && analysisNorm.maxValue == null}
+										&{'>'}
+										${analysisNorm.minValue}
+									#{/elseif}
+									#{elseif analysisNorm.minValue != null && analysisNorm.maxValue != null}
+										${analysisNorm.minValue}
+										&{'-'}
+										${analysisNorm.maxValue}
+									#{/elseif}
+									${analysisNorm.unit}
+								#{/option}
+			    			#{/list}
+						#{/select}
+						<input class="analysis-description" type="text" value="${surveyAnalysis.description}" disabled="disabled" name="">
+					#{/if}
+					#{elseif surveyAnalysis.analysisNorm.analysis.analysisType.name() == 'DESCRIPTION'}
+   						<input class="analysis-description" type="text" value="${surveyAnalysis.description}" disabled="disabled" name="${surveyAnalysis.analysisNorm.analysisNormId}">
+   					#{/elseif}
+				</div>
+			</div>
+		#{/list}
+		<div class="editButtonDiv">
+			<input type="submit" class="editButton" onclick="updateAnalyses()" id="editButton" value="&{'save'}">
+		</div>
+	#{/if}
+</div>

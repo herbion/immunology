@@ -1,0 +1,38 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.nosologyclinicalmanifestations') /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'objects.nosologyclinicalmanifestations'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['clinicalManifestationId', 'multyplier', 'nosology']}
+        	#{crud.custom 'clinicalManifestationId'}
+           		<span class="hiddenLinks">@{NosologyClinicalManifestations.show(object.Id)}</span>
+	    		${object.clinicalManifestationId}
+		   	#{/crud.custom}
+		   	#{crud.custom 'multyplier'}
+           		<span class="hiddenLinks">@{NosologyClinicalManifestations.show(object.Id)}</span>
+	    		${object.multyplier}
+		   	#{/crud.custom}
+		  	 #{crud.custom 'nosology'}
+           		<span class="hiddenLinks">@{NosologyClinicalManifestations.show(object.nosology.nosologyId)}</span>
+	    		${object.nosology.nosologyName}
+		   	#{/crud.custom}
+        #{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        &{'total', models.NosologyClinicalManifestation.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'nosologyclinicalmanifestation.add'}</a>
+    </p>
+
+</div>

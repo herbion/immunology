@@ -1,0 +1,30 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.insertions') /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'objects.insertions'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['insertionName']}
+        	#{crud.custom 'insertionName'}
+           	  	<span class="hiddenLinks">@{Insertions.show(object.insertionId)}</span>
+		      	${object.insertionName}
+		   	#{/crud.custom}
+        #{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        &{'total', models.Insertion.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'insertion.add'}</a>
+    </p>
+
+</div>

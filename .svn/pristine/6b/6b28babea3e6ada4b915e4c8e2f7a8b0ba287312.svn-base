@@ -1,0 +1,532 @@
+UK locale CRUD messages
+crud.title=Адміністрування
+crud.home=Головна
+crud.blank=Новий
+crud.index.title=Виберіть об'єкт для редагування
+crud.index.objectType=Тип об'єкта
+crud.index.action=
+crud.index.add=Додати
+crud.add=Додати &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d &{%s}
+crud.list.totalSize=%d всього
+crud.list.empty=Список порожній
+crud.pagination.previous=« Попередня
+crud.pagination.next=Наступна »
+crud.pagination.last=Остання »»
+crud.pagination.first=«« Перша
+crud.show.title=Редагування &{%s}
+crud.save=Зберегти
+crud.cancel=Відміна
+crud.saveAndContinue=Зберегти та продовжити редагування
+crud.cancel=Відмінити
+crud.hasErrors=Виправте помилки, будь ласка
+crud.blank.title=Додати &{%s}
+crud.saveAndAddAnother=Зберегти та створити новий
+crud.delete=Видалити &{%s}
+crud.created=Об'єкт успішно створено
+crud.saved=Об'єкт успішно збережено
+crud.deleted=Об'єкт успішно видалено
+crud.delete.error=Неможливо видалити цей об'єкт
+crud.search=Пошук
+crud.none=(Немає)
+crud.selectValue=(Виберіть значення, будь ласка)
+crud.customEditing=Редагування
+
+crud.help.required=Обов'язкове.
+crud.help.minlength=Мінімальна довжина %d.
+crud.help.maxlength=Максимальна довжина %d.
+crud.help.email=Дійсна електронна пошта.
+crud.help.dateformat=ДД-ММ-РРРР формат.
+crud.help.numeric=Числове.
+crud.help.min=Повинне бути більше за %d.
+crud.help.future=В майбутньому.
+crud.help.past=В минулому.
+crud.help.after=Після %s.
+crud.help.before=Перед %s.
+crud.help.range=Між %d та %d
+
+# ================= CRUD Main Page =====================
+objects.complaints=Скарги
+objects.complainttypes=Типи скарг
+objects.medicinecards=Медичні картки
+objects.patients=Пацієнти
+objects.roles=Ролі
+objects.surveys=Обстеження
+objects.surveyanswers=Результати обстеження
+objects.syndromes=Синдроми
+objects.users=Користувачі
+objects.analysiss=Аналізи
+objects.anamnesiss=Анамнез
+objects.analysisnorms=Лабораторні норми
+objects.nosologys=Нозології
+objects.nosologytypes=Типи нозологій
+objects.clinicalmanifestations= Клінічні прояви
+objects.clinicalmanifestationnorms= Норми клінічних проявів
+objects.surveyanalysiss= Аналізи огляду
+objects.surveyclinicalmanifestations= Огляд клінічних проявів
+objects.medicinecardanamnesiss= Анамнез в медичній карті
+objects.insertions=Метод введення
+objects.medications=Типи медичних засобів
+objects.medicationdetails=Медичні засоби
+objects.surveytreatments=Лікування обстеження
+objects.treatmentgroups=Групи медичних засобів
+objects.treatmenttypes=Типи лікування
+objects.medicinecardanamnesisdiseases=Анамнестичні захворювання в медичній карті
+objects.medicinecardnosologys=Нозології в медичній карті
+objects.analysissubtypes=Підтипи аналізу
+objects.analysisdetails=Деталі аналізу
+objects.allergens=Алергени
+objects.clinicalmanifestationcomplaints=Скарги клінічних проявів
+objects.anamnesisdetails=Деталі анамнезу
+objects.anamnesisdetailvalues=Значення деталей анамнезу
+objects.anamnesisdiseases=Анамнестичні захворювання
+objects.anamnesisdiseasedetails=Деталі анамнестичних захворювань
+objects.nosologyanalysiss=Аналізи нозологій
+objects.nosologyclinicalmanifestations=Клінічні прояви нозологій
+objects.nosologycomplainttypes=Типи скарг нозологій
+
+title.edit=Редагувати
+total=Всього: &{%s}
+
+save=Зберегти
+create=Створити
+number=№
+difficultyDegree=Ступінь важкості
+insufficiencyDegree=Ступінь недостатності
+
+# ================= Patient =====================
+patients=Пацієнти
+firstName=Ім'я
+lastName=Прізвище
+middleName=По батькові
+gender=Стать
+gender.male=Чоловіча
+gender.female=Жіноча
+birthday=Дата народження
+country=Країна
+region=Область
+district=Район
+city=Місто/Село
+street=Вулиця
+house=Будинок
+flat=Квартира
+medicineCard=Медична картка
+patient.add=Додати пацієнта
+patient.delete=Видалити пацієнта
+patient.edit.title=Редагування пацієнта
+patient=Пацієнт
+patient.abbreviation=ПІБ
+
+# =================== User =======================
+login=Логін
+password=Пароль
+post=Посада
+roles=Ролі
+users=Користувачі
+user=Користувач
+user.add=Додати користувача
+user.edit.title=Редагування користувача
+user.delete=Видалити користувача
+user.saved=Користувача успішно збережено
+
+# =================== Role =======================
+roleName=Назва ролі
+roles=Ролі
+roles.add=Додати роль
+roles.edit.title=Редагування ролі
+roles.delete=Видалити роль
+roles.emptyUsersList=Користувачів немає
+
+# =================== Syndrome ===================
+name=Назва
+syndromes=Синдроми
+syndrome.add=Додати синдром
+syndrome.edit.title=Редагування синдрому
+complaintTypes=Типи скарг
+syndrome.delete=Видалити синдром
+
+syndrome.select=Виберіть синдром:
+syndrome.allergic=Алергічний
+syndrome.autoimmune=Автоімунний
+syndrome.immunodeficiencyInfective=Імунодефіцит-інфекційний
+syndrome=синдром
+
+# ================ Complaints ================
+complaints=Скарги
+complaints.add=Додати скаргу
+complaints.edit.title=Редагування скарги
+complaint.delete=Видалити скаргу
+
+# ================ Complaint Type ================
+multyplier=Множник
+complaintTypeName=Тип скарги
+syndrome=Синдром
+complaintTypes=Типи скарг
+complaintTypes.add=Додати тип скарги
+complaintTypes.edit=Редагування типу скарги
+complaintTypes.delete=Видалити тип скарги
+
+# ================== Complaint ===================
+complaintName=Назва скарги
+complaintType=Тип скарги
+
+# ================ Medicine Card==================
+creationDate=Дата створення
+otherInfo=Додаткова інформація
+medicineCard.edit.title=Редагування медичної картки
+medicineCards=Медичні картки
+surveys=Обстеження
+medicineCard.delete=Видалити медичну картку
+no.surveys=Обстежень немає
+medicineCardAnamneses=Анамнези
+medicineCardAnamnesisDiseases=Анамнестичні захворювання
+medicineCardNosologies=Нозології
+
+# ==================== Survey ====================
+survey.add=Додати обстеження
+surveyDate=Дата обстеження
+difficultyDegree=Ступінь важкості
+insufficiencyDegree=Ступінь недостатності
+doctor=Лікар
+survey.edit.title=Редагування обстеження
+survey.delete=Видалити обстеження
+surveyAnswers=Результати обстеження
+alergeticDifficultyDegree=Алергічний ступінь важкості
+alergeticInsufficiencyDegree=Алергічний ступінь недостатності
+autoimmunoDifficultyDegree=Автоімунний ступінь важкості
+autoimmunoInsufficiencyDegree=Автоімунний ступінь недостатності
+immunodefDifficultyDegree=Імунодефіцитний ступінь важкості
+immunodefInsufficiencyDegree=Імунодефіцитний ступінь недостатності
+surveyAnswers=Результати обстеження
+surveyAnalyses=Результати аналізів обстеження
+surveyClinicalManifestations=Клінічні прояви обстеження
+surveyTreatments=Лікування
+
+survey.new=Нове обстеження
+survey.laboratory=Лабораторні дані
+survey.clinic=Клінічні прояви
+survey.list.isEmpty=Обстежень немає
+survey.show=Перегляд обстеження
+survey.deleted=Обстеження успішно видалено
+survey.treatment=Лікування
+survey.nosology=Нозологія
+
+# =================== Survey Answers ==============
+answers.add=Додати результати обстеження
+answers.edit=Редагування результату обстеження
+answers.delete=Видалити результат обстеження
+answerDescription=Опис
+answerValue=Значення
+complaintDetails=Деталі скагри
+complaint=Скарга
+survey=Обстеження
+
+
+validation.required=Обов'язкове.
+validation.numeric=Числове.
+logout=Вихід
+delete=Видалити
+edit=Редагувати
+view=Переглянути
+access.denied=У вас немає прав для перегляду цієї сторінки
+
+# ==================== Allergen ====================
+allergenName=Назва алергена
+
+allergen.add=Додати алерген
+allergen.edit=Редагування алергена
+allergen.delete=Видалити алерген
+
+# ==================== Analysis ====================
+analysisName=Назва анлізу
+analysisType=Тип аналізу
+
+analysis.add=Додати аналіз
+analysis.edit=Редагування аналізу
+analysis.delete=Видалити аналіз
+
+# ================= Analysis Norms =================
+minValue=Мінімальне значення
+maxValue=Максимальне значення
+description=Опис
+updateDate=Останнє оновлення
+value=Значення
+unit=Одиниця
+analysis=Аналіз
+
+analysisnorm.add=Додати лабораторну норму
+analysisnorm.edit=Редагування лабораторної норми
+analysisnorm.delete=Видалити лабораторну норму
+
+# ================= Analysis Subtypes =================
+analysisSubTypeName=Назва підтипу аналізу
+
+analysissubtype.add=Додати підтип аналізу
+analysissubtype.edit=Редагування підтипу аналізу
+analysissubtype.delete=Видалити підтип аналізу
+
+# ================= Analysis Details =================
+analysisDetailName=Назва деталі аналізу
+analysisSubType=Підтип аналізу
+
+analysisdetail.add=Додати деталь аналізу
+analysisdetail.edit=Редагування деталі аналізу
+analysisdetail.delete=Видалити деталь аналізу
+
+# ==================== Nosology ====================
+nosologyName=Назва нозології
+nosologyType=Тип нозології
+
+nosology.add=Додати нозологію
+nosology.edit=Редагування нозології
+nosology.delete=Видалити нозологію
+
+# ================= Nosology Types =================
+nosologyTypeName=Назва типу нозології
+
+nosologyType.add=Додати тип нозології
+nosologyType.edit=Редагування типу нозології
+nosologyType.delete=Видалити тип нозології
+
+# ============ Nosology Complaint Type =============
+complaintTypeId=Тип скарг
+
+nosologycomplainttype.add=Додати тип скарг нозології
+nosologycomplainttype.edit=Редагування типу скарг нозології
+nosologycomplainttype.delete=Видалити тип скарг нозології
+
+# ========= Nosology Clinical Manifestation ========
+clinicalManifestationId=Клінічний прояв
+
+nosologyclinicalmanifestation.add=Додати клінічний прояв нозології
+nosologyclinicalmanifestation.edit=Редагування клінічного прояву нозології
+nosologyclinicalmanifestation.delete=Видалити клінічний прояв нозології
+
+# =============== Nosology Analysis ================
+analysisId=Аналіз
+
+nosologyanalysis.add=Додати аналіз нозології
+nosologyanalysis.edit=Редагування аналізу нозології
+nosologyanalysis.delete=Видалити аналіз нозології
+
+# ==================== Insertions ====================
+insertionName=Метод введення
+medicationDetails=Медичні засоби
+
+insertion.add=Додати метод введення
+insertion.edit=Редагування методу введення
+insertion.delete=Видалити метод введення
+
+# =================== Medications ====================
+medicationName=Назва типу медичних засобів
+treatmentType=Тип лікування
+
+medication.add=Додати тип медичних засобів
+medication.edit=Редагування типу медичних засобів
+medication.delete=Видалити тип медичних засобів
+
+# ================ Medication Details ================
+medicationDetailName=Назва медичного засобу
+medication=Тип медичних засобів
+insertions=Методи введення
+
+medicationDetail.add=Додати медичний засіб
+medicationDetail.edit=Редагування медичного засобу
+medicationDetail.delete=Видалити медичний засіб
+
+# ================= Survey Treatment =================
+treatmentDescription=Опис лікування
+dose=Доза
+multiplicity=Кратність
+medicationDetail=Медичний засіб
+treatmentGroup=Група медичних засобів
+insertion=Метод введення
+
+surveyTreatment.add=Додати лікування 
+surveyTreatment.edit=Редагування лікування
+surveyTreatment.delete=Видалити лікування
+
+# ================== Treatment Group =================
+treatmentGroupName=Назва групи медичних засобів
+date=Дата
+
+treatmentGroup.add=Додати групу медичних засобів
+treatmentGroup.edit=Редагування групи медичних засобів
+treatmentGroup.delete=Видалити групу медичних засобів
+
+# ================== Treatment Type ==================
+medications=Група медичних засобів
+treatmentTypeName=Назва типу лікування
+hasTherapyType=Має тип лікування
+
+treatmentType.add=Додати тип лікування
+treatmentType.edit=Редагування типу лікування
+treatmentType.delete=Видалити тип лікування
+
+# ==================== Login Page ====================
+secure.username=Логін:
+secure.password=Пароль:
+secure.remember=Запам'ятати мене
+secure.signin=Вхід
+secure.error=Помилка, невідомий логін або пароль.
+
+# ==================== PatientView Page ====================
+patient.all=Всі пацієнти
+patient.userOnly=Мої пацієнти
+patient.list.isEmpty=Немає пацієнтів
+patient.saved=Пацієнт успішно збережений
+patient.deleted=Пацієнт успішно видалений
+
+anamnesis.save.success=Анамнестичні дані успішно збережено
+anamnesis.save.error=Помилка при збереженні анамнестичних даних
+
+# ==================== Anamnesis ====================
+anamnesisName=Назва анамнезу
+anamnesisType=Тип анамнезу
+anamnesisDetails=Деталі анамнезу
+
+anamnesis.add=Додати анамнез
+anamnesis.edit=Редагування анамнезу
+anamnesis.delete=Видалити анамнез
+
+anamnesis.data=Анамнестичні дані
+anamnesis.disease=Анамнестичні захворювання
+
+# ================= Anamnesis Detail ================
+anamnesisDetailName=Назва
+type=Тип введення
+anamnesisDetailValues=Значення анамнестичних деталей
+anamnesis=Анамнез
+
+anamnesisdetail.add=Додати анамнестичні деталі
+anamnesisdetail.edit=Редагування анамнестичних деталей
+anamnesisdetail.delete=Видалити анамнестичні деталі
+
+# ============== Anamnesis Detail Value =============
+anamnesisDetailValueName=Назва
+anamnesisDetailValueValue=Значення
+anamnesisDetail=Деталі анамнезу
+
+anamnesisdetailvalue.add=Додати значення деталі анамнезу
+anamnesisdetailvalue.edit=Редагування значення деталі анамнезу
+anamnesisdetailvalue.delete=Видалити значення деталі анамнезу
+
+# ================= Anamnesis Disease ================
+anamnesisDiseaseName=Назва
+anamnesisDiseaseDetails=Деталі анамнестичного захворювання
+
+anamnesisdisease.add=Додати анамнестичне захворювання
+anamnesisdisease.edit=Редагування анамнестичного захворювання
+anamnesisdisease.delete=Видалити анамнестичне захворювання
+
+# ============= Anamnesis Disease Detail =============
+anamnesisDiseaseDetailName=Назва
+anamnesisDiseaseDetailValue=Значення
+anamnesisDisease=Анамнестичне захворювання
+
+anamnesisdiseasedetail.add=Додати деталі анамнестичного захворювання
+anamnesisdiseasedetail.edit=Редагування деталей анамнестичного захворювання
+anamnesisdiseasedetail.delete=Видалити деталі анамнестичного захворювання
+
+# ==================== SurveyView Page ====================
+complaints.save.success=Скарги успішно збережено
+complaints.save.error=Помилка при збереженні скарги
+laboratory.save.success=Лабораторні дані успішно збережено
+laboratory.save.error=Помилка при збереженні лабораторних даних
+clinic.save.success=Клінічні прояви успішно збережено
+clinic.save.error=Помилка при збереженні клінічних проявів
+treatments.save.success=Лікування успішно збережено
+treatments.save.error=Помилка при збереженні лікування
+nosology.save.success=Нозологію успішно збережено
+nosology.save.error=Помилка при збереженні нозології
+
+# ==================== ClinicalManifestation ====================
+clinicalManifestationName=Назва клінічного прояву
+clinicalManifestationType=Тип клінічного прояву
+clinicalManifestationNorms=Норми клінічного прояву
+clinicalManifestationComplaint=Скарга клінічного прояву
+
+clinicalmanifestation.add=Додати клінічний прояв
+clinicalmanifestation.edit=Редагування клінічного прояву
+clinicalmanifestation.delete=Видалити клінічний прояв
+
+# ==================== ClinicalManifestationNorm ====================
+clinicalmanifestationnorm.add=Додати норму для клінічного прояву
+clinicalmanifestationnorm.edit=Редагування норми клінічного прояву
+clinicalmanifestationnorm.delete=Видалити норму клінічного прояву
+
+# ==================== ClinicalManifestationComplaint ====================
+clinicalManifestationComplainName=Назва скарги клінічного прояву
+clinicalManifestations=Клінічні прояви
+
+clinicalmanifestationcomplaint.add=Додати скаргу клінічного прояву
+clinicalmanifestationcomplaint.edit=Редагування скарги клінічного прояву
+clinicalmanifestationcomplaint.delete=Видалити скаргу клінічного прояву
+
+# ==================== SurveyClinicalManifestation ====================
+surveyclinicalmanifestation.add=Додати огляд клінічного прояву
+surveyclinicalmanifestation.edit=Редагування огляду клінічного прояву
+surveyclinicalmanifestation.delete=Видалити огляд клінічного прояву
+
+# ==================== SurveyAnalysis ====================
+surveyanalysis.add=Додати аналізи огляду
+surveyanalysis.edit=Редагування аналізу огляду
+surveyanalysis.delete=Видалити аналіз огляду
+
+# ==================== MedicineCardAnamnesis ====================
+medicinecardanamnesis.add=Додати анамнез до медичної карти
+medicinecardanamnesis.edit=Редагування анамнезу в медичній карті
+medicinecardanamnesis.delete=Видалити анамнез з медичної карти
+
+beginDate=Дата початку
+endDate=Дата закінчення
+firstManifestation=Дата першого прояву
+amount=Кількість
+anamnesisDetailValue=Значення деталі анамнезу
+isChecked=Відмічено
+
+# ================= MedicineCardAnamnesisDisease ================
+medicinecardanamnesisdisease.add=Додати анаменстичне захворювання до медичної карти
+medicinecardanamnesisdisease.edit=Редагування анамнестичного захворювання в медичній карті
+medicinecardanamnesisdisease.delete=Видалити анамнестичне захворювання з медичної карти
+
+anamnesisDisease=Анамнестичне захворювання
+
+# ==================== MedicineCardNosologys ====================
+medicinecardnosology.add=Додати нозологію до медичної карти
+medicinecardnosology.edit=Редагування нозології в медичній карті
+medicinecardnosology.delete=Видалити нозологію з медичної карти
+
+active=Активна
+nosology=Нозологія
+
+# ==================== Treatment ====================
+select.insertion=Виберіть метод введення:
+treatment.multiplicity=Кратність:
+treatment.dose=Доза:
+treatment.description=Назва:
+treatment.insertion=Метод введення:
+
+select.therapy.type=Виберіть тип терапії:
+therapy.type=Тип терапії:
+therapy.type.basic=Основна терапія
+therapy.type.supporting=Підтримуюча терапія
+
+select.allergen=Виберіть алерген:
+treatment.allergen=Алерген:
+
+# ==================== Сharts ====================
+charts=Графіки
+chart.difficultyDegree=Графік ступеня важкості
+chart.insufficiencyDegree=Графік ступеня недостатності
+chart.data.error=Помилка під час завантаження даних!
+chart.date=Дата
+chart.degree=Ступінь
+
+# ==================== Nosology ====================
+select.nosology=Виберіть нозологію:
+
+# ==================== General ====================
+select.syndrome=Виберіть синдром
+delete.confirmation=Ви дійсно хочете видалити цей запис?
