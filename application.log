@@ -460,3 +460,97 @@ Caused by: java.sql.BatchUpdateException: Batch entry 0 insert into survey (aler
 23:05:11 play.Logger INFO : Module secure is available (d:\JAVA\play-1.2.4\modules\secure)
 23:05:13 play.Logger INFO : Precompiling ...
 23:05:34 play.Logger INFO : Done.
+01:37:53 play.Logger ERROR: Can't apply evolution
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "                 
+  
+                                                
+  
+CREATE TABLE ANALYSIS (
+    ANALYSIS_ID BIGINT NOT NULL,
+    NAME VARCHAR(255),
+    TYPE INTEGER,
+    SYNDROME_SYNDROME_ID BIGINT
+) WITHOUT[*] OIDS "; SQL statement:
+--database schema
+--
+-- Structure for table analysis (OID = 29527) : 
+--
+CREATE TABLE analysis (
+    analysis_id bigint NOT NULL,
+    name varchar(255),
+    type integer,
+    syndrome_syndrome_id bigint
+) WITHOUT OIDS [42000-149]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.message.DbException.getSyntaxError(DbException.java:179)
+	at org.h2.command.Parser.getSyntaxError(Parser.java:480)
+	at org.h2.command.Parser.prepareCommand(Parser.java:229)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:165)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:153)
+	at play.db.Evolutions.execute(Evolutions.java:467)
+	at play.db.Evolutions.applyScript(Evolutions.java:257)
+	at play.db.Evolutions.main(Evolutions.java:120)
+01:38:40 play.Logger ERROR: Can't apply evolution
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "                 
+  
+                                                
+  
+CREATE TABLE ANALYSIS (
+    ANALYSIS_ID BIGINT NOT NULL,
+    NAME VARCHAR(255),
+    TYPE INTEGER,
+    SYNDROME_SYNDROME_ID BIGINT
+) WITHOUT[*] OIDS "; SQL statement:
+--database schema
+--
+-- Structure for table analysis (OID = 29527) : 
+--
+CREATE TABLE analysis (
+    analysis_id bigint NOT NULL,
+    name varchar(255),
+    type integer,
+    syndrome_syndrome_id bigint
+) WITHOUT OIDS [42000-149]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.message.DbException.getSyntaxError(DbException.java:179)
+	at org.h2.command.Parser.getSyntaxError(Parser.java:480)
+	at org.h2.command.Parser.prepareCommand(Parser.java:229)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:165)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:153)
+	at play.db.Evolutions.execute(Evolutions.java:467)
+	at play.db.Evolutions.applyScript(Evolutions.java:257)
+	at play.db.Evolutions.main(Evolutions.java:120)
+01:39:02 play.Logger INFO : Starting D:\workspace\immunology-play
+01:39:02 play.Logger INFO : Module crud is available (d:\JAVA\play-1.2.4\modules\crud)
+01:39:02 play.Logger INFO : Module jqueryui is available (D:\workspace\immunology-play\modules\jqueryui-1.0)
+01:39:02 play.Logger INFO : Module secure is available (d:\JAVA\play-1.2.4\modules\secure)
+01:39:02 play.Logger INFO : Precompiling ...
+01:39:19 play.Logger INFO : Connected to jdbc:h2:mem:play;MODE=MYSQL
+01:39:21 play.Logger WARN : 
+01:39:21 play.Logger WARN : Your database is not up to date.
+01:39:21 play.Logger WARN : Use `play evolutions` command to manage database evolutions.
+01:39:21 play.Logger ERROR: 
+
+@6djc67068
+Can't start in PROD mode with errors
+
+Your database needs evolution!
+An SQL script will be run on your database.
+
+play.db.Evolutions$InvalidDatabaseRevision
+	at play.db.Evolutions.checkEvolutionsState(Evolutions.java:336)
+	at play.db.Evolutions.onApplicationStart(Evolutions.java:203)
+	at play.plugins.PluginCollection.onApplicationStart(PluginCollection.java:480)
+	at play.Play.start(Play.java:515)
+	at play.Play.init(Play.java:300)
+	at play.server.Server.main(Server.java:158)
