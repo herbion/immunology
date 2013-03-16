@@ -1,27 +1,7 @@
 #{extends 'main.html' /}
 #{set title:messages.get('patients') /}
 
-<style>
-.surveyAnswerBtn {
-	height: 24px;
-	width: 120px;
-	font-size: 12px;
-	font-family: 'Helvetica', 'Arial', 'Sans';
-	margin: 0px !important;
-}
-
-.surveyAnswerBtn span {
-	height: 24px;
-	margin: 0px;
-	padding: 0px !important;
-	margin-top: 4px;
-}
-
-.patientsSwitcher {
-	float: right;
-	margin: 0px !important;
-}
-</style>
+#{stylesheet 'patients_view.css'/}
 
 <script>
 $(function() {

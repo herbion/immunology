@@ -21,8 +21,6 @@
 *		/surveyView/delete						SurveyView.delete
 *		/surveyView/edit/{id}					SurveyView.edit
 
-
-
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

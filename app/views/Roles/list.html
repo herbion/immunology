@@ -1,25 +1,24 @@
 #{extends 'CRUD/layout.html' /}
 #{set title:messages.get('roles') /}
-
 <script>
-$(document).ready(function() {
-	$("tbody tr").each(function() {
-		$(this).removeClass("odd").removeClass("even");
-		$(this).find("td").each(function() {
-			var link = $(this).find('.hiddenLinks').text();
-			$(this).click(function() {
-				$(location).attr("href", link);
-			});
-			$(this).hover(
-			  function () {
-			    $(this).addClass("hover");
-			  },
-			  function () {
-			    $(this).removeClass("hover");
-			  });
-		});	
-	});
-});
+    $(document).ready(function () {
+        $("tbody tr").each(function () {
+            $(this).removeClass("odd").removeClass("even");
+            $(this).find("td").each(function () {
+                var link = $(this).find('.hiddenLinks').text();
+                $(this).click(function () {
+                    $(location).attr("href", link);
+                });
+                $(this).hover(
+                        function () {
+                            $(this).addClass("hover");
+                        },
+                        function () {
+                            $(this).removeClass("hover");
+                        });
+            });
+        });
+    });
 </script>
 
 <div id="crudList" class="${type.name}">
@@ -27,24 +26,24 @@ $(document).ready(function() {
     <h2 id="crudListTitle">&{'roles'}</h2>
 
     <div id="crudListSearch">
-        #{crud.search /}
+    #{crud.search /}
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['roleName', 'users']}
-	        #{crud.custom 'roleName'}
-	        	<span class="hiddenLinks">@{Roles.show(object.roleId)}</span>
-	           	${object.roleName}
-			#{/crud.custom}
-			#{crud.custom 'users'}
-        		<span class="hiddenLinks">@{Users.list()}</span>
-           		${object.users}
-			#{/crud.custom}
-        #{/crud.table}
+    #{crud.table fields:['roleName', 'users']}
+        #{crud.custom 'roleName'}
+            <span class="hiddenLinks">@{Roles.show(object.roleId)}</span>
+        ${object.roleName}
+        #{/crud.custom}
+        #{crud.custom 'users'}
+            <span class="hiddenLinks">@{Users.list()}</span>
+        ${object.users}
+        #{/crud.custom}
+    #{/crud.table}
     </div>
 
     <div id="crudListPagination">
-        &{'total', models.Role.count()}
+    &{'total', models.Role.count()}
         #{pagination /}
     </div>
 

@@ -10,6 +10,9 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @With(Secure.class)
 public class Application extends Controller {
 
@@ -25,7 +28,7 @@ public class Application extends Controller {
             session.put("isUserRole", user.isUserRole());
         }
 	}
-	
+
     public static void index() {
     	User loggedUser = User.find("byLogin", Security.connected()).first();
     	boolean isAdmin = loggedUser.isAdminRole();

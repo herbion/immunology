@@ -27,7 +27,7 @@ public class UserView extends Controller {
 	public static void showUser() {
 		logger.info("showUser(" + user + ")");
 		user = User.find("byLogin", Security.connected()).first();
-		Map<String, Object> model = new HashMap<String, Object>();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put("user", user);
 		renderTemplate(model);
 	}
