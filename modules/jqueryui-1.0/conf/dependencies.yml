@@ -1,4 +1,0 @@
-self: play -> jqueryui 1.0
-
-require:
-    - play
