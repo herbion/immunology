@@ -1,15 +1,12 @@
 #{extends 'main.html' /}
 #{set title:messages.get('patients') /}
 
-#{stylesheet 'patients_view.css'/}
+#{stylesheet 'patients-view.css'/}
 
 <script>
-$(function() {
-	$(".patientsSwitcher").each(function() {
-		$(this).buttonset();
-	});
-});
+    #{include '/public/javascripts/patient-view-patients.js'/}
 </script>
+
 
 <div id="patientsTitleContainer">
 	<h2 class="listTitle" id="patientsListTitle">&{'patients'}</h2>

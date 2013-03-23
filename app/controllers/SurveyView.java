@@ -58,7 +58,16 @@ public class SurveyView extends Controller {
 		renderTemplate(model);
 	}
 
-	public static void edit(Long id) {
+    public static void addNosology(Long id) {
+        User user = User.find("byLogin", Security.connected()).first();
+        List<Syndrome> syndromes = Syndrome.findAll();
+        MedicineCard medicineCard = MedicineCard.findById(id);
+
+        render(user, syndromes, medicineCard.medicineCardId, medicineCard);
+    }
+
+
+    public static void edit(Long id) {
 		User user = User.find("byLogin", Security.connected()).first();
 		Survey survey = Survey.findById(id);
 

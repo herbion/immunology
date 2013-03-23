@@ -1,0 +1,44 @@
+
+#surveyAnalysis {
+	display: table;
+    position: relative;
+    width: 100%;
+    margin: 0px 0px 5px 0px;
+    background-color: #E1EEF4;
+}
+
+.analysisDescriptionArea {
+    color: #00557F;
+    text-align: center;
+    width: 60%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.analysisName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.analysis-description {
+	border-width: 1px;
+    float: right;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+    margin: 2px 40px 2px 10px;
+    padding: 1px;
+    width: 200px;
+}
+
+.analysisNormDescription {
+	float: left;
+    padding: 4px 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 250px;
+}

@@ -1,0 +1,71 @@
+
+.clinic {
+	display: table;
+    position: relative;
+    width: 100%;
+    margin: 0px 0px 5px 0px;
+    background-color: #E1EEF4;
+}
+
+.clinicName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.clinic-norm-id{
+	visibility: hidden; 
+	width: 0px;
+}
+
+.clinicsSelect {
+	width: 250px;
+	float: left;
+	font-size: 12px !important;
+	font-family: 'Helvetica', 'Arial', 'Sans' !important;
+}
+
+.clinicsDescription {
+    color: #00557F;
+    text-align: center;
+    width: 100%;
+    display: table;
+    vertical-align: middle;
+}
+
+.clinicsName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.clinics-checkbox {
+	float: left;
+	margin-top: 6px;
+}
+
+.clinicalManifestationName {
+	float: left;
+	width: 320px;
+}
+
+.clinicDescriptionArea {
+	display: table;
+	margin: 5px 5px 5px 350px;
+	line-height: 25px;
+}

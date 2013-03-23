@@ -15,18 +15,10 @@
 		<script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-ru.js"></script>
 		<script type="text/javascript" src="/public/scripts/admin.js"></script>
     </head>
-    <script type="text/javascript">
-    $(document).ready(function() {
-    	var headerImgHeight = 80;
-    	var footerHeight = 35;
-    	var paddings = 40;
-    	var windowHeight = $(window).height() - headerImgHeight - footerHeight - paddings;
-    	var contentHeight = $("#crudContent").height();
-    	if(contentHeight < windowHeight) {
-    		$('#crudContent').height(windowHeight);
-    	}
-    });
+    <script>
+        #{include '/public/javascripts/c-ru-d-layout.js'/}
     </script>
+
     <body id="crud">
 		#{header /}
 

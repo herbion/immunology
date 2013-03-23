@@ -1,0 +1,85 @@
+
+#survey-info {
+	border-radius: 5px;
+}
+
+#survey-info li {
+	height: 25px;
+    width: 100%;
+    color: #00557F;
+    list-style: none;
+}
+
+#survey-info ul {
+	padding: 0px 40px;
+	font-size: 12px;
+	font-family: 'Helvetica'; 
+	margin: 5px 0px;
+}
+
+#survey-info li:nth-child(odd) { 
+	background-color: #FFFFFF; 
+}
+
+#survey-info li:nth-child(even) { 
+	background-color: #E1EEF4;
+}
+
+.answerValue {
+	float: left;
+	padding: 1px 0 1px 4px;
+    width: 48%;
+}
+
+.answerValue input {
+	margin: 0px;
+}
+
+.complaintName {
+	height: 19px;
+    margin-top: 2px;
+	float: left;
+    color: #00557F;
+    padding: 2px 0px 2px 4px;
+    width: 48%;
+}
+
+.editButton {
+	float: right; 
+	margin-right: 20px;
+	background-color: #54BD06;
+    border-radius: 8px 8px 8px 8px;
+    color: white !important;
+    font-size: 12px;
+    padding: 3px 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.editButton:hover {
+	opacity: 0.8;
+}
+
+.surveyAnswerBtn {
+	height: 20px;
+	width: 80px;
+}
+
+.surveyAnswerBtn span {
+	height: 20px;
+	margin: 0px;
+	padding: 0px !important;
+}
+
+.syndromeTitleContainer {
+	display: table;
+	width: 100%;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}

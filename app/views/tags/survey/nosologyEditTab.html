@@ -1,93 +1,9 @@
-<style>
-.nosology {
-	display: table;
-	position: relative;
-	width: 100%;
-	margin: 0px 0px 5px 0px;
-	background-color: #E1EEF4;
-}
-
-.nosologyName {
-	background-color: #2191C0;
-    color: #FFFFFF;
-    font-weight: bold;
-    padding: 4px 10px;
-    width: 300px;
-    text-align: right;
-    float: left;
-}
-
-.nosologyDescription {
-    color: #00557F;
-    text-align: center;
-    width: 60%;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.nosologiesSelect {
-	width: 250px;
-	font-size: 12px !important;
-	font-family: 'Helvetica', 'Arial', 'Sans' !important;
-}
-
-.editButtonDiv {
-	display: table;
-    height: 25px;
-    position: relative;
-    width: 100%;
-}
-</style>
+#{stylesheet 'tags-survey-nosology-edit-tab.css'/}
 
 <script>
-
-$(document).ready(function() {
-	var id = $(".nosology").find(".hidden-id").val();
-	if(id != 0 && id != "" && id != undefined){
-		$(".nosology").find(".nosologiesSelect option[value=" + id + "]").attr("selected", "selected");
-	}
-});
-
-var updateNosology = function () {
-	var jsonObject = "";
-	var surveyId = $("#hidden-survey-id").val();
-	var medicineCardId = $("#hidden-med-card-id").val();
-	var syndromeId = $("input[name='synd_radio']:checked").attr('value');
-	var id = $(".nosologiesSelect option:selected").val();
-	if(id == 0 || id == "" || id == undefined){
-		id = null;
-	}
-
-	jsonObject = jsonObject + "{'surveyId':" + surveyId + ",";
-	jsonObject = jsonObject + "'syndromeId':" + syndromeId + ",";
-	jsonObject = jsonObject + "'nosologyId':" + id + "}";
-
-	console.log(jsonObject );
-	
-	$.ajax({
-		type : "POST",
-		url : "/surveyView/updateNosology",
-		data : jsonObject,
-		dataType : "json",
-		contentType : "application/json",
-		success : function(id) {
-			$("#hidden-survey-id").val(id);
-			noty({
-				text: "&{'nosology.save.success'}",
-				layout: "topRight",
-				type: "success"
-			});
-		},
-		error : function(e) {
-			noty({
-				text: "&{'nosology.save.error'}",
-				layout: "topRight",
-				type: "error"
-			});
-		}
-	});
-}
+    #{include '/public/javascripts/tags-survey-nosology-edit-tab.js'/}
 </script>
+
 
 <div id="nosology-info">
 	#{if syndrome != null}

@@ -1,0 +1,50 @@
+
+#surveyClinics {
+	display: table;
+    position: relative;
+    width: 100%;
+    margin: 0px 0px 5px 0px;
+    background-color: #E1EEF4;
+}
+
+.clinicsDescription_odd, .clinicsDescription_even {
+    color: #00557F;
+    text-align: center;
+    padding: 4px 10px;
+    display: table;
+    vertical-align: middle;
+    margin: 0px 0px 0px 400px;
+}
+
+.clinicsDescription_odd {
+	background-color: #FFFFFF;
+}
+
+.clinicsDescription_even {
+	background-color: #E1EEF4;
+}
+
+.clinicsName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.clinics {
+	display: table;
+}
+
+.surveyClinicalManifestationName {
+	float: left;
+	width: 250px;
+	font-weight: bold;
+}
+
+.surveyClinicalManifestationValue {
+	float: left;
+	width: 250px;
+}

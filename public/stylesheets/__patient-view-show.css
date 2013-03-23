@@ -1,0 +1,189 @@
+#hidden-med-card-id {
+    display: none;
+}
+
+.hidden-anamnesis-value {
+    display: none;
+}
+
+.hidden-anamnesis-description {
+    display: none;
+}
+
+.anamnesis-description {
+    width: 400px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+}
+
+.editButtonDiv {
+    display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.requiredField {
+    font-size: 10px;
+    margin-left: 10px;
+    color: #222222;
+}
+
+.patientValue {
+    float: left;
+    margin-bottom: 4px;
+    padding: 2px 10px;
+}
+
+.patientValue input {
+    width: 300px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+    margin: 0px;
+}
+
+.patientValue select {
+    width: 300px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+    margin: 0px 0px 2px;
+}
+
+.hasError {
+    color: #C00;
+}
+
+#patient_gender {
+    width: 305px;
+}
+
+.cancelButton, .saveButton {
+    background: #54BD06;
+    border-radius: 8px 8px 8px 8px;
+    color: white !important;
+    padding: 3px 10px;
+    text-decoration: none;
+}
+
+.cancelButton:hover {
+    opacity: 0.8;
+}
+
+#surveysTable_length select {
+    width: 50px;
+    font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+}
+
+.crudButtons {
+    background: #EFEFEF;
+    border-radius: 10px 10px 10px 10px;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px !important;
+    font-family: 'Helvetica','Arial','Sans';
+}
+
+.crudButtons input {
+    background: #54BD06;
+    border-radius: 8px 8px 8px 8px;
+    color: white !important;
+    padding: 2px 10px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Helvetica','Arial','Sans';
+}
+
+.anamnesis-data {
+    font-family: 'Helvetica';
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    color: #00557F;
+    padding: 0px 0px 5px;
+}
+
+.anamnesisDescription {
+    color: #00557F;
+    text-align: center;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.anamnesisTypeName {
+    background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-align: right;
+    width: 200px;
+    float: left;
+}
+
+.anamnesis {
+    display: table;
+    position: relative;
+    width: 100%;
+    margin: 0px 0px 4px 0px;
+    height: 25px;
+    background-color: #E2EDFB;
+}
+
+#medicineCard_otherInfo {
+    height: 16px;
+    overflow: hidden;
+}
+
+.anamnesisFields {
+    margin: 5px 5px 5px 300px;
+    display: table;
+    color: #00557F;
+}
+
+.anamnesisDetailName {
+    font-weight: bold;
+}
+
+.anamnesisDetailValueContainer {
+    display: table;
+    width: 100%;
+    line-height: 25px;
+}
+
+.anamnesis-checkbox {
+    float: left;
+    margin-top: 6px;
+}
+
+.anamnesisDetailValueName {
+    float: left;
+    width: 200px;
+}
+
+.anamnesisSelect {
+    width: 180px;
+    margin: 3px 20px 0px 20px;
+    font-size: 12px !important;
+    font-family: 'Helvetica', 'Arial', 'Sans' !important;
+}
+
+.anamnesisSelectDesease {
+    margin: 3px 10px 0px 10px;
+}
+
+.anamnesisDeseaseDetailValueContainer {
+    line-height: 25px;
+    margin: 5px 5px 5px 300px;
+    display: table;
+    color: #00557F;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.anamnesis-desease-detail-name {
+    float: left;
+    width: 200px;
+}

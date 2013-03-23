@@ -1,0 +1,19 @@
+
+.forbiddenContainer {
+	text-align: center;
+	margin-top: 100px;
+	width: 300px;
+	height: 200px;
+	border: 1px solid red;
+	border-radius: 5px;
+	background: url("/public/images/elements/accessDenied.jpg") no-repeat scroll 0 0 transparent;
+	padding-left: 200px;
+	font-size: 20px;
+	font-family: 'Helvetica','Arial','Sans';
+	color: red;
+}
+
+.forbiddenMessage {
+	margin-top: 65px;
+	font-weight: bold;
+}

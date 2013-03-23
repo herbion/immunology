@@ -1,0 +1,20 @@
+
+#hidden-survey-id {
+	display: none;
+}
+
+#hidden-med-card-id {
+	display: none;
+}
+
+#selectSyndromeBlock {
+	float: right;
+    margin: 0px;
+}
+
+.syndromeLabel {
+	float: right;
+	width: 220px;
+	height: 25px;
+	font-size: 12px;
+}

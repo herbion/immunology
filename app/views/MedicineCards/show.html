@@ -1,26 +1,9 @@
 #{extends 'CRUD/layout.html' /}
 #{set title:messages.get('medicineCard.edit.title') /}
-<script type="text/javascript">
-var date;
-$(document).ready(function() {
-	date = $('#object_creationDate').val();
-	var datepicker = '#object_creationDate';
-	$.datepicker.setDefaults($.extend({
-		minDate: new Date(1900,0,1),
-		maxDate: new Date(),
-		yearRange: '1900:+00',
-		changeMonth: true,
-		changeYear: true},
-		$.datepicker.regional['']));
-	$(datepicker).datepicker();
-	%{
-		currentLanguage = play.i18n.Lang.get();
-	}%
-	$(datepicker).datepicker('option', $.datepicker.regional['&{currentLanguage}'.lenght == 0 ? 'en' : '&{currentLanguage}']);
-	$(datepicker).datepicker('option', 'dateFormat', 'dd-mm-yy');
-	$('#object_creationDate').val(date);
-});
+<script>
+    #{include '/public/javascripts/medicine-cards-show.js'/}
 </script>
+
 <div id="crudShow" class="${type.name}">
 
     <h2 id="crudShowTitle">&{'medicineCard.edit.title'}</h2>

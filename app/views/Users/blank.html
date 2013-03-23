@@ -12,18 +12,10 @@
              	<label for="roles">
 		            &{'roles'}
 		        </label>
-		        <script type="text/javascript">
-			        var toggle = function(roleElement) {
-			            var input = document.getElementById('h'+roleElement.id);
-			            if(roleElement.className.indexOf('selected') > -1) {
-			                roleElement.className = 'role';
-			                input.value = '';
-			            } else {
-			                roleElement.className = 'role selected';
-			                input.value = roleElement.id;
-			            }
-			        }
-			    </script>
+		        <script>
+    #{include '/public/javascripts/users-blank.js'/}
+</script>
+
 			    <div class="roles-list">
 			        #{list items:models.Role.findAll(), as:'role'}
 			               <span id="${role.roleId}" onclick="toggle(this)" class="${role_isFirst ? 'role selected' : 'role' }" >

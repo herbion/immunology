@@ -1,0 +1,127 @@
+
+.analysis {
+	display: table;
+	position: relative;
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	background-color: #E1EEF4;
+}
+
+.analysisName {
+	background-color: #2191C0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 300px;
+    text-align: right;
+    float: left;
+}
+
+.analysisNormsSelect {
+	width: 250px;
+}
+
+.analysisDescription {
+    color: #00557F;
+    text-align: center;
+    width: 60%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.editButtonDiv {
+	display: table;
+    height: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.treatmentTypeName {
+	background-color: #2191C0;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 4px 10px;
+	text-align: center;
+}
+
+#treatment-info ul {
+	padding-left: 0px;
+	list-style-type: none;
+	margin-top: 2px;
+}
+
+.medicationName {
+	width: 280px;
+	background: #379CC6;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 2px 10px;
+	text-align: right;
+	margin-top: 5px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	font-size: 13px;
+}
+
+.medicationDetailName {
+	width: 250px;
+	background: #4da7cc;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 2px 10px;
+	text-align: right;
+	float: left;
+	margin-right: 110px;
+}
+
+.treatment-checkbox {
+	margin: 2px 0px 0px 0px;
+}
+
+.insertion-select {
+	margin: 0px 0px 0px 10px;
+	font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px !important;
+}
+
+#selectInsertionBlock {
+	display: inline;
+}
+
+.treatments {
+	padding: 5px 0px;
+	border-bottom: 1px solid #2191C0;
+}
+
+#treatment-info label {
+	font-weight: bold;
+	float: none;
+	width: none;
+	color: #666;
+	cursor: pointer;
+	display: inline;
+}
+
+.treatment-multiplicity, .treatment-dose, .treatment-description {
+	width: 100px;
+	margin: 0px 20px 0px 5px;
+	padding: 1px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.treatment-multiplicity{
+	width: 30px;	
+}
+
+#selectTherapyTypeBlock, #selectAllergenBlock {
+	display: inline;
+	margin: 0px 0px 0px 10px;
+}
+
+.therapy-type-select, .allergen-select {
+	font-family: 'Helvetica','Arial','Sans' !important;
+	font-size: 12px !important;
+}
+

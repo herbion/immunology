@@ -1,0 +1,21 @@
+
+.editButton {
+	background-color: #54BD06;
+    border-radius: 8px 8px 8px 8px;
+    color: white !important;
+    font-size: 12px !important;
+    padding: 3px 10px;
+    text-decoration: none;
+	font-family: 'Helvetica', 'Arial', 'Sans' !important;
+	border: none;
+	cursor: pointer;
+}
+
+.editButton:hover {
+	opacity: .8;
+}
+
+.chart {
+	margin: 10px 0px 10px 0px;
+}
+

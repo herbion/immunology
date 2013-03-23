@@ -1,0 +1,69 @@
+
+
+#survey-info li {
+	height: 20px;
+    width: 100%;
+    color: #00557F;
+    list-style: none;
+}
+
+#survey-info ul {
+	padding: 0px 40px; 
+	margin: 5px 0px;
+}
+
+#survey-info li:nth-child(odd) {
+	background-color: #FFFFFF; 
+}
+
+#survey-info li:nth-child(even) { 
+	background-color: #E1EEF4;
+}
+
+.answerValue {
+	float: left;
+	padding: 2px 0 2px 4px;
+    width: 48%;
+}
+
+.editButton {
+	float: right; 
+	background-color: #54BD06;
+    border-radius: 8px 8px 8px 8px;
+    color: white !important;
+    font-size: 12px;
+    padding: 3px 10px;
+    text-decoration: none;
+}
+
+.editButton:hover {
+	opacity: 0.8;
+}
+
+.complaintName {
+	float: left;
+    color: #00557F;
+    padding: 2px 0 2px 4px;
+    width: 48%;
+}
+
+.syndromeTitleContainer {
+	display: table;
+	width: 100%;
+}
+
+.complaint-type-value {
+	display: inline-block;
+	border: 1px solid white;
+	border-radius: 2px;
+	background: white;
+	color: #2191C0;
+	font-family: 'Helvetica','Arial','Sans' !important;
+    font-size: 12px;
+    margin: 0 0 0 10px;
+    padding: 0 5px;
+}
+
+.hidden-complaint-type-value {
+	display: none;
+}
