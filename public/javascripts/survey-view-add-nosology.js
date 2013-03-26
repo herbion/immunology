@@ -7,20 +7,21 @@
         });
 
         $("input[name='synd_radio']").change(function () {
-            var selectAction = #{jsAction @reloadComplaints(':syndromes') /};
-            $('#tabs-1').load(selectAction({syndromes: $(this).val()}));
+            console.log('Loading reloadComplaintsForNosology ...');
+            var selectAction = #{jsAction @reloadComplaintsForNosology(':nosolodyId') /};
+            $('#tabs-1').load(selectAction({nosolodyId: $(this).val()}));
 
-            selectAction = #{jsAction @reloadAnalysis(':syndromes') /};
-            $('#tabs-2').load(selectAction({syndromes: $(this).val()}));
+            // selectAction = #{jsAction @reloadAnalysis(':nosolodyId') /};
+            // $('#tabs-2').load(selectAction({nosolodyId: $(this).val()}));
 
-            selectAction = #{jsAction @reloadClinicalManifestations(':syndromes') /};
-            $('#tabs-3').load(selectAction({syndromes: $(this).val()}));
+            // selectAction = #{jsAction @reloadClinicalManifestations(':nosolodyId') /};
+            // $('#tabs-3').load(selectAction({nosolodyId: $(this).val()}));
 
-            selectAction = #{jsAction @reloadTreatments(':syndromes') /};
-            $('#tabs-4').load(selectAction({syndromes: $(this).val()}));
+            // selectAction = #{jsAction @reloadTreatments(':nosolodyId') /};
+            // $('#tabs-4').load(selectAction({nosolodyId: $(this).val()}));
 
-            selectAction = #{jsAction @reloadNosology(':syndromes') /};
-            $('#tabs-5').load(selectAction({syndromes: $(this).val()}));
+            // selectAction = #{jsAction @reloadNosology(':nosolodyId') /};
+            // $('#tabs-5').load(selectAction({nosolodyId: $(this).val()}));
         });
 
         var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');

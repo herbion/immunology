@@ -7,6 +7,7 @@ $(function() {
 	});
 
 	$("input[name='synd_radio']").change(function () {
+		console.log('reloading content id=' + $(this).val());
 		var selectAction = #{jsAction @reloadComplaints(':syndromes') /};
 	    $('#tabs-1').load(selectAction({syndromes: $(this).val()}));
 	    

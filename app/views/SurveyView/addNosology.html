@@ -10,10 +10,10 @@
 <div id="surveyEditTitleContainer">
     <h2 class="listTitle">&{'survey.new'}</h2>
     <div id="selectSyndromeBlock">
-    #{list items:syndromes, as:'synd'}
+    #{list items:nosologies, as:'nosology'}
         <div class="radio">
-            <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
-            <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
+            <input type="radio" id="radio_${nosology.nosologyId}" name="synd_radio" value="${nosology.nosologyId}"/>
+            <label for="radio_${nosology.nosologyId}" class="syndromeLabel">${nosology.nosologyName}</label>
         </div>
     #{/list}
     </div>
@@ -31,19 +31,23 @@
             <li><a href="#tabs-5">&{'survey.nosology'}</a></li>
         </ul>
         <div id="tabs-1">
-        #{include 'tags/survey/complaintsAddTab.html' /}
+        *{
+            #{include 'tags/survey/complaintsAddTab.html' /}
+        }*
         </div>
-        <div id="tabs-2">
-        #{include 'tags/survey/analysesAddTab.html' /}
-        </div>
-        <div id="tabs-3">
-        #{include 'tags/survey/clinicsAddTab.html' /}
-        </div>
-        <div id="tabs-4">
-        #{include 'tags/survey/treatmentsAddTab.html' /}
-        </div>
-        <div id="tabs-5">
-        #{include 'tags/survey/nosologyAddTab.html' /}
-        </div>
+        *{
+            <div id="tabs-2">
+            #{include 'tags/survey/analysesAddTab.html' /}
+            </div>
+            <div id="tabs-3">
+            #{include 'tags/survey/clinicsAddTab.html' /}
+            </div>
+            <div id="tabs-4">
+            #{include 'tags/survey/treatmentsAddTab.html' /}
+            </div>
+            <div id="tabs-5">
+            #{include 'tags/survey/nosologyAddTab.html' /}
+            </div>
+        }*
     </div>
 </div>

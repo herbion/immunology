@@ -6,12 +6,13 @@
 
 
 %{	
-clinicalManifestationComplaintBySyndrome = syndrome != null ? models.ClinicalManifestationComplaint.find("bySyndrome", syndrome).fetch() : null;
+	clinicalManifestationComplaintBySyndrome = (syndrome != null) ? syndrome.clinicalManifestationComplaints : null;
+
 }%
 
 <div id="clinics-info">
-	#{if clinicalManifestationComplaintBySyndrome != null && !clinicalManifestationComplaintBySyndrome.isEmpty()}
-		#{list clinicalManifestationComplaintBySyndrome, as:'clinicalManifestationComplaint'}
+	#{if syndrome != null && !syndrome.clinicalManifestationComplaints.isEmpty()}
+		#{list syndrome.clinicalManifestationComplaints, as:'clinicalManifestationComplaint'}
 			<div class="clinics">
 				<div class="clinicsName">${clinicalManifestationComplaint.clinicalManifestationComplainName}</div>
 				<div class="clinicDescriptionArea">
@@ -37,4 +38,7 @@ clinicalManifestationComplaintBySyndrome = syndrome != null ? models.ClinicalMan
 			<input type="submit" class="editButton" onclick="saveClinicalManifestations()" id="editClinicButton" value="&{'save'}">
 		</div>
 	#{/if}
+	#{else}
+		<b>&{'survey.clinic'}</b> is not set, please configure it in admin section
+	#{/else}
 </div>

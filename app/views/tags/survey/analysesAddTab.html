@@ -6,11 +6,8 @@
 
 
 <div id="analyses-info">
-%{	
-analysesBySyndrome = syndrome != null ? models.Analysis.find("bySyndrome", syndrome).fetch() : null;
-}%
-#{if analysesBySyndrome != null && !analysesBySyndrome.isEmpty()}
-	#{list items:analysesBySyndrome, as:'analysis'}
+#{if syndrome != null && !syndrome.analyzes.isEmpty()}
+	#{list items:syndrome.analyzes, as:'analysis'}
 	<div class="analysis">
 		<div class="analysisName">${analysis.analysisName}</div>
 		<input class="analysis-checkbox" type="checkbox">
@@ -67,4 +64,7 @@ analysesBySyndrome = syndrome != null ? models.Analysis.find("bySyndrome", syndr
 		<input type="submit" class="editButton" onclick="saveAnalyses();" id="editAnalysesButton" value="&{'save'}">
 	</div>
 #{/if}
+#{else}
+	<b>&{'survey.laboratory'}</b> is not set, please configure it in admin section
+#{/else}
 </div>

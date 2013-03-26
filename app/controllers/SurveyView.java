@@ -60,10 +60,10 @@ public class SurveyView extends Controller {
 
     public static void addNosology(Long id) {
         User user = User.find("byLogin", Security.connected()).first();
-        List<Syndrome> syndromes = Syndrome.findAll();
+        List<Nosology> nosologies = Nosology.findAll();
         MedicineCard medicineCard = MedicineCard.findById(id);
 
-        render(user, syndromes, medicineCard.medicineCardId, medicineCard);
+        render(user, nosologies, medicineCard.medicineCardId, medicineCard);
     }
 
 
@@ -108,6 +108,11 @@ public class SurveyView extends Controller {
 
 	public static void reloadComplaints(Long id) {
 		Syndrome syndrome = Syndrome.findById(id);
+		render("tags/survey/complaintsAddTab.html", syndrome);
+	}
+
+	public static void reloadComplaintsForNosology(Long id) {
+		Nosology syndrome = Nosology.findById(id);
 		render("tags/survey/complaintsAddTab.html", syndrome);
 	}
 

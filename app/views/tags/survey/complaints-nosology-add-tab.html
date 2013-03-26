@@ -7,7 +7,7 @@
 
 <div id="survey-info">
 	#{if syndrome != null}
-		#{list items: syndrome.complaintTypes, as:'complaintType'}
+		#{list items: models.ComplaintType.find("bySyndrome", syndrome).fetch(), as:'complaintType'}
 			<div class="complaintTypeName">${complaintType.complaintTypeName}</div>
 			<ul>
  			#{list items:models.Complaint.find("byComplaintType", complaintType).fetch(), as:'complaint'}
@@ -33,7 +33,4 @@
  			<input type="submit" class="editButton" onclick="saveComplaints()" id="editComplaintButton" value="&{'save'}">
 		</div>
 	#{/if}
-	#{else}
-		Empty	    		
-	#{/else}
 </div>
