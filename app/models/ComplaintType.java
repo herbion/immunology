@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
@@ -32,8 +33,11 @@ public class ComplaintType extends GenericModel {
     @Column(name = "name")
     public String complaintTypeName;
     
-    @ManyToOne
-    public Syndrome syndrome;
+    @ManyToMany(mappedBy = "complaintTypes")
+    public List<Syndrome> syndrome;
+
+    @ManyToMany(mappedBy = "complaintTypes")
+    public List<Nosology> nosology;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "complaintType")
     public List<Complaint> complaints;

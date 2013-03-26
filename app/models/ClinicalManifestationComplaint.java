@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,8 +40,8 @@ public class ClinicalManifestationComplaint extends GenericModel {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "clinicalManifestationComplaint")
 	public List<ClinicalManifestation> clinicalManifestations;
 
-	@ManyToOne
-	public Syndrome syndrome;
+	@ManyToMany(mappedBy = "clinicalManifestationComplaints")
+	public List<Syndrome> syndrome;
 
 	@Override
 	public int hashCode() {

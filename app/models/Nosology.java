@@ -2,18 +2,7 @@ package models;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
@@ -33,6 +22,15 @@ public class Nosology extends GenericModel {
     @Required
     @Column(name = "name")
     public String nosologyName;
+
+
+    @Column
+    @ManyToMany
+    @JoinTable(name = "nosology_complaint_types", 
+    	joinColumns = @JoinColumn(name = "nosology_id", referencedColumnName = "nosology_id"), 
+    	inverseJoinColumns = @JoinColumn(name = "complaint_type_id", referencedColumnName = "complaint_type_id")
+    )
+	public List<ComplaintType> complaintTypes;
     
     @OneToMany(mappedBy = "nosology")
     public List<NosologyComplaintType>nosologyComplaintTypes;

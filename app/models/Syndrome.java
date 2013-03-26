@@ -2,18 +2,9 @@ package models;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 import play.data.validation.Required;
-import play.db.jpa.GenericModel;
+import play.db.jpa.*;
 
 @Entity
 @Table(name = "syndrome")
@@ -29,15 +20,31 @@ public class Syndrome extends GenericModel {
 	@Column(name = "name")
 	public String name;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "syndrome")
+	@Column
+    @ManyToMany
+    @JoinTable(name = "syndrome_complaint_type", 
+    	joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), 
+    	inverseJoinColumns = @JoinColumn(name = "complaint_type_id", referencedColumnName = "complaint_type_id")
+    )
 	public List<ComplaintType> complaintTypes;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "syndrome")
+	
+	@Column
+    @ManyToMany
+    @JoinTable(name = "syndrome_analysis", 
+    	joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), 
+    	inverseJoinColumns = @JoinColumn(name = "analysis_id", referencedColumnName = "analysis_id")
+    )
 	public List<Analysis> analyzes;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "syndrome")
+	@Column
+    @ManyToMany
+    @JoinTable(name = "syndrome_clinical_manifestation_complaint", 
+    	joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), 
+    	inverseJoinColumns = @JoinColumn(name = "clinical_manifestation_complaint_id", referencedColumnName = "clinical_manifestation_complaint_id")
+    )
 	public List<ClinicalManifestationComplaint> clinicalManifestationComplaints;
 
+	@Column
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "syndrome")
 	public List<Anamnesis> anamnezes;
 
