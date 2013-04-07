@@ -1,0 +1,43 @@
+#{stylesheet 'tags-survey-clinics-add-tab.css'/}
+
+<script>
+    #{include '/public/javascripts/tags-survey-clinics-add-tab.js'/}
+</script>
+
+
+*{	
+	clinicalManifestationComplaintBySyndrome = (syndrome != null) ? syndrome.clinicalManifestationComplaints : null;
+}*
+
+<div id="clinics-info">
+	#{if _clinics}
+		#{list _clinics, as:'clinicComplaint'}
+			<div class="clinics">
+				<div class="clinicsName">${clinicComplaint.clinicalManifestationComplainName}</div>
+				<div class="clinicDescriptionArea">
+					#{list clinicComplaint.clinicalManifestations, as:'clinicalManifestation'}
+						<div class="clinicsDescription">
+							<input class="clinics-checkbox" type="checkbox">
+							<div class="clinicalManifestationName">${clinicalManifestation.name}</div>
+							#{if clinicalManifestation.clinicalManifestationType.name() == 'DROPDOWN'}
+					   			#{select 'clinicalManifestationNorms', class:"clinicsSelect"}
+									#{list items:models.ClinicalManifestationNorm.find("byClinicalManifestation", clinicalManifestation).fetch(), as:'clinicalManifestationNorm'}
+										#{option clinicalManifestationNorm.id}
+											${clinicalManifestationNorm.description}
+										#{/option}
+					    			#{/list}
+								#{/select}
+							#{/if}	
+						</div>
+					#{/list}
+				</div>
+			</div>
+		#{/list}
+		<div class="editButtonDiv">
+			<input type="submit" class="editButton" onclick="saveClinicalManifestations()" id="editClinicButton" value="&{'save'}">
+		</div>
+	#{/if}
+	#{else}
+		<b>&{'survey.clinic'}</b> is not set, please configure it in admin section
+	#{/else}
+</div>

@@ -10,6 +10,8 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import play.test.Fixtures;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ public class Application extends Controller {
 	
 	@Before
 	static void storeSession() {
-		if(Security.isConnected()) {
+        if(Security.isConnected()) {
             User user = User.find("byLogin", Security.connected()).first();
             session.put("user", user);
             session.put("isUserRole", user.isUserRole());

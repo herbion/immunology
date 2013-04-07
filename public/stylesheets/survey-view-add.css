@@ -18,3 +18,10 @@
 	height: 25px;
 	font-size: 12px;
 }
+
+#survey-types > a {
+	font-size: 15px;
+	text-decoration: none;
+	border-bottom: 1px dashed;
+	color: #eee;
+}

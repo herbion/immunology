@@ -1,10 +1,4 @@
-
-	$(document).ready(function() {
-		$(".clinicsSelect").each(function() {
-			setClinicsDisabled(this);
-		});
-	});
-
+$(document).ready(function() {
 	$(".clinics-checkbox").click(function(){
 		if($(this).is(":checked")){
 			setClinicsEnabled($(this).parent().find(".clinicsSelect"));
@@ -70,3 +64,10 @@
 			}
 		});
 	}
+
+	$(".clinicsSelect").each(function() {
+		setClinicsDisabled(this);
+	});
+});
+
+	
