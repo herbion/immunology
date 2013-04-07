@@ -5,3 +5,4 @@ require:
     - play -> crud
     - play -> secure
     - play -> jqueryui 1.0
+    - play -> logisimayml 1.8

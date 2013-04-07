@@ -9,10 +9,11 @@
 # Home page
 *      /                						Application.index
 
-*      /patientView/list						PatientView.patients
-*	   /patientView/show/{id}					PatientView.show
-*	   /patientView/add							PatientView.add
-*      /patientView/{type}      				PatientView.updatePatientsTable
+GET      /patients                              PatientView.patients
+*      	 /patients/list						    PatientView.patients
+*	     /patients/show/{id}					PatientView.show
+*	     /patients/add							PatientView.add
+*        /patients/{type}      				    PatientView.updatePatientsTable
 
 *      /userView/show							UserView.showUser
 
