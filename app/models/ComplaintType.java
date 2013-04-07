@@ -33,11 +33,11 @@ public class ComplaintType extends GenericModel {
     @Column(name = "name")
     public String complaintTypeName;
     
-    @ManyToMany(mappedBy = "complaintTypes")
-    public List<Syndrome> syndrome;
+    // @ManyToMany(mappedBy = "complaintTypes")
+    // public List<Syndrome> syndrome;
 
-    @ManyToMany(mappedBy = "complaintTypes")
-    public List<Nosology> nosology;
+    // @ManyToMany(mappedBy = "complaintTypes")
+    // public List<Nosology> nosology;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "complaintType")
     public List<Complaint> complaints;
@@ -50,7 +50,6 @@ public class ComplaintType extends GenericModel {
 	result = prime * result + ((complaintTypeName == null) ? 0 : complaintTypeName.hashCode());
 	result = prime * result + ((complaints == null) ? 0 : complaints.hashCode());
 	result = prime * result + ((multyplier == null) ? 0 : multyplier.hashCode());
-	result = prime * result + ((syndrome == null) ? 0 : syndrome.hashCode());
 	return result;
     }
 
@@ -82,11 +81,6 @@ public class ComplaintType extends GenericModel {
 	    if (other.multyplier != null)
 		return false;
 	} else if (!multyplier.equals(other.multyplier))
-	    return false;
-	if (syndrome == null) {
-	    if (other.syndrome != null)
-		return false;
-	} else if (!syndrome.equals(other.syndrome))
 	    return false;
 	return true;
     }

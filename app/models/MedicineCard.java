@@ -54,65 +54,65 @@ public class MedicineCard extends GenericModel {
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = super.hashCode();
-	result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
-	result = prime * result + ((medicineCardId == null) ? 0 : medicineCardId.hashCode());
-	result = prime * result + ((otherInfo == null) ? 0 : otherInfo.hashCode());
-	result = prime * result + ((surveys == null) ? 0 : surveys.hashCode());
-	return result;
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result + ((medicineCardId == null) ? 0 : medicineCardId.hashCode());
+		result = prime * result + ((otherInfo == null) ? 0 : otherInfo.hashCode());
+		result = prime * result + ((surveys == null) ? 0 : surveys.hashCode());
+		return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (!super.equals(obj))
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	MedicineCard other = (MedicineCard) obj;
-	if (creationDate == null) {
-	    if (other.creationDate != null)
-		return false;
-	} else if (!creationDate.equals(other.creationDate))
-	    return false;
-	if (medicineCardAnamneses == null) {
-	    if (other.medicineCardAnamneses != null)
-		return false;
-	} else if (!medicineCardAnamneses.equals(other.medicineCardAnamneses))
-	    return false;
-	if (medicineCardId == null) {
-	    if (other.medicineCardId != null)
-		return false;
-	} else if (!medicineCardId.equals(other.medicineCardId))
-	    return false;
-	if (medicineCardNosologies == null) {
-	    if (other.medicineCardNosologies != null)
-		return false;
-	} else if (!medicineCardNosologies.equals(other.medicineCardNosologies))
-	    return false;
-	if (otherInfo == null) {
-	    if (other.otherInfo != null)
-		return false;
-	} else if (!otherInfo.equals(other.otherInfo))
-	    return false;
-	if (patient == null) {
-	    if (other.patient != null)
-		return false;
-	} else if (!patient.equals(other.patient))
-	    return false;
-	if (surveys == null) {
-	    if (other.surveys != null)
-		return false;
-	} else if (!surveys.equals(other.surveys))
-	    return false;
-	return true;
+		if (this == obj)
+		    return true;
+		if (!super.equals(obj))
+		    return false;
+		if (getClass() != obj.getClass())
+		    return false;
+		MedicineCard other = (MedicineCard) obj;
+		if (creationDate == null) {
+		    if (other.creationDate != null)
+			return false;
+		} else if (!creationDate.equals(other.creationDate))
+		    return false;
+		if (medicineCardAnamneses == null) {
+		    if (other.medicineCardAnamneses != null)
+			return false;
+		} else if (!medicineCardAnamneses.equals(other.medicineCardAnamneses))
+		    return false;
+		if (medicineCardId == null) {
+		    if (other.medicineCardId != null)
+			return false;
+		} else if (!medicineCardId.equals(other.medicineCardId))
+		    return false;
+		if (medicineCardNosologies == null) {
+		    if (other.medicineCardNosologies != null)
+			return false;
+		} else if (!medicineCardNosologies.equals(other.medicineCardNosologies))
+		    return false;
+		if (otherInfo == null) {
+		    if (other.otherInfo != null)
+			return false;
+		} else if (!otherInfo.equals(other.otherInfo))
+		    return false;
+		if (patient == null) {
+		    if (other.patient != null)
+			return false;
+		} else if (!patient.equals(other.patient))
+		    return false;
+		if (surveys == null) {
+		    if (other.surveys != null)
+			return false;
+		} else if (!surveys.equals(other.surveys))
+		    return false;
+		return true;
     }
 
     @Override
     public String toString() {
-	return "MedicineCard/id=" + medicineCardId;
+		return "MedicineCard/id=" + medicineCardId;
     }
 
 }

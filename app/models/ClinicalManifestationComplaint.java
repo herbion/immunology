@@ -40,9 +40,6 @@ public class ClinicalManifestationComplaint extends GenericModel {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "clinicalManifestationComplaint")
 	public List<ClinicalManifestation> clinicalManifestations;
 
-	@ManyToMany(mappedBy = "clinicalManifestationComplaints")
-	public List<Syndrome> syndrome;
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -51,7 +48,6 @@ public class ClinicalManifestationComplaint extends GenericModel {
 				+ ((clinicalManifestationComplainName == null) ? 0 : clinicalManifestationComplainName.hashCode());
 		result = prime * result
 				+ ((clinicalManifestationComplaintId == null) ? 0 : clinicalManifestationComplaintId.hashCode());
-		result = prime * result + ((syndrome == null) ? 0 : syndrome.hashCode());
 		return result;
 	}
 
@@ -73,11 +69,6 @@ public class ClinicalManifestationComplaint extends GenericModel {
 			if (other.clinicalManifestationComplaintId != null)
 				return false;
 		} else if (!clinicalManifestationComplaintId.equals(other.clinicalManifestationComplaintId))
-			return false;
-		if (syndrome == null) {
-			if (other.syndrome != null)
-				return false;
-		} else if (!syndrome.equals(other.syndrome))
 			return false;
 		return true;
 	}
