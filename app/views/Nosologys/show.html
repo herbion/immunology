@@ -7,8 +7,11 @@
 
     <div class="objectForm">
     #{form action:@save(object._key()), enctype:'multipart/form-data'}
-        #{crud.form fields:['nosologyName', 'syndrome', 'complaintTypes'] }
-            *{ crud.custom ...  }*
+            *{ 
+                #{crud.form fields:['nosologyName', 'syndrome', 'complaintTypes'] }
+                crud.custom ...  
+            }*
+        #{crud.form}
         #{/crud.form}
         <p class="crudButtons">
             <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />

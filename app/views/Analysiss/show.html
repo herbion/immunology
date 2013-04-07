@@ -7,7 +7,7 @@
 
     <div class="objectForm">
     #{form action:@save(object._key()), enctype:'multipart/form-data'}
-        #{crud.form fields:['analysisName', 'multyplier', 'analysisType', 'syndrome', 'analysisNorms', 'analysisSubTypes']}
+        #{crud.form fields:['analysisName', 'multyplier', 'analysisType', 'analysisNorms', 'analysisSubTypes']}
         	#{crud.custom 'analysisNorms'}
 	    		<label for="analysisNorms"><a href="@{AnalysisNorms.list()}" class="nonUnderlined">&{'objects.analysisnorms'}</a></label>
 	    		%{analysisNorms = models.AnalysisNorm.find("byAnalysis", object).fetch()}%
@@ -44,7 +44,7 @@
 				</div>
 	    		#{/if}
 	    		#{else}
-					&{'crud.list.empty'}	    		
+					&{'crud.list.empty'}
 	    		#{/else}
         	#{/crud.custom}
         #{/crud.form}

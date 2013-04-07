@@ -9,44 +9,44 @@
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/admin.css'}" />
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery-ui-1.8.20.custom.css'}">
-		<script type="text/javascript" src="@{'/public/jquery/jquery-1.7.2.min.js'}"></script>
-		<script type="text/javascript" src="/public/jquery/jquery-ui-1.8.20.custom.min.js"></script>
-		<script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-uk.js"></script>
-		<script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-ru.js"></script>
-		<script type="text/javascript" src="/public/scripts/admin.js"></script>
+        <script type="text/javascript" src="@{'/public/jquery/jquery-1.7.2.min.js'}"></script>
+        <script type="text/javascript" src="/public/jquery/jquery-ui-1.8.20.custom.min.js"></script>
+        <script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-uk.js"></script>
+        <script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-ru.js"></script>
+        <script type="text/javascript" src="/public/scripts/admin.js"></script>
     </head>
     <script>
         #{include '/public/javascripts/c-ru-d-layout.js'/}
     </script>
 
     <body id="crud">
-		#{header /}
+        #{header /}
 
         <div id="navigation">
-        	<div id="breadcrumb">
-            	#{navigation /}
-        	</div>
-        	<div id="logout">
-            	<a class="logoutLink" href="@{Secure.logout()}">&{'logout'}</a>
-        	</div>
-        	<div id="loggedUser">
-        		<span>[${session.user}]</span>
-        	</div>
+            <div id="breadcrumb">
+                #{navigation /}
+            </div>
+            <div id="logout">
+                <a class="logoutLink" href="@{Secure.logout()}">&{'logout'}</a>
+            </div>
+            <div id="loggedUser">
+                <span>[${session.user}]</span>
+            </div>
         </div>
 
-			#{if flash.success}
+            #{if flash.success}
             <div class="crudFlash flashSuccess">
                 ${flash.success}
             </div>
-			#{/if}
-			#{if flash.error || error}
+            #{/if}
+            #{if flash.error || error}
             <div class="crudFlash flashError">
                 ${error ?: flash.error}
             </div>
-			#{/if}
+            #{/if}
 
         <div id="crudContent">
-			#{doLayout /}
+            #{doLayout /}
         </div>
 
         #{footer /}
