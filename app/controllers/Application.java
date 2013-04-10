@@ -35,8 +35,11 @@ public class Application extends Controller {
     	User loggedUser = User.find("byLogin", Security.connected()).first();
     	boolean isAdmin = loggedUser.isAdminRole();
     	logger.info("loggedUser:" + loggedUser + "; isAdmin: " + isAdmin);
-    	String redirectView = isAdmin ? ADMIN_REDIRECT_VIEW : USER_REDIRECT_VIEW;
-    	redirect(redirectView);
+        if (isAdmin) {
+           redirect(ADMIN_REDIRECT_VIEW); 
+        } else {
+            PatientView.patients();
+        }
     }
     
     public static void changeLanguage(String lang, String currentLocation){
