@@ -10,6 +10,11 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import play.test.Fixtures;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @With(Secure.class)
 public class Application extends Controller {
 
@@ -26,15 +31,6 @@ public class Application extends Controller {
 		}
 	}
 
-	public static void index() {
-		User loggedUser = User.find("byLogin", Security.connected()).first();
-		boolean isAdmin = loggedUser.isAdminRole();
-		logger.info("loggedUser:" + loggedUser + "; isAdmin: " + isAdmin);
-		String redirectView = isAdmin ? ADMIN_REDIRECT_VIEW
-				: USER_REDIRECT_VIEW;
-		redirect(redirectView);
-	}
-
 	public static void changeLanguage(String lang, String currentLocation) {
 		String currentLang = Lang.get();
 		if (!lang.equals(currentLang)) {
@@ -43,4 +39,14 @@ public class Application extends Controller {
 		redirect(currentLocation);
 	}
 
+    public static void index() {
+    	User loggedUser = User.find("byLogin", Security.connected()).first();
+    	boolean isAdmin = loggedUser.isAdminRole();
+    	logger.info("loggedUser:" + loggedUser + "; isAdmin: " + isAdmin);
+        if (isAdmin) {
+           redirect(ADMIN_REDIRECT_VIEW); 
+        } else {
+            PatientView.patients();
+        }
+    }
 }

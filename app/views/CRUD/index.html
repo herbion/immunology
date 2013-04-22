@@ -5,12 +5,8 @@
     #{include '/public/javascripts/c-ru-d-index.js'/}
 </script>
 
-
-
 <div id="crudIndex">
-
     <h2>&{'crud.index.title'}</h2>
-
     <table>
         <thead>
             <tr>
@@ -19,18 +15,17 @@
             </tr>
         </thead>
         <tbody>
-#{crud.types}
-            <tr>
-                <td>
-                	<span class="hiddenLinks">${type.listAction}</span>
-                    &{'objects.' + type.name.toLowerCase()}
-                </td>
-                <td class="crudNew" >
-                    <a href="${type.blankAction}">&{'crud.index.add', type}</a>
-                </td>
-            </tr>
-#{/crud.types}
+            #{crud.types}
+                <tr>
+                    <td>
+                        <span class="hiddenLinks">${type.listAction}</span>
+                        &{'objects.' + type.name.toLowerCase()}
+                    </td>
+                    <td class="crudNew" >
+                        <a href="${type.blankAction}">&{'crud.index.add', type}</a>
+                    </td>
+                </tr>
+            #{/crud.types}
         </tbody>
     </table>
-
 </div>

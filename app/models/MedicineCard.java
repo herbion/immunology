@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,98 +24,95 @@ import play.db.jpa.GenericModel;
 @SequenceGenerator(name = "medicine_card_sequence", sequenceName = "medicine_card_sequence", allocationSize = 1)
 public class MedicineCard extends GenericModel {
 
-	@Id
-	@Column(name = "medicine_card_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicine_card_sequence")
-	public Long medicineCardId;
+    @Id
+    @Column(name = "medicine_card_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicine_card_sequence")
+    public Long medicineCardId;
 
-	@Required
-	@Column(name = "creation_date")
-	public Date creationDate;
+    @Required
+    @Column(name = "creation_date")
+    public Date creationDate;
 
-	@MaxSize(10000)
-	@Column(name = "other_info", length = 10000)
-	public String otherInfo;
+    @MaxSize(10000)
+    @Column(name = "other_info", length = 10000)
+    public String otherInfo;
 
-	@OneToOne(mappedBy = "medicineCard")
-	public Patient patient;
+    @OneToOne(mappedBy = "medicineCard")
+    public Patient patient;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
-	public List<Survey> surveys;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
+    public List<Survey> surveys;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
-	public List<MedicineCardAnamnesis> medicineCardAnamneses;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
+    public List<MedicineCardAnamnesis> medicineCardAnamneses;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
+    public List<MedicineCardAnamnesisDisease>medicineCardAnamnesisDiseases ;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
-	public List<MedicineCardAnamnesisDisease> medicineCardAnamnesisDiseases;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
+    public List<MedicineCardNosology> medicineCardNosologies;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineCard")
-	public List<MedicineCardNosology> medicineCardNosologies;
-
-	@Override
-	public int hashCode() {
+    @Override
+    public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((creationDate == null) ? 0 : creationDate.hashCode());
-		result = prime * result
-				+ ((medicineCardId == null) ? 0 : medicineCardId.hashCode());
-		result = prime * result
-				+ ((otherInfo == null) ? 0 : otherInfo.hashCode());
+		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result + ((medicineCardId == null) ? 0 : medicineCardId.hashCode());
+		result = prime * result + ((otherInfo == null) ? 0 : otherInfo.hashCode());
 		result = prime * result + ((surveys == null) ? 0 : surveys.hashCode());
 		return result;
-	}
+    }
 
-	@Override
-	public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
 		if (this == obj)
-			return true;
+		    return true;
 		if (!super.equals(obj))
-			return false;
+		    return false;
 		if (getClass() != obj.getClass())
-			return false;
+		    return false;
 		MedicineCard other = (MedicineCard) obj;
 		if (creationDate == null) {
-			if (other.creationDate != null)
-				return false;
+		    if (other.creationDate != null)
+			return false;
 		} else if (!creationDate.equals(other.creationDate))
-			return false;
+		    return false;
 		if (medicineCardAnamneses == null) {
-			if (other.medicineCardAnamneses != null)
-				return false;
+		    if (other.medicineCardAnamneses != null)
+			return false;
 		} else if (!medicineCardAnamneses.equals(other.medicineCardAnamneses))
-			return false;
+		    return false;
 		if (medicineCardId == null) {
-			if (other.medicineCardId != null)
-				return false;
+		    if (other.medicineCardId != null)
+			return false;
 		} else if (!medicineCardId.equals(other.medicineCardId))
-			return false;
+		    return false;
 		if (medicineCardNosologies == null) {
-			if (other.medicineCardNosologies != null)
-				return false;
+		    if (other.medicineCardNosologies != null)
+			return false;
 		} else if (!medicineCardNosologies.equals(other.medicineCardNosologies))
-			return false;
+		    return false;
 		if (otherInfo == null) {
-			if (other.otherInfo != null)
-				return false;
+		    if (other.otherInfo != null)
+			return false;
 		} else if (!otherInfo.equals(other.otherInfo))
-			return false;
+		    return false;
 		if (patient == null) {
-			if (other.patient != null)
-				return false;
+		    if (other.patient != null)
+			return false;
 		} else if (!patient.equals(other.patient))
-			return false;
+		    return false;
 		if (surveys == null) {
-			if (other.surveys != null)
-				return false;
-		} else if (!surveys.equals(other.surveys))
+		    if (other.surveys != null)
 			return false;
+		} else if (!surveys.equals(other.surveys))
+		    return false;
 		return true;
-	}
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 		return "MedicineCard/id=" + medicineCardId;
-	}
+    }
 
 }

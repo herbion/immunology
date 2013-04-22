@@ -6,15 +6,14 @@
 
 
 <div id="nosology-info">
-	#{if syndrome != null}
 		<div class="nosology">
 			<div class="nosologyName">&{'survey.nosology'}</div>
 			<div class="nosologyDescription">
 				#{select 'nosologies', class:"nosologiesSelect"}
 					#{option 0} &{'select.nosology'} #{/option}
-					#{list items:models.Nosology.find("bySyndrome", syndrome).fetch(), as:'nosology'}
-						#{option nosology.nosologyId}
-							${nosology.nosologyName}
+					#{list items:_nosologies, as:'nosology'}
+						#{option nosology.id}
+							${nosology.title}
 						#{/option}
 			   		#{/list}
 				#{/select}
@@ -23,5 +22,4 @@
 		<div class="editButtonDiv">
 			<input type="submit" class="editButton" onclick="saveNosology();" id="editAnalysesButton" value="&{'save'}">
 		</div>
-	#{/if}
 </div>

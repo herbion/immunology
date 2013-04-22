@@ -15,10 +15,10 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['name']}
-        #{crud.custom 'name'}
-				<span class="hiddenLinks">@{admin.Syndromes.show(object.syndromeId)}</span>
-				&{object.name}
+        #{crud.table fields:['title']}
+        #{crud.custom 'title'}
+				<span class="hiddenLinks">@{admin.Syndromes.show(object._key())}</span>
+				&{object.title}
 		#{/crud.custom} 
         #{/crud.table}
     </div>

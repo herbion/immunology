@@ -6,9 +6,8 @@
 
 
 <div id="treatment-info">
-	#{if syndrome != null}
-		#{list items: models.TreatmentType.find("bySyndrome", syndrome).fetch(), as:'treatmentType'}
-			<!-- <div class="treatmentTypeName"></div> -->
+	#{if _treatments}
+		#{list items: _treatments, as:'treatmentType'}
 			<h3 class="treatmentTypeName">${treatmentType.treatmentTypeName}</h3>
 			<div>
 	 			#{list items:models.Medication.find("byTreatmentType", treatmentType).fetch(), as:'medication'}

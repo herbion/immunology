@@ -1,33 +1,41 @@
-
 $(function() {
-	$("#tabs").tabs();
+	var init = function () {
+		console.log('init radio buttons');
+		$('#tabs').tabs();
+		$("#selectSyndromeBlock .radio").each(function() {
+			$(this).buttonset();
+		});
+	};
+	init();
 
-	$(".radio").each(function() {
-		$(this).buttonset();
-	});
-
-	$("input[name='synd_radio']").change(function () {
+	$("input[name='synd_radio']").change(function() {
+		$('#tabs').html('Loading');
 		console.log('reloading content id=' + $(this).val());
-		var selectAction = #{jsAction @reloadComplaints(':syndromes') /};
-	    $('#tabs-1').load(selectAction({syndromes: $(this).val()}));
-	    
-	    selectAction = #{jsAction @reloadAnalysis(':syndromes') /};
-	    $('#tabs-2').load(selectAction({syndromes: $(this).val()}));
-	    
-	    selectAction = #{jsAction @reloadClinicalManifestations(':syndromes') /};
-	    $('#tabs-3').load(selectAction({syndromes: $(this).val()}));
 
-	    selectAction = #{jsAction @reloadTreatments(':syndromes') /};
-	    $('#tabs-4').load(selectAction({syndromes: $(this).val()}));
+		var updateAction = #{jsAction @loadContentFrom(':idSurveyObject') /};
+		var id = $(this).val();
 
-	    selectAction = #{jsAction @reloadNosology(':syndromes') /};
-	    $('#tabs-5').load(selectAction({syndromes: $(this).val()}));
+		$('#tabs').html("<center><h1>Loading stuff, wait a sec folks ... <h1></center>");
+
+		$.post(updateAction({
+			idSurveyObject: id
+		}),	function(content) {
+			$('#tabs').html(content);
+			$('#tabs').tabs('destroy'); // ~~~~~~~~ REMOVE THIS LATER ~~~~~~
+			init();
+		});
 	});
 
 	var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');
 	var patientAnchor = $('<a></a>').text("${medicineCard.patient.lastName}" + " " +
-										  "${medicineCard.patient.firstName}" + " " +
-										  "${medicineCard.patient.middleName}")
+									"${medicineCard.patient.firstName}" + " " +
+									"${medicineCard.patient.middleName}")
 									.attr('href', '@{PatientView.show(medicineCard.patient.patientId)}');
-	$('#breadcrumb').append(signRightNav.clone()).append(patientAnchor);
+	var surveyAnchor = $('<a/>').text("&{'survey.new'}")
+								.attr('href', '@{SurveyView.add(medicineCard.medicineCardId)}');
+	$('#breadcrumb').append(signRightNav.clone())
+					.append(patientAnchor)
+					.append(signRightNav.clone())
+					.append(surveyAnchor);
+	
 });

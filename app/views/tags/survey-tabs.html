@@ -1,0 +1,37 @@
+*{ Here must be generic tab template.  }*
+*{ Translate templates params to tags agrs :) }*
+%{
+	if (surveyObject) _surveyObject = surveyObject;
+}%
+
+#{if _surveyObject}
+	<ul>
+		<li><a href="#tabs-1">&{'complaints'}</a></li>
+		<li><a href="#tabs-2">&{'survey.laboratory'}</a></li>
+		<li><a href="#tabs-3">&{'survey.clinic'}</a></li>
+		<li><a href="#tabs-4">&{'survey.treatment'}</a></li>
+		#{if _surveyObject.hasProperty('nosologies')}
+			<li><a href="#tabs-5">&{'survey.nosology'}</a></li>
+		#{/if}
+	</ul>
+	<div id="tabs-1">
+		#{survey.complaints-add-tab complaints: _surveyObject.complaintTypes /}
+	</div>
+	<div id="tabs-2">
+		#{survey.analyses-add-tab analyzes: _surveyObject.analyzes /}
+	</div>
+	<div id="tabs-3">
+		#{survey.clinics-add-tab clinics: _surveyObject.clinicalManifestationComplaints /}
+	</div>
+	<div id="tabs-4">
+		#{survey.treatments-add-tab treatments: _surveyObject.treatmentTypes /}
+	</div>
+	#{if _surveyObject.hasProperty('nosologies')}
+		<div id="tabs-5">
+			#{survey.nosology-add-tab nosologies: _surveyObject.nosologies /}
+		</div>
+	#{/if}
+#{/if}
+#{else}
+	<h1>Будь ласка, виберіть обєкт обстеження зі списку.</h1>
+#{/else}

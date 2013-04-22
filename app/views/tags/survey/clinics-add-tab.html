@@ -5,18 +5,17 @@
 </script>
 
 
-%{	
+*{	
 	clinicalManifestationComplaintBySyndrome = (syndrome != null) ? syndrome.clinicalManifestationComplaints : null;
-
-}%
+}*
 
 <div id="clinics-info">
-	#{if syndrome != null && !syndrome.clinicalManifestationComplaints.isEmpty()}
-		#{list syndrome.clinicalManifestationComplaints, as:'clinicalManifestationComplaint'}
+	#{if _clinics}
+		#{list _clinics, as:'clinicComplaint'}
 			<div class="clinics">
-				<div class="clinicsName">${clinicalManifestationComplaint.clinicalManifestationComplainName}</div>
+				<div class="clinicsName">${clinicComplaint.clinicalManifestationComplainName}</div>
 				<div class="clinicDescriptionArea">
-					#{list clinicalManifestationComplaint.clinicalManifestations, as:'clinicalManifestation'}
+					#{list clinicComplaint.clinicalManifestations, as:'clinicalManifestation'}
 						<div class="clinicsDescription">
 							<input class="clinics-checkbox" type="checkbox">
 							<div class="clinicalManifestationName">${clinicalManifestation.name}</div>

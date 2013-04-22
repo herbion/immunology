@@ -9,8 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,84 +25,71 @@ import com.immunology.enums.AnalysisType;
 @SequenceGenerator(name = "analysis_sequence", sequenceName = "analysis_sequence", allocationSize = 1)
 public class Analysis extends GenericModel {
 
-	@Id
-	@Column(name = "analysis_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "analysis_sequence")
-	public Long analysisId;
+    @Id
+    @Column(name = "analysis_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "analysis_sequence")
+    public Long analysisId;
 
-	@Required
-	@Column(name = "name")
-	public String analysisName;
+    @Required
+    @Column(name = "name")
+    public String analysisName;
+    
+    @Column(name = "multyplier")
+    public Double multyplier;
 
-	@Column(name = "multyplier")
-	public Double multyplier;
+    @Required
+    @Enumerated
+    @Column(name = "type")
+    public AnalysisType analysisType;
 
-	@Required
-	@Enumerated
-	@Column(name = "type")
-	public AnalysisType analysisType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analysis")
+    public List<AnalysisNorm> analysisNorms;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analysis")
+    public List<AnalysisSubType> analysisSubTypes;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "analysis")
-	public List<AnalysisNorm> analysisNorms;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "analysis")
-	public List<AnalysisSubType> analysisSubTypes;
-
-	@ManyToMany(mappedBy = "analyzes")
-	public List<Syndrome> syndrome;
-
-	@Override
-	public int hashCode() {
+    @Override
+    public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((analysisId == null) ? 0 : analysisId.hashCode());
-		result = prime * result
-				+ ((analysisName == null) ? 0 : analysisName.hashCode());
-		result = prime * result
-				+ ((analysisType == null) ? 0 : analysisType.hashCode());
-		result = prime * result
-				+ ((syndrome == null) ? 0 : syndrome.hashCode());
+		result = prime * result + ((analysisId == null) ? 0 : analysisId.hashCode());
+		result = prime * result + ((analysisName == null) ? 0 : analysisName.hashCode());
+		result = prime * result + ((analysisType == null) ? 0 : analysisType.hashCode());
 		return result;
-	}
+    }
 
-	@Override
-	public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
 		if (this == obj)
-			return true;
+		    return true;
 		if (!super.equals(obj))
-			return false;
+		    return false;
 		if (getClass() != obj.getClass())
-			return false;
+		    return false;
 		Analysis other = (Analysis) obj;
 		if (analysisId == null) {
-			if (other.analysisId != null)
-				return false;
+		    if (other.analysisId != null)
+			return false;
 		} else if (!analysisId.equals(other.analysisId))
-			return false;
+		    return false;
 		if (analysisName == null) {
-			if (other.analysisName != null)
-				return false;
+		    if (other.analysisName != null)
+			return false;
 		} else if (!analysisName.equals(other.analysisName))
-			return false;
+		    return false;
 		if (analysisNorms == null) {
-			if (other.analysisNorms != null)
-				return false;
+		    if (other.analysisNorms != null)
+			return false;
 		} else if (!analysisNorms.equals(other.analysisNorms))
-			return false;
+		    return false;
 		if (analysisType != other.analysisType)
-			return false;
-		if (syndrome == null) {
-			if (other.syndrome != null)
-				return false;
-		} else if (!syndrome.equals(other.syndrome))
-			return false;
+		    return false;
 		return true;
-	}
+    }
 
-	@Override
-	public String toString() {
-		return analysisName;
-	}
+    @Override
+    public String toString() {
+	return analysisName;
+    }
 
 }

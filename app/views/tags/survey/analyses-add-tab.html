@@ -4,10 +4,11 @@
     #{include '/public/javascripts/tags-survey-analyses-add-tab.js'/}
 </script>
 
+*{ _analyzes is always 'analyzes' for this tag}*
 
 <div id="analyses-info">
-#{if syndrome != null && !syndrome.analyzes.isEmpty()}
-	#{list items:syndrome.analyzes, as:'analysis'}
+#{if _analyzes}
+	#{list items:_analyzes, as:'analysis'}
 	<div class="analysis">
 		<div class="analysisName">${analysis.analysisName}</div>
 		<input class="analysis-checkbox" type="checkbox">

@@ -1,0 +1,8 @@
+User(bob):
+ firstName: "super-user"
+ lastName: "super-user"
+ middleName: "super-user"
+ login: "super-user"
+ password: "super-user"
+ post: "super-user"
+

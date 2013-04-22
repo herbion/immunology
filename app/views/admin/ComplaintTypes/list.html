@@ -16,7 +16,7 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['complaintTypeName', 'multyplier', 'syndrome', 'nosology', 'complaints'] }
+        #{crud.table fields:['complaintTypeName', 'multyplier', 'complaints'] }
             #{crud.custom 'complaintTypeName'}
                 <span class="hiddenLinks">@{admin.ComplaintTypes.show(object.complaintTypeId)}</span>
                 ${object.complaintTypeName}
@@ -25,10 +25,13 @@
                 <span class="hiddenLinks">@{admin.ComplaintTypes.show(object.complaintTypeId)}</span>
                 ${object.multyplier}
             #{/crud.custom}
+<<<<<<< HEAD:app/views/admin/ComplaintTypes/list.html
             #{crud.custom 'syndrome'}
                 <span class="hiddenLinks">@{admin.Syndromes.show(object.syndrome.syndromeId)}</span>
                 ${object.syndrome.name}
             #{/crud.custom}
+=======
+>>>>>>> ddb7ea36e7e0610bbdfeb8c387cd883435d2ff65:app/views/ComplaintTypes/list.html
         #{/crud.table}
     </div>
 
