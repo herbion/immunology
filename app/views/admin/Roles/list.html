@@ -1,0 +1,38 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('roles') /}
+<script>
+    #{include '/public/javascripts/roles-list.js'/}
+</script>
+
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'roles'}</h2>
+
+    <div id="crudListSearch">
+    #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+    #{crud.table fields:['roleName', 'users']}
+        #{crud.custom 'roleName'}
+            <span class="hiddenLinks">@{admin.Roles.show(object.roleId)}</span>
+        ${object.roleName}
+        #{/crud.custom}
+        #{crud.custom 'users'}
+            <span class="hiddenLinks">@{admin.Users.list()}</span>
+        ${object.users}
+        #{/crud.custom}
+    #{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+    &{'total', models.Role.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'roles.add'}</a>
+    </p>
+
+</div>

@@ -2,8 +2,8 @@ package wrappers;
 
 public class ClinicalManifestationNormWrapper {
 
-    public Long id;
-    
-    public Boolean isChecked;
-    
+	public Long id;
+
+	public Boolean isChecked;
+
 }

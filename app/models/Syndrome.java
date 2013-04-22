@@ -2,9 +2,21 @@ package models;
 
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import play.data.validation.Required;
-import play.db.jpa.*;
+import play.db.jpa.GenericModel;
 
 @Entity
 @Table(name = "syndrome")
@@ -21,27 +33,18 @@ public class Syndrome extends GenericModel {
 	public String name;
 
 	@Column
-    @ManyToMany
-    @JoinTable(name = "syndrome_complaint_type", 
-    	joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), 
-    	inverseJoinColumns = @JoinColumn(name = "complaint_type_id", referencedColumnName = "complaint_type_id")
-    )
+	@ManyToMany
+	@JoinTable(name = "syndrome_complaint_type", joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), inverseJoinColumns = @JoinColumn(name = "complaint_type_id", referencedColumnName = "complaint_type_id"))
 	public List<ComplaintType> complaintTypes;
-	
+
 	@Column
-    @ManyToMany
-    @JoinTable(name = "syndrome_analysis", 
-    	joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), 
-    	inverseJoinColumns = @JoinColumn(name = "analysis_id", referencedColumnName = "analysis_id")
-    )
+	@ManyToMany
+	@JoinTable(name = "syndrome_analysis", joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), inverseJoinColumns = @JoinColumn(name = "analysis_id", referencedColumnName = "analysis_id"))
 	public List<Analysis> analyzes;
 
 	@Column
-    @ManyToMany
-    @JoinTable(name = "syndrome_clinical_manifestation_complaint", 
-    	joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), 
-    	inverseJoinColumns = @JoinColumn(name = "clinical_manifestation_complaint_id", referencedColumnName = "clinical_manifestation_complaint_id")
-    )
+	@ManyToMany
+	@JoinTable(name = "syndrome_clinical_manifestation_complaint", joinColumns = @JoinColumn(name = "syndrome_id", referencedColumnName = "syndrome_id"), inverseJoinColumns = @JoinColumn(name = "clinical_manifestation_complaint_id", referencedColumnName = "clinical_manifestation_complaint_id"))
 	public List<ClinicalManifestationComplaint> clinicalManifestationComplaints;
 
 	@Column
@@ -61,14 +64,21 @@ public class Syndrome extends GenericModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((analyzes == null) ? 0 : analyzes.hashCode());
-		result = prime * result + ((anamnezes == null) ? 0 : anamnezes.hashCode());
 		result = prime * result
-				+ ((clinicalManifestationComplaints == null) ? 0 : clinicalManifestationComplaints.hashCode());
-		result = prime * result + ((complaintTypes == null) ? 0 : complaintTypes.hashCode());
+				+ ((analyzes == null) ? 0 : analyzes.hashCode());
+		result = prime * result
+				+ ((anamnezes == null) ? 0 : anamnezes.hashCode());
+		result = prime
+				* result
+				+ ((clinicalManifestationComplaints == null) ? 0
+						: clinicalManifestationComplaints.hashCode());
+		result = prime * result
+				+ ((complaintTypes == null) ? 0 : complaintTypes.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((syndromeId == null) ? 0 : syndromeId.hashCode());
-		result = prime * result + ((treatmentTypes == null) ? 0 : treatmentTypes.hashCode());
+		result = prime * result
+				+ ((syndromeId == null) ? 0 : syndromeId.hashCode());
+		result = prime * result
+				+ ((treatmentTypes == null) ? 0 : treatmentTypes.hashCode());
 		return result;
 	}
 
@@ -94,7 +104,8 @@ public class Syndrome extends GenericModel {
 		if (clinicalManifestationComplaints == null) {
 			if (other.clinicalManifestationComplaints != null)
 				return false;
-		} else if (!clinicalManifestationComplaints.equals(other.clinicalManifestationComplaints))
+		} else if (!clinicalManifestationComplaints
+				.equals(other.clinicalManifestationComplaints))
 			return false;
 		if (complaintTypes == null) {
 			if (other.complaintTypes != null)

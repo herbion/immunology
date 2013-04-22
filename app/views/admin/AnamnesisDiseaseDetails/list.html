@@ -1,0 +1,36 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.anamnesisdiseasedetails') /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'objects.anamnesisdiseasedetails'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['anamnesisDiseaseDetailName', 'anamnesisDisease']}
+        	#{crud.custom 'anamnesisDiseaseDetailName'}
+           	  <span class="hiddenLinks">@{admin.AnamnesisDiseaseDetails.show(object.anamnesisDiseaseDetailId)}</span>
+		      ${object.anamnesisDiseaseDetailName}
+		   	#{/crud.custom}
+        	#{crud.custom 'anamnesisDisease'}
+              #{if object.anamnesisDisease != null}
+	           	  <span class="hiddenLinks">@{admin.AnamnesisDiseases.show(object.anamnesisDisease.anamnesisDiseaseId)}</span>
+			      ${object.anamnesisDisease.anamnesisDiseaseName}
+		      #{/if}
+		   #{/crud.custom}
+        #{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        &{'total', models.AnamnesisDiseaseDetail.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'anamnesisdiseasedetail.add'}</a>
+    </p>
+
+</div>

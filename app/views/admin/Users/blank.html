@@ -1,0 +1,37 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('user.add') /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'user.add'}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+		#{crud.form fields:['lastName', 'firstName', 'middleName', 'login', 'password', 'post', 'roles'] }
+			#{crud.custom 'roles'}
+             	<label for="roles">
+		            &{'roles'}
+		        </label>
+		        <script>
+    #{include '/public/javascripts/users-blank.js'/}
+</script>
+
+			    <div class="roles-list">
+			        #{list items:models.Role.findAll(), as:'role'}
+			               <span id="${role.roleId}" onclick="toggle(this)" class="${role_isFirst ? 'role selected' : 'role' }" >
+				               ${role.roleName}
+				           </span>
+				           <input id="h${role.roleId}" type="hidden" name="object.roles.roleId" value="${role_isFirst ? role.roleId : '' }" />
+			        #{/list}
+			    </div>
+		    #{/crud.custom}
+       #{/ crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

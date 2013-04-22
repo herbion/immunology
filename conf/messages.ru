@@ -152,7 +152,7 @@ syndrome.autoimmune=Аутоиммунный
 syndrome.immunodeficiencyInfective=Иммунодефицит-инфекционный
 syndrome=синдром
 
-# ================ Complaints ================
+# ================ __Complaints ================
 complaints=Жалобы
 complaints.add=Добавить жалобу
 complaints.edit.title=Редактирование жалобы

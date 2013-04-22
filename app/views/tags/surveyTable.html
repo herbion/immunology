@@ -37,10 +37,10 @@ $(document).ready(function() {
 }%
 
 <div id="surveyAddLink">
-  	<a href="@{surveyView.add(medicineCardId)}">&{'survey.add'}</a>
+  	<a href="@{SurveyView.add(medicineCardId)}">&{'survey.add'}</a>
 </div>
 <div id="surveyAddLink">
-    <a href="@{surveyView.addNosology(medicineCardId)}">Додати обстеження (нозологія)</a>
+    <a href="@{SurveyView.addNosology(medicineCardId)}">Додати обстеження (нозологія)</a>
 </div>
 <table id="surveysTable">
 	<thead>
@@ -63,7 +63,7 @@ $(document).ready(function() {
 			<td>${survey.user.firstName} ${survey.user.lastName}</td>
 			<td align="center">
 				<div class="button_85X13 buttonShow">
-	   				<a class="showSurveyButton" href="@{surveyView.show(survey.surveyId)}">&{'view'}</a>
+	   				<a class="showSurveyButton" href="@{SurveyView.show(survey.surveyId)}">&{'view'}</a>
    				</div>
    				<div class="button_85X13 buttonDelete">
   					<a href="#" class="deleteSurveyButton" id="&{survey.surveyId}">&{'delete'}</a>

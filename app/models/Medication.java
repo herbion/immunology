@@ -40,10 +40,16 @@ public class Medication extends GenericModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((medicationDetails == null) ? 0 : medicationDetails.hashCode());
-		result = prime * result + ((medicationId == null) ? 0 : medicationId.hashCode());
-		result = prime * result + ((medicationName == null) ? 0 : medicationName.hashCode());
-		result = prime * result + ((treatmentType == null) ? 0 : treatmentType.hashCode());
+		result = prime
+				* result
+				+ ((medicationDetails == null) ? 0 : medicationDetails
+						.hashCode());
+		result = prime * result
+				+ ((medicationId == null) ? 0 : medicationId.hashCode());
+		result = prime * result
+				+ ((medicationName == null) ? 0 : medicationName.hashCode());
+		result = prime * result
+				+ ((treatmentType == null) ? 0 : treatmentType.hashCode());
 		return result;
 	}
 

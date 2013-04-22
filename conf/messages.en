@@ -152,7 +152,7 @@ syndrome.autoimmune=Autoimmune
 syndrome.immunodeficiencyInfective=Immunodeficiency-infective
 syndrome=syndrome
 
-# ================ Complaints ================
+# ================ __Complaints ================
 complaints=Complaints
 complaints.add=Add complaint
 complaints.edit.title=Complaint editing

@@ -5,6 +5,7 @@
 # Import Secure routes
 *      /                						module:secure
 *      /objects                					module:crud
+#*	   /admin									module:crud
 
 # Home page
 *      /                						Application.index
@@ -27,3 +28,4 @@ GET     /public/                                staticDir:public
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+#*       /admin/{controller}/{action}            admin.{controller}.{action}

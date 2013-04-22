@@ -1,17 +1,13 @@
 package models;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -64,11 +60,19 @@ public class MedicineCardAnamnesis extends GenericModel {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((beginDate == null) ? 0 : beginDate.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result
+				+ ((beginDate == null) ? 0 : beginDate.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result + ((firstManifestation == null) ? 0 : firstManifestation.hashCode());
-		result = prime * result + ((medicineCardAnamnesisId == null) ? 0 : medicineCardAnamnesisId.hashCode());
+		result = prime
+				* result
+				+ ((firstManifestation == null) ? 0 : firstManifestation
+						.hashCode());
+		result = prime
+				* result
+				+ ((medicineCardAnamnesisId == null) ? 0
+						: medicineCardAnamnesisId.hashCode());
 		return result;
 	}
 
@@ -119,7 +123,8 @@ public class MedicineCardAnamnesis extends GenericModel {
 		if (medicineCardAnamnesisId == null) {
 			if (other.medicineCardAnamnesisId != null)
 				return false;
-		} else if (!medicineCardAnamnesisId.equals(other.medicineCardAnamnesisId))
+		} else if (!medicineCardAnamnesisId
+				.equals(other.medicineCardAnamnesisId))
 			return false;
 		return true;
 	}

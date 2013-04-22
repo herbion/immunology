@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +15,6 @@ import javax.persistence.Table;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
-
-import com.immunology.enums.AnamnesisType;
 
 @Entity
 @Table(name = "analysis_subtype")
@@ -43,9 +40,16 @@ public class AnalysisSubType extends GenericModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((analysis == null) ? 0 : analysis.hashCode());
-		result = prime * result + ((analysisSubTypeId == null) ? 0 : analysisSubTypeId.hashCode());
-		result = prime * result + ((analysisSubTypeName == null) ? 0 : analysisSubTypeName.hashCode());
+		result = prime * result
+				+ ((analysis == null) ? 0 : analysis.hashCode());
+		result = prime
+				* result
+				+ ((analysisSubTypeId == null) ? 0 : analysisSubTypeId
+						.hashCode());
+		result = prime
+				* result
+				+ ((analysisSubTypeName == null) ? 0 : analysisSubTypeName
+						.hashCode());
 		return result;
 	}
 

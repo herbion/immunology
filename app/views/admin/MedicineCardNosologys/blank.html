@@ -1,0 +1,24 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('medicinecardnosology.add') /}
+
+<script>
+    #{include '/public/javascripts/medicine-card-nosologys-blank.js'/}
+</script>
+
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'medicinecardnosology.add'}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+        #{crud.form fields:['description', 'beginDate', 'endDate', 'active', 'nosology', 'medicineCard'] /}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

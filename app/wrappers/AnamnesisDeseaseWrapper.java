@@ -2,10 +2,10 @@ package wrappers;
 
 public class AnamnesisDeseaseWrapper {
 
-    public Long id;
+	public Long id;
 
-    public Boolean isChecked;
+	public Boolean isChecked;
 
-    public String description;
+	public String description;
 
 }

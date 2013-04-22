@@ -58,16 +58,15 @@ public class SurveyView extends Controller {
 		renderTemplate(model);
 	}
 
-    public static void addNosology(Long id) {
-        User user = User.find("byLogin", Security.connected()).first();
-        List<Nosology> nosologies = Nosology.findAll();
-        MedicineCard medicineCard = MedicineCard.findById(id);
+	public static void addNosology(Long id) {
+		User user = User.find("byLogin", Security.connected()).first();
+		List<Nosology> nosologies = Nosology.findAll();
+		MedicineCard medicineCard = MedicineCard.findById(id);
 
-        render(user, nosologies, medicineCard.medicineCardId, medicineCard);
-    }
+		render(user, nosologies, medicineCard.medicineCardId, medicineCard);
+	}
 
-
-    public static void edit(Long id) {
+	public static void edit(Long id) {
 		User user = User.find("byLogin", Security.connected()).first();
 		Survey survey = Survey.findById(id);
 
@@ -171,7 +170,8 @@ public class SurveyView extends Controller {
 
 		for (SurveyAnalysis surveyAnalysis : surveyAnalysisList) {
 			if (surveyAnalysis.isChecked) {
-				if (surveyAnalysis.analysisNorm.analysis.syndrome.equals(syndrome)) {
+				if (surveyAnalysis.analysisNorm.analysis.syndrome
+						.equals(syndrome)) {
 					surveyAnalyses.add(surveyAnalysis);
 				}
 			}
@@ -192,11 +192,14 @@ public class SurveyView extends Controller {
 				clinicalManifestationComplaint = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation.clinicalManifestationComplaint;
 				if (clinicalManifestationComplaint.syndrome.equals(syndrome)) {
 					if (contentMap.containsKey(clinicalManifestationComplaint)) {
-						contentMap.get(clinicalManifestationComplaint).add(surveyClinicalManifestation);
+						contentMap.get(clinicalManifestationComplaint).add(
+								surveyClinicalManifestation);
 					} else {
 						surveyClinicalManifestationList = new ArrayList<SurveyClinicalManifestation>();
-						surveyClinicalManifestationList.add(surveyClinicalManifestation);
-						contentMap.put(clinicalManifestationComplaint, surveyClinicalManifestationList);
+						surveyClinicalManifestationList
+								.add(surveyClinicalManifestation);
+						contentMap.put(clinicalManifestationComplaint,
+								surveyClinicalManifestationList);
 					}
 				}
 			}
@@ -212,7 +215,8 @@ public class SurveyView extends Controller {
 		List<SurveyTreatment> clinicalTreatmentList = survey.surveyTreatments;
 
 		for (SurveyTreatment surveyTreatment : clinicalTreatmentList) {
-			if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome.equals(syndrome)) {
+			if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome
+					.equals(syndrome)) {
 				surveyTreatments.add(surveyTreatment);
 			}
 		}
@@ -278,11 +282,14 @@ public class SurveyView extends Controller {
 			clinicalManifestationComplaint = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation.clinicalManifestationComplaint;
 			if (clinicalManifestationComplaint.syndrome.equals(syndrome)) {
 				if (contentMap.containsKey(clinicalManifestationComplaint)) {
-					contentMap.get(clinicalManifestationComplaint).add(surveyClinicalManifestation);
+					contentMap.get(clinicalManifestationComplaint).add(
+							surveyClinicalManifestation);
 				} else {
 					surveyClinicalManifestationList = new ArrayList<SurveyClinicalManifestation>();
-					surveyClinicalManifestationList.add(surveyClinicalManifestation);
-					contentMap.put(clinicalManifestationComplaint, surveyClinicalManifestationList);
+					surveyClinicalManifestationList
+							.add(surveyClinicalManifestation);
+					contentMap.put(clinicalManifestationComplaint,
+							surveyClinicalManifestationList);
 				}
 			}
 		}
@@ -298,12 +305,14 @@ public class SurveyView extends Controller {
 		List<SurveyTreatment> clinicalTreatmentList = survey.surveyTreatments;
 
 		for (SurveyTreatment surveyTreatment : clinicalTreatmentList) {
-			if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome.equals(syndrome)) {
+			if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome
+					.equals(syndrome)) {
 				surveyTreatments.add(surveyTreatment);
 				medicationDetails.add(surveyTreatment.medicationDetail);
 			}
 		}
-		render("tags/survey/treatmentsEditTab.html", syndrome, surveyTreatments, medicationDetails);
+		render("tags/survey/treatmentsEditTab.html", syndrome,
+				surveyTreatments, medicationDetails);
 	}
 
 	public static void editNosology(Long syndromeId, Long surveyId) {
@@ -317,7 +326,8 @@ public class SurveyView extends Controller {
 	public static void saveComplaints() {
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 		Nosology nosology = null;
 
 		Long surveyId = surveyWrapper.surveyId;
@@ -351,7 +361,8 @@ public class SurveyView extends Controller {
 			for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
 				if (surveyClinicalManifestation.multiplier != null) {
 					maxVal += 3 * surveyClinicalManifestation.multiplier;
-					val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+					val += surveyClinicalManifestation.value
+							* surveyClinicalManifestation.multiplier;
 				}
 			}
 
@@ -374,7 +385,8 @@ public class SurveyView extends Controller {
 
 			if (nosologyComplaintTypes != null) {
 				for (NosologyComplaintType nosologyComplaintType : nosologyComplaintTypes) {
-					if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
+					if (nosologyComplaintType.complaintTypeId
+							.equals(complaintType.complaintTypeId)) {
 						surveyAnswer.multiplier = nosologyComplaintType.multyplier;
 						break;
 					}
@@ -396,7 +408,8 @@ public class SurveyView extends Controller {
 	public static void saveAnalyses() {
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Long surveyId = surveyWrapper.surveyId;
 		Long medicineCardId = surveyWrapper.medicineCardId;
@@ -476,7 +489,8 @@ public class SurveyView extends Controller {
 	public static void saveClinicalManifestations() {
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Long surveyId = surveyWrapper.surveyId;
 		Long medicineCardId = surveyWrapper.medicineCardId;
@@ -519,7 +533,8 @@ public class SurveyView extends Controller {
 		}
 
 		for (ClinicalManifestationNormWrapper clinicalManifestationNormWrapper : clinicalManifestationNormWrappers) {
-			clinicalManifestationNorm = ClinicalManifestationNorm.findById(clinicalManifestationNormWrapper.id);
+			clinicalManifestationNorm = ClinicalManifestationNorm
+					.findById(clinicalManifestationNormWrapper.id);
 			surveyClinicalManifestation = new SurveyClinicalManifestation();
 			surveyClinicalManifestation.survey = survey;
 			surveyClinicalManifestation.clinicalManifestationNorm = clinicalManifestationNorm;
@@ -545,7 +560,8 @@ public class SurveyView extends Controller {
 				}
 			}
 			if (surveyClinicalManifestation.multiplier != null) {
-				val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+				val += surveyClinicalManifestation.value
+						* surveyClinicalManifestation.multiplier;
 				maxVal += 3 * surveyClinicalManifestation.multiplier;
 			}
 		}
@@ -563,7 +579,8 @@ public class SurveyView extends Controller {
 	public static void saveTreatments() {
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Long surveyId = surveyWrapper.surveyId;
 		Long medicineCardId = surveyWrapper.medicineCardId;
@@ -592,18 +609,22 @@ public class SurveyView extends Controller {
 				if (treatmentWrapper.isChecked) {
 					surveyTreatment = new SurveyTreatment();
 					surveyTreatment.survey = survey;
-					surveyTreatment.medicationDetail = MedicationDetail.findById(treatmentWrapper.id);
+					surveyTreatment.medicationDetail = MedicationDetail
+							.findById(treatmentWrapper.id);
 					surveyTreatment.treatmentDescription = treatmentWrapper.description;
 					surveyTreatment.dose = treatmentWrapper.dose;
 					surveyTreatment.multiplicity = treatmentWrapper.multiplicity;
 					if (treatmentWrapper.insertionId != null) {
-						surveyTreatment.insertion = Insertion.findById(treatmentWrapper.insertionId);
+						surveyTreatment.insertion = Insertion
+								.findById(treatmentWrapper.insertionId);
 					}
 					if (treatmentWrapper.therapy != null) {
-						surveyTreatment.therapyType = TherapyType.valueOf(treatmentWrapper.therapy);
+						surveyTreatment.therapyType = TherapyType
+								.valueOf(treatmentWrapper.therapy);
 					}
 					if (treatmentWrapper.allegrenId != null) {
-						surveyTreatment.allergen = Allergen.findById(treatmentWrapper.allegrenId);
+						surveyTreatment.allergen = Allergen
+								.findById(treatmentWrapper.allegrenId);
 					}
 
 					surveyTreatments.add(surveyTreatment);
@@ -621,7 +642,8 @@ public class SurveyView extends Controller {
 	public static void saveNosology() {
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Long surveyId = surveyWrapper.surveyId;
 		Long medicineCardId = surveyWrapper.medicineCardId;
@@ -650,7 +672,8 @@ public class SurveyView extends Controller {
 					surveyAnswer.multiplier = 0.0;
 					complaintType = surveyAnswer.complaint.complaintType;
 					for (NosologyComplaintType nosologyComplaintType : nosology.nosologyComplaintTypes) {
-						if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
+						if (nosologyComplaintType.complaintTypeId
+								.equals(complaintType.complaintTypeId)) {
 							surveyAnswer.multiplier = nosologyComplaintType.multyplier;
 							break;
 						}
@@ -658,7 +681,8 @@ public class SurveyView extends Controller {
 
 					if (surveyAnswer.multiplier != null) {
 						maxVal += 3 * surveyAnswer.multiplier;
-						val += surveyAnswer.answerValue * surveyAnswer.multiplier;
+						val += surveyAnswer.answerValue
+								* surveyAnswer.multiplier;
 					}
 				}
 
@@ -668,7 +692,8 @@ public class SurveyView extends Controller {
 					clinicalManifestation = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation;
 
 					for (NosologyClinicalManifestation nosologyClinicalManifestation : nosology.nosologyClinicalManifestations) {
-						if (nosologyClinicalManifestation.clinicalManifestationId.equals(clinicalManifestation.id)) {
+						if (nosologyClinicalManifestation.clinicalManifestationId
+								.equals(clinicalManifestation.id)) {
 							surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
 							break;
 						}
@@ -676,7 +701,8 @@ public class SurveyView extends Controller {
 
 					if (surveyClinicalManifestation.multiplier != null) {
 						maxVal += 3 * surveyClinicalManifestation.multiplier;
-						val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+						val += surveyClinicalManifestation.value
+								* surveyClinicalManifestation.multiplier;
 					}
 				}
 
@@ -693,15 +719,18 @@ public class SurveyView extends Controller {
 						surveyAnalysis.multiplier = null;
 						analysis = surveyAnalysis.analysisNorm.analysis;
 						for (NosologyAnalysis nosologyAnalysis : nosology.nosologyAnalysis) {
-							if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
+							if (nosologyAnalysis.analysisId
+									.equals(analysis.analysisId)) {
 								surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
 								break;
 							}
 						}
 
-						if (surveyAnalysis.multiplier != null && surveyAnalysis.multiplier != 0) {
+						if (surveyAnalysis.multiplier != null
+								&& surveyAnalysis.multiplier != 0) {
 							maxVal += 3 * surveyAnalysis.multiplier;
-							val += surveyAnalysis.value * surveyAnalysis.multiplier;
+							val += surveyAnalysis.value
+									* surveyAnalysis.multiplier;
 						}
 					}
 				}
@@ -730,7 +759,8 @@ public class SurveyView extends Controller {
 	public static void updateComplaints() {
 		String jsonString = request.params.get("body");
 
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Long surveyId = surveyWrapper.surveyId;
 		List<SurveyAnswerWrapper> surveyAnswerWrappers = surveyWrapper.surveyAnswers;
@@ -746,7 +776,8 @@ public class SurveyView extends Controller {
 			for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
 				if (surveyClinicalManifestation.multiplier != null) {
 					maxVal += 3 * surveyClinicalManifestation.multiplier;
-					val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+					val += surveyClinicalManifestation.value
+							* surveyClinicalManifestation.multiplier;
 				}
 			}
 
@@ -778,7 +809,8 @@ public class SurveyView extends Controller {
 
 	public static void updateAnalyses() {
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Survey survey = Survey.findById(surveyWrapper.surveyId);
 		List<AnalysisNormWrapper> analysisNormWrappers = surveyWrapper.analysesNorms;
@@ -841,7 +873,8 @@ public class SurveyView extends Controller {
 
 	public static void updateClinicalManifestations() {
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Survey survey = Survey.findById(surveyWrapper.surveyId);
 		List<ClinicalManifestationNormWrapper> clinicalManifestationNormWrappers = surveyWrapper.clinicalManifestationNorms;
@@ -867,7 +900,8 @@ public class SurveyView extends Controller {
 		}
 
 		for (ClinicalManifestationNormWrapper clinicalManifestationNormWrapper : clinicalManifestationNormWrappers) {
-			clinicalManifestationNorm = ClinicalManifestationNorm.findById(clinicalManifestationNormWrapper.id);
+			clinicalManifestationNorm = ClinicalManifestationNorm
+					.findById(clinicalManifestationNormWrapper.id);
 			surveyClinicalManifestation = new SurveyClinicalManifestation();
 			surveyClinicalManifestation.survey = survey;
 			surveyClinicalManifestation.clinicalManifestationNorm = clinicalManifestationNorm;
@@ -893,7 +927,8 @@ public class SurveyView extends Controller {
 				}
 			}
 			if (surveyClinicalManifestation.multiplier != null) {
-				val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+				val += surveyClinicalManifestation.value
+						* surveyClinicalManifestation.multiplier;
 				maxVal += 3 * surveyClinicalManifestation.multiplier;
 			}
 		}
@@ -916,7 +951,8 @@ public class SurveyView extends Controller {
 
 	public static void updateTreatments() {
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 
 		Long surveyId = surveyWrapper.surveyId;
 		List<TreatmentWrapper> treatmentWrappers = surveyWrapper.treatments;
@@ -930,18 +966,22 @@ public class SurveyView extends Controller {
 				if (treatmentWrapper.isChecked) {
 					surveyTreatment = new SurveyTreatment();
 					surveyTreatment.survey = survey;
-					surveyTreatment.medicationDetail = MedicationDetail.findById(treatmentWrapper.id);
+					surveyTreatment.medicationDetail = MedicationDetail
+							.findById(treatmentWrapper.id);
 					surveyTreatment.treatmentDescription = treatmentWrapper.description;
 					surveyTreatment.dose = treatmentWrapper.dose;
 					surveyTreatment.multiplicity = treatmentWrapper.multiplicity;
 					if (treatmentWrapper.insertionId != null) {
-						surveyTreatment.insertion = Insertion.findById(treatmentWrapper.insertionId);
+						surveyTreatment.insertion = Insertion
+								.findById(treatmentWrapper.insertionId);
 					}
 					if (treatmentWrapper.therapy != null) {
-						surveyTreatment.therapyType = TherapyType.valueOf(treatmentWrapper.therapy);
+						surveyTreatment.therapyType = TherapyType
+								.valueOf(treatmentWrapper.therapy);
 					}
 					if (treatmentWrapper.allegrenId != null) {
-						surveyTreatment.allergen = Allergen.findById(treatmentWrapper.allegrenId);
+						surveyTreatment.allergen = Allergen
+								.findById(treatmentWrapper.allegrenId);
 					}
 
 					surveyTreatments.add(surveyTreatment);
@@ -961,7 +1001,8 @@ public class SurveyView extends Controller {
 
 	public static void updateNosology() {
 		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString,
+				SurveyWrapper.class);
 		Long surveyId = surveyWrapper.surveyId;
 		Long nosologyId = surveyWrapper.nosologyId;
 
@@ -981,13 +1022,15 @@ public class SurveyView extends Controller {
 				surveyAnswer.multiplier = null;
 				complaintType = surveyAnswer.complaint.complaintType;
 				for (NosologyComplaintType nosologyComplaintType : survey.nosology.nosologyComplaintTypes) {
-					if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
+					if (nosologyComplaintType.complaintTypeId
+							.equals(complaintType.complaintTypeId)) {
 						surveyAnswer.multiplier = nosologyComplaintType.multyplier;
 						break;
 					}
 				}
 
-				if (surveyAnswer.multiplier != null && surveyAnswer.multiplier != 0) {
+				if (surveyAnswer.multiplier != null
+						&& surveyAnswer.multiplier != 0) {
 					maxVal += 3 * surveyAnswer.multiplier;
 					val += surveyAnswer.answerValue * surveyAnswer.multiplier;
 				}
@@ -999,7 +1042,8 @@ public class SurveyView extends Controller {
 				clinicalManifestation = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation;
 
 				for (NosologyClinicalManifestation nosologyClinicalManifestation : survey.nosology.nosologyClinicalManifestations) {
-					if (nosologyClinicalManifestation.clinicalManifestationId.equals(clinicalManifestation.id)) {
+					if (nosologyClinicalManifestation.clinicalManifestationId
+							.equals(clinicalManifestation.id)) {
 						surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
 						break;
 					}
@@ -1007,7 +1051,8 @@ public class SurveyView extends Controller {
 
 				if (surveyClinicalManifestation.multiplier != null) {
 					maxVal += 3 * surveyClinicalManifestation.multiplier;
-					val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+					val += surveyClinicalManifestation.value
+							* surveyClinicalManifestation.multiplier;
 				}
 			}
 
@@ -1023,13 +1068,15 @@ public class SurveyView extends Controller {
 					surveyAnalysis.multiplier = null;
 					analysis = surveyAnalysis.analysisNorm.analysis;
 					for (NosologyAnalysis nosologyAnalysis : survey.nosology.nosologyAnalysis) {
-						if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
+						if (nosologyAnalysis.analysisId
+								.equals(analysis.analysisId)) {
 							surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
 							break;
 						}
 					}
 
-					if (surveyAnalysis.multiplier != null && surveyAnalysis.multiplier != 0) {
+					if (surveyAnalysis.multiplier != null
+							&& surveyAnalysis.multiplier != 0) {
 						maxVal += 3 * surveyAnalysis.multiplier;
 						val += surveyAnalysis.value * surveyAnalysis.multiplier;
 					}

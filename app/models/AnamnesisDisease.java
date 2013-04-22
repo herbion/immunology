@@ -47,9 +47,16 @@ public class AnamnesisDisease extends GenericModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((anamnesisDiseaseId == null) ? 0 : anamnesisDiseaseId.hashCode());
-		result = prime * result + ((anamnesisDiseaseName == null) ? 0 : anamnesisDiseaseName.hashCode());
-		result = prime * result + ((syndrome == null) ? 0 : syndrome.hashCode());
+		result = prime
+				* result
+				+ ((anamnesisDiseaseId == null) ? 0 : anamnesisDiseaseId
+						.hashCode());
+		result = prime
+				* result
+				+ ((anamnesisDiseaseName == null) ? 0 : anamnesisDiseaseName
+						.hashCode());
+		result = prime * result
+				+ ((syndrome == null) ? 0 : syndrome.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
