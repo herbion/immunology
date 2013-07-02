@@ -6,6 +6,7 @@ crud.index.title=Выберите обьект для редактировани
 crud.index.objectType=Тип обьекта
 crud.index.action=
 crud.index.add=Добавить
+crud.index.list=Список
 crud.add=Добавить &{%s}
 crud.list.title=&{%s}
 crud.list.size=%d &{%s}
@@ -49,6 +50,7 @@ crud.help.range=Между %d и %d
 # ================= CRUD Main Page =====================
 objects.complaints=Жалобы
 objects.complainttypes=Типы жалоб
+#ComplaintTypes=Типы жалоб
 objects.medicinecards=Медицинские карты
 objects.patients=Пациенты
 objects.roles=Роли

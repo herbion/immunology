@@ -10,8 +10,7 @@
 
     <div class="objectForm">
     #{form action:@save(object._key()), enctype:'multipart/form-data'}
-    	#{crud.form fields:['creationDate', 'otherInfo', 'surveys', 'patient', 'medicineCardAnamneses',
-    		'medicineCardAnamnesisDiseases',  'medicineCardNosologies']}
+    	#{crud.form fields:['creationDate', 'otherInfo', 'surveys', 'patient', 'medicineCardAnamneses', 'medicineCardAnamnesisDiseases',  'medicineCardNosologies']}
            	#{crud.custom 'surveys'}
 		    	%{surveyList = controllers.Surveys.getSurveysListByMedicineCardId(object);}%
 		    	<label>&{'surveys'}</label>

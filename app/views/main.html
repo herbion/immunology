@@ -35,11 +35,18 @@
 	#{get 'moreScripts' /}
 </head>
 <body id="immunology">
+
+	
 	#{header /}
 	#{breadcrumb user: user/}
 	
 	<div id="content">
 		#{doLayout /}
 	</div>
+	
+	#{secure.check "admin"}
+		<p style="text-align: center; margin-bottom: 20px;">So, you're kind of admin guy here is your page -> 
+			<a href="@{CRUD.index()}">Administration page</a></p>
+	#{/secure.check}
 </body>
 </html>

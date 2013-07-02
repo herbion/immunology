@@ -2,14 +2,16 @@
 #{set title:messages.get('complaints') /}
 
 <script>
-    #{include '/public/javascripts/complaints-list.js'/}
+#{include '/public/javascripts/complaints-list.js'/}
 </script>
 
 
 
 <div id="crudList" class="${type.name}">
 
-    <h2 id="crudListTitle">&{'complaints'}</h2>
+    #{set 'block-title'}
+        &{'complaints'}
+    #{/set}
 
     <div id="crudListSearch">
         #{crud.search /}
@@ -17,15 +19,14 @@
 
     <div id="crudListTable">
         #{crud.table fields:['complaintName', 'complaintType'] }
-           #{crud.custom 'complaintName'}
-           	  <span class="hiddenLinks">@{admin.Complaints.show(object.complaintId)}</span>
-		      ${object.complaintName}
-		   #{/crud.custom}
-		   #{crud.custom 'complaintType'}
-		      <span class="hiddenLinks">@{admin.ComplaintTypes.show(object.complaintType.complaintTypeId)}</span>
-		      ${object.complaintType.complaintTypeName}
-		   #{/crud.custom}
-		#{/ crud.table}
+        #{crud.custom 'complaintName'}
+            <a href="@{admin.Complaints.show(object.complaintId)}">${object.complaintName}</a>
+        #{/crud.custom}
+        #{crud.custom 'complaintType'}
+        <span class="hiddenLinks">@{admin.ComplaintTypes.show(object.complaintType.complaintTypeId)}</span>
+        ${object.complaintType.complaintTypeName}
+        #{/crud.custom}
+        #{/ crud.table}
     </div>
 
     <div id="crudListPagination">

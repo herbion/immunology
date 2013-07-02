@@ -6,6 +6,7 @@ crud.index.title=Виберіть об'єкт для редагування
 crud.index.objectType=Тип об'єкта
 crud.index.action=
 crud.index.add=Додати
+crud.index.list=Список
 crud.add=Додати &{%s}
 crud.list.title=&{%s}
 crud.list.size=%d &{%s}

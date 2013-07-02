@@ -2,49 +2,30 @@
 #{set title:messages.get('complaintTypes.edit') /}
 
 <div id="crudShow" class="${type.name}">
+    #{set 'block-title'}
+        &{'complaintTypes.edit'}
+    #{/set}
 
-    <h2 id="crudShowTitle">&{'complaintTypes.edit'}</h2>
+    #{set 'info'}
+        edit
+    #{/set}
 
     <div class="objectForm">
-    #{form action:@save(object._key()), enctype:'multipart/form-data'}
-        #{crud.form fields:['complaintTypeName', 'multyplier', 'syndrome', 'complaints'] }
-			#{crud.custom 'syndrome'}
-        	   <label for="${syndrome}">&{'syndrome'}</label>
-		       #{select 'object.syndrome.syndromeId', items:models.Syndrome.findAll(), valueProperty:'syndromeId', 
-		       		labelProperty:'name', value:object.syndrome.syndromeId, id:'syndromeSelector' /}
-        	#{/crud.custom}
-        	
-        	#{crud.custom 'complaints'}
-	    		<label for="${complaints}"><a href="@{admin.Complaints.list()}" class="nonUnderlined">&{'objects.complaints'}</a></label>
-	    		%{complaints = models.Complaint.find("byComplaintType", object).fetch()}%
-	    		#{if complaints != null && !complaints.isEmpty() }
-	    		<div class="list">
-					#{list items:complaints, as:'complaint'}
-						<li>
-							<span id="${complaint.complaintId}" class="hiddenLinks">
-								@{admin.Complaints.show(complaint.complaintId)}
-					        </span>
-					        ${complaint.complaintName}
-				        </li>
-				    #{/list}
-	    		</div>
-	    		#{/if}
-	    		#{else}
-					&{'crud.list.empty'}	    		
-	    		#{/else}
-        	#{/crud.custom}
+    #{form action:@save(object._key()), enctype:'multipart/form-data', class:"form-horizontal"}
+        #{crud.form fields:['complaintTypeName', 'multyplier', 'complaints'] }
         #{/crud.form}
-        <p class="crudButtons">
-            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
-            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
-        </p>
+
+        <div class="form-actions">
+           <button type="submit" class="btn btn-primary">&{'crud.save', type.modelName}</button>
+           <button type="button" class="btn">&{'crud.cancel', type.modelName} </button>
+           <button type="submit" 
+                  class="btn btn-danger pull-right" 
+                  name="_delete" 
+                  onclick="if (confirm('&{'complaintTypes.delete'}')) { $('#deleteObject').submit();} return false;  "
+                value="" > &{'complaintTypes.delete'}
+            </button> 
+        </div>
     #{/form}
+    #{form @delete(object._key()), id:"deleteObject", class: "invisible"}#{/form}
     </div>
-
-    #{form @delete(object._key())}
-        <p class="crudDelete">
-            <input type="submit" value="&{'complaintTypes.delete'}" onclick="return confirm('&{'complaintTypes.delete'}')"/>
-        </p>
-    #{/form}
-
 </div>

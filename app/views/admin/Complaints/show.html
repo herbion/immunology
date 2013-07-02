@@ -10,8 +10,13 @@
         #{crud.form }
 			#{crud.custom 'complaintType'}
         	    <label for="${medicineCard}">&{'complaintType'}</label>
-		       #{select 'object.complaintType.complaintTypeId', items:models.ComplaintType.findAll(), valueProperty:'complaintTypeId', 
-		       		labelProperty:'complaintTypeName', value:object.complaintType.complaintTypeId, id:'complaintTypeSelector' /}
+		       #{select 'object.complaintType.complaintTypeId', 
+                    items:models.ComplaintType.findAll(), 
+                    valueProperty:'complaintTypeId', 
+		       		labelProperty:'complaintTypeName', 
+                    value:object.complaintType.complaintTypeId, 
+                    id:'complaintTypeSelector' 
+                /}
         	#{/crud.custom}
         #{/crud.form}
         <p class="crudButtons">

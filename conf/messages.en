@@ -1,3 +1,6 @@
+# crud sections
+#crud.dashboard
+
 # EN locale CRUD messages
 crud.title=Administration
 crud.home=Home
@@ -6,6 +9,7 @@ crud.index.title=Choose the object to edit
 crud.index.objectType=Object type
 crud.index.action=
 crud.index.add=Add
+crud.index.list=List
 crud.add=Add &{%s}
 crud.list.title=&{%s}
 crud.list.size=%d &{%s}

@@ -22,4 +22,4 @@ server.pid
 *.ipr
 *.iws
 docs
-*.log
+*.log*

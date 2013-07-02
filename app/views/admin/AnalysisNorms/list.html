@@ -1,40 +1,40 @@
 #{extends 'CRUD/layout.html' /}
-#{set title:messages.get('objects.analysisnorms') /}
-
-<script>
-    #{include '/public/javascripts/analysis-norms-list.js'/}
-</script>
-
-
+#{set title:messages.get('crud.list.title', type.name) /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
 
 <div id="crudList" class="${type.name}">
+    <!-- Block title -->
+    #{set 'block-title'}
+        <a href="@{blank()}" class="tooltip-top" data-original-title="${ messages.get('crud.blank.title', translatedTitle ) }">
+            <i class="icon-plus-sign"></i>
+        </a>
+        ${translatedTitle}
+    #{/set}
 
-    <h2 id="crudListTitle">&{'objects.analysisnorms'}</h2>
+    <!-- Add additional info about entity to block -->
+    #{set 'info' }
+        '&{'total', models.AnalysisNorm.count()}'
+    #{/set}
 
-    <div id="crudListSearch">
+    <!-- Add search input to block -->
+    #{set 'search'}
         #{crud.search /}
-    </div>
-
+    #{/set}
+    
     <div id="crudListTable">
         #{crud.table fields:['analysis', 'description', 'unit'] }
            #{crud.custom 'analysis'}
-           	  <span class="hiddenLinks">@{admin.Analysiss.show(object.analysis.analysisId)}</span>
-		      ${object.analysis.analysisName}
-		   #{/crud.custom}
+              <a href="@{admin.Analysiss.show(object.analysis.analysisId)}">${object.analysis.analysisName}</a>          
+       #{/crud.custom}
            #{crud.custom 'description'}
-           	  <span class="hiddenLinks">@{admin.AnalysisNorms.show(object.analysisNormId)}</span>
-		      ${object.description}
-		   #{/crud.custom}
-		#{/ crud.table}
+              <a href="@{admin.AnalysisNorms.show(object.analysisNormId)}">${object.description}</a>
+       #{/crud.custom}
+    #{/ crud.table}
     </div>
 
     <div id="crudListPagination">
-    	&{'total', models.AnalysisNorm.count()}
-        #{pagination /}
+        #{crud.pagination /}
     </div>
-
-    <p id="crudListAdd">
-        <a href="@{blank()}">&{'analysisnorm.add'}</a>
-    </p>
-
 </div>

@@ -4,9 +4,9 @@
 
 # Import Secure routes
 *      /                						module:secure
-*      /objects                					module:crud
-#*	   /admin									module:crud
-
+*	   /admin/classic							admin.MainController.oldIndex
+*	   /admin									module:crud
+* /asd module:crud
 # Home page
 *      /                						Application.index
 
@@ -25,7 +25,6 @@ GET      /patients                              PatientView.patients
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

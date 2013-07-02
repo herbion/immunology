@@ -1,0 +1,17 @@
+    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+        <li>
+            <a href="@{CRUD.index()}"><i class="icon-chevron-right"></i> Категорії</a>
+        </li>
+        <li>
+            <a href="@{admin.ComplaintTypes.list()}"><i class="icon-chevron-right"></i> Скарги</a>
+        </li>
+        <li>
+            <a href="#"><i class="icon-chevron-right"></i> Лабораторні дані</a>
+        </li>
+        <li>
+            <a href="#"><i class="icon-chevron-right"></i> Клінічні прояви</a>
+        </li>
+        <li>
+            <a href="@{admin.MedicineCards.list()}"><span class="badge badge-info pull-right">${models.MedicineCard.count()}</span> Медичні картки</a>
+        </li>
+    </ul>

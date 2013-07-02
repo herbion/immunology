@@ -1,31 +1,133 @@
 #{extends 'CRUD/layout.html' /}
 #{set title:messages.get('crud.title') /}
 
-<script>
-    #{include '/public/javascripts/c-ru-d-index.js'/}
-</script>
 
-<div id="crudIndex">
-    <h2>&{'crud.index.title'}</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>&{'crud.index.objectType'}</th>
-                <th width="20%">&{'crud.index.action'}</th>
-            </tr>
-        </thead>
-        <tbody>
-            #{crud.types}
-                <tr>
-                    <td>
-                        <span class="hiddenLinks">${type.listAction}</span>
-                        &{'objects.' + type.name.toLowerCase()}
-                    </td>
-                    <td class="crudNew" >
-                        <a href="${type.blankAction}">&{'crud.index.add', type}</a>
-                    </td>
-                </tr>
-            #{/crud.types}
-        </tbody>
-    </table>
-</div>
+%{
+    models = [];
+    for(controllerClass in play.Play.classloader.getAssignableClasses(_('controllers.CRUD'))) {
+        resourceModel = _('controllers.CRUD$ObjectType').get(controllerClass)
+        if(resourceModel != null) {
+            models.add(resourceModel)
+        }
+    }
+    for(controllerClass in play.Play.classloader.getAssignableClasses(_('play.scalasupport.crud.CRUDWrapper'))) {
+        resourceModel = _('controllers.CRUD$ObjectType').get(controllerClass)
+        if(resourceModel != null) {
+            models.add(resourceModel)
+        }
+    }
+    java.util.Collections.sort(models)
+}%
+
+%{ attrs = [:];
+   models.eachWithIndex() { item, i -> }%
+    %{
+        
+        attrs.put(item.toString(), item)
+    }%
+%{ } }%
+
+#{set 'custom'}true!#{/set}
+
+<div id="index" class="">
+    <div class="hero-unit">
+        <div class="well">
+            <h2>&{'crud.index.title'}</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <a href="@{admin.MainController.oldIndex()}" class="btn btn-primary pull-right">Link to <i>Classic</i> page</a>
+        </div>
+    <!-- </div> -->
+            <div class="row">
+                #{ admin.block title:'patients' }
+                    #{admin.mini type: attrs.get('Patient') /}
+                    #{admin.mini type: attrs.get('User') /}
+                    #{admin.mini type: attrs.get('Role') /}
+                #{/admin.block }
+
+                #{ admin.block title:'clinicalmanifestations' }
+                    #{admin.mini type: attrs.get('ClinicalManifestation') /}
+                    #{admin.mini type: attrs.get('ClinicalManifestationComplaint') /}
+                    #{admin.mini type: attrs.get('ClinicalManifestationNorm') /}
+                #{/admin.block }
+
+                #{ admin.block title:'insertions' }
+                    #{admin.mini type: attrs.get('Insertion') /}
+                    #{admin.mini type: attrs.get('Medication') /}
+                    #{admin.mini type: attrs.get('MedicationDetail') /}
+                #{/admin.block }
+            </div>
+            <div class="row">            
+                #{ admin.block title:'medicinecards' }
+                    #{admin.mini type: attrs.get('MedicineCard') /}
+                    #{admin.mini type: attrs.get('MedicineCardAnamnesis') /}
+                    #{admin.mini type: attrs.get('MedicineCardAnamnesisDisease') /}
+                    #{admin.mini type: attrs.get('MedicineCardNosology') /}
+                #{/admin.block }
+
+                #{ admin.block title:'surveys' }
+                    #{admin.mini type: attrs.get('Survey') /}
+                    #{admin.mini type: attrs.get('SurveyAnalysis') /}
+                    #{admin.mini type: attrs.get('SurveyAnswer') /}
+                    #{admin.mini type: attrs.get('SurveyClinicalManifestation') /}
+                    #{admin.mini type: attrs.get('SurveyTreatment') /}
+                #{/admin.block }
+
+                #{ admin.block title:'anamnesiss' }
+                    #{admin.mini type: attrs.get('Anamnesis') /}
+                    #{admin.mini type: attrs.get('AnamnesisDetail') /}
+                    #{admin.mini type: attrs.get('AnamnesisDetailValue') /}
+                    #{admin.mini type: attrs.get('AnamnesisDisease') /}
+                    #{admin.mini type: attrs.get('AnamnesisDiseaseDetail') /}
+                #{/admin.block }
+
+            </div>
+            <div class="row">
+                #{ admin.block title:'nosologyanalysiss' }
+                    #{admin.mini type: attrs.get('NosologyAnalysis') /}
+                    #{admin.mini type: attrs.get('NosologyClinicalManifestation') /}
+                    #{admin.mini type: attrs.get('NosologyComplaintType') /}
+                #{/admin.block }
+
+                #{ admin.block title:'nosologys' }
+                    #{admin.mini type: attrs.get('Nosology') /}
+                    #{admin.mini type: attrs.get('SurveyObject') /}
+                    #{admin.mini type: attrs.get('Syndrome') /}
+                    #{admin.mini type: attrs.get('TreatmentType') /}
+                #{/admin.block }
+                #{ admin.block title:'analysiss', span:4}
+                    #{admin.mini type: attrs.get('Analysis') /}
+                    #{admin.mini type: attrs.get('AnalysisDetail') /}
+                    #{admin.mini type: attrs.get('AnalysisNorm') /}
+                    #{admin.mini type: attrs.get('AnalysisSubType') /}
+                #{/admin.block }
+            </div>
+            <div class="row">
+                #{ admin.block title:'allergens', span:4}
+                    #{admin.mini type: attrs.get('Allergen') /}
+                #{/admin.block }
+                
+                #{ admin.block title:'complaints', span:4}
+                    #{admin.mini type: attrs.get('Complaint') /}
+                    #{admin.mini type: attrs.get('ComplaintType') /}
+                #{/admin.block }
+            </div>
+        </div>
+        #{set 'moreSideBars'}
+            <div class="counters">
+                #{admin.block span:10, title: 'counters'}
+                     #{crud.types}
+                     <blockquote>
+                        <p>
+                            <a href="${type.listAction}">&{'objects.' + type.name.toLowerCase()} <span class="badge badge-info">${type.count(null, '', '1=1')}</span></a>
+                        </p>
+                    </blockquote>
+                    #{/crud.types}
+                #{/admin.block}
+            </div>
+        #{/set}
+    </div>

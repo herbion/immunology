@@ -1,0 +1,31 @@
+<ul class="breadcrumb">
+    <i class="icon-chevron-left hide-sidebar">
+        <a href='#' title="Hide Sidebar" rel='tooltip'>&nbsp;</a>
+    </i>
+    <i class="icon-chevron-right show-sidebar" style="display:none;">
+        <a href="#" title="Show Sidebar" rel="tooltip">&nbsp;</a>
+    </i>
+    
+    <li><a href="@{CRUD.index()}">&{'crud.home'}</a></li>
+    #{if _caller.type}
+        <li><span class="divider">/</span> 
+            <a href="@{list()}">
+                &{'objects.' + _caller.type.name.toLowerCase()}
+            </a>
+        </li>
+    #{/if}
+    #{if _caller.object?._key()}
+        <li><span class="divider">/</span> 
+            <a href="@{show(_caller.object._key())}">
+                ${_caller.object?.toString()?.escape()?.raw()}
+            </a>
+        </li>
+    #{/if}
+    #{if request.actionMethod == 'blank' || request.actionMethod == 'create'}
+        <li><span class="divider">/</span> 
+            <a href="@{blank()}">
+                &{'crud.blank'}
+            </a>
+        </li>
+    #{/if}
+</ul>

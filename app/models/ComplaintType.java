@@ -39,7 +39,7 @@ public class ComplaintType extends GenericModel {
     // @ManyToMany(mappedBy = "complaintTypes")
     // public List<Nosology> nosology;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "complaintType")
+    @OneToMany
     public List<Complaint> complaints;
 
     @Override

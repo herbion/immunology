@@ -1,44 +1,73 @@
 #{extends 'CRUD/layout.html' /}
-#{set title:messages.get('medication.edit') /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
+#{set title:messages.get('crud.show.title', translatedTitle) /}
 
 <div id="crudShow" class="${type.name}">
+    #{set 'block-title'}
+        ${ messages.get('crud.show.title', translatedTitle ) }
+    #{/set}
 
-    <h2 id="crudShowTitle">&{'medication.edit'}</h2>
+    #{set 'info'}
+        Edit
+    #{/set}
 
     <div class="objectForm">
-    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+    #{form action:@save(object._key()), enctype:'multipart/form-data', class:'form-horizontal'}
         #{crud.form fields:['medicationName', 'treatmentType', 'medicationDetails']}
-        	#{crud.custom 'medicationDetails'}
-	    		<label for="nosologyTypes"><a href="@{admin.MedicationDetails.list()}" class="nonUnderlined">&{'objects.medicationdetails'}</a></label>
-	    		%{medicationDetails = models.MedicationDetail.find("byMedication", object).fetch()}%
-	    		#{if medicationDetails != null && !medicationDetails.isEmpty()}
-	    		<div class="list">
-					#{list items:medicationDetails, as:'medicationDetail'}
-			           	<li>
-			           		<span id="${medicationDetail.medicationDetailId}" class="hiddenLinks">
-								@{admin.MedicationDetails.show(medicationDetail.medicationDetailId)}
-			        		</span>
-			        		${medicationDetail.medicationDetailName}
-		        		</li>
-				    #{/list}
-				</div>
-				#{/if}
-	    		#{else}
-					&{'crud.list.empty'}
-				#{/else}
-        	#{/crud.custom}
+          #{crud.custom 'medicationDetails'}
+          <div class="control-group">
+                <label for="" class="control-label">
+                    <label for="nosologyTypes">
+
+                        <a href="@{admin.MedicationDetails.list()}" class="nonUnderlined">&{'objects.medicationdetails'}</a>
+                    </label>
+                </label>
+                <div class="controls">
+                    #{if object.medicationDetails != null && !object.medicationDetails.isEmpty()}
+                        <ul class="square-list">
+                            #{list items:object.medicationDetails, as:'_'}
+                                  <li>
+                                    <a href="@{admin.MedicationDetails.show(_._key())}" 
+                                       class="muted details">
+                                       ${_.medicationDetailName}
+                                       <i class="icon-search tooltip-right" data-original-title="Відкрити деталі"></i>
+                                   </a>                                  
+                                </li>
+                            #{/list}
+                        </ul>
+                    #{/if}
+                    #{else}
+                        &{'crud.list.empty'}
+                    #{/else}
+                </div>
+            </div>  
+          
+
+          #{/crud.custom}
         #{/crud.form}
-        <p class="crudButtons">
-            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
-            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
-        </p>
+        <div class="form-actions">
+           <button type="submit" 
+                   name="_save" 
+                   class="btn btn-primary">
+                   &{'crud.save', type.modelName}
+           </button>
+           <button type="button" class="btn">
+            &{'crud.cancel', type.modelName}
+           </button>
+           <button type="submit" 
+                  class="btn btn-danger pull-right" 
+                  name="_delete" 
+                  onclick="if (confirm('&{'crud.delete', object}')) { $('#deleteObject').submit();} return false;  "
+                value="" > &{'crud.delete', '"' + object.toString() + '"'}
+            </button> 
+        </div>
     #{/form}
     </div>
-
-    #{form @delete(object._key())}
-        <p class="crudDelete">
-            <input type="submit" value="&{'medication.delete'}" onclick="return confirm('&{'medication.delete'}')"/>
-        </p>
+    #{form @delete(object._key()), 
+           id:"deleteObject", 
+           class: "invisible"}
     #{/form}
-
 </div>
+

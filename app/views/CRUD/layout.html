@@ -1,55 +1,134 @@
 <!DOCTYPE html>
-
-<html lang="${lang}">
+<html class="no-js">    
     <head>
         <title>#{get 'title' /}</title>
-        <meta charset="${_response_encoding}" />
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/admin.css'}" />
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery-ui-1.8.20.custom.css'}">
-        <script type="text/javascript" src="@{'/public/jquery/jquery-1.7.2.min.js'}"></script>
-        <script type="text/javascript" src="/public/jquery/jquery-ui-1.8.20.custom.min.js"></script>
-        <script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-uk.js"></script>
-        <script type="text/javascript" src="/public/jquery/jquery.ui.datepicker-ru.js"></script>
-        <script type="text/javascript" src="/public/scripts/admin.js"></script>
+        <!-- Bootstrap -->
+        #{stylesheet "bootstrap/bootstrap.min.css" /}
+        #{stylesheet "bootstrap/bootstrap-responsive.min.css" /}
+
+
+        <!-- Vendors -->
+        #{stylesheet "vendors/chosen.css" /}
+        #{stylesheet "vendors/opa-icons.css" /}
+
+        <!-- Override bootstrap -->
+        #{stylesheet "admin.css" /}
+        <!-- More styles for tags -->
+        #{get 'moreStyles' /}
+        
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        #{script "vendors/modernizr-2.6.2-respond-1.1.0.min.js" /}
     </head>
-    <script>
-        #{include '/public/javascripts/c-ru-d-layout.js'/}
-    </script>
+    
+    <body>
 
-    <body id="crud">
-        #{header /}
-
-        <div id="navigation">
-            <div id="breadcrumb">
-                #{navigation /}
+        <!-- navbar -->
+        #{admin.navbar /}
+        <!-- end navbar -->
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <!-- sidedar -->
+                <div class="span3" id="sidebar">
+                    #{admin.sidebar /}
+                    #{get 'moreSideBars' /}
+                </div>
+                <!-- end sidebar -->
+                <div class="span9" id="content">
+                    <div class="row-fluid">
+                        #{if flash.success}
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                ${flash.success}
+                            </div>
+                        #{/if}
+                        #{if flash.error || error}
+                            <div class="alert alert-error">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                ${error ?: flash.error}
+                            </div>
+                        #{/if}
+                            <div class="navbar">
+                                <div class="navbar-inner"> 
+                                     #{admin.navigation /}
+                                </div>
+                            </div>
+                        </div>
+                    <!-- Define "custom" variable in template to do own layout -->
+                    #{ifnot custom}
+                        <div class="row-fluid">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="pull-left">#{get 'block-title' /}</div>
+                                    #{get 'search' /}
+                                    <div class="pull-right"><span class="badge badge-info">#{get 'info' /}</span>
+                                    </div>
+                                </div>
+                                <div class="block-content collapse in">
+                                    <div class="span12">
+                                        #{doLayout /}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                    #{/ifnot }
+                    #{else }
+                        #{doLayout /}
+                    #{/else}
+                    </div>
+                </div>
             </div>
-            <div id="logout">
-                <a class="logoutLink" href="@{Secure.logout()}">&{'logout'}</a>
-            </div>
-            <div id="loggedUser">
-                <span>[${session.user}]</span>
-            </div>
+            <hr>
+            <footer id="footer">
+                #{footer /}
+            </footer>
         </div>
+        <!--/.fluid-container-->
+        #{script "bootstrap/jquery-1.7.2.min.js" /}
+        #{script "bootstrap/jquery-ui-1.8.21.custom.min.js" /}
+        #{script "bootstrap/bootstrap.min.js" /}
 
-            #{if flash.success}
-            <div class="crudFlash flashSuccess">
-                ${flash.success}
-            </div>
-            #{/if}
-            #{if flash.error || error}
-            <div class="crudFlash flashError">
-                ${error ?: flash.error}
-            </div>
-            #{/if}
+        #{script "vendors/jquery.chosen.min.js" /}
+        
+        #{get 'moreScripts' /}
 
-        <div id="crudContent">
-            #{doLayout /}
-        </div>
+        <script>
+            $(function() {
+                // Side Bar Toggle
+                $('.hide-sidebar').click(function() {
+                  $('#sidebar').hide('fast', function() {
+                    $('#content').removeClass('span9');
+                    $('#content').addClass('span12');
+                    $('.hide-sidebar').hide();
+                    $('.show-sidebar').show();
+                  });
+                });
 
-        #{footer /}
+                $('.show-sidebar').click(function() {
+                    $('#content').removeClass('span12');
+                    $('#content').addClass('span9');
+                    $('.show-sidebar').hide();
+                    $('.hide-sidebar').show();
+                    $('#sidebar').show('fast');
+                });
+            });
+            $('.chosen').chosen();
+            $('[data-original-title]').tooltip();
+            $('[rel="tooltip"]').tooltip();
+            $('#sidebar a').each(function() {
+                if ($(this).attr('href') === window.location.pathname) {
+                    $(this).parent().addClass('active');
+                }
+            });
 
+            $('span.label.label-info').filter(function() { 
+                return $.trim($(this).text()) === ''
+            }).remove();
+        </script>
     </body>
+
 </html>
