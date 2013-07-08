@@ -7,50 +7,45 @@
 
 
 <div id="crudList" class="${type.name}">
-
-    <h2 id="crudListTitle">&{'medicineCards'}</h2>
-
+	#{set 'block-title'}
+	    <a href="@{blank()}" class="tooltip-top" data-original-title="&{'MedicineCards.add'}">
+            <i class="icon-plus-sign"></i>
+        </a>
+		&{'medicineCards'}
+	#{/set}
+	#{set 'info'}
+		&{'total', models.MedicineCard.count()}
+	#{/set}
+    #{set 'search'}
+    	#{crud.search /}
+    #{/set}
+   
     <div id="crudListTable">
-	    <table>
-		    <thead>
-		        <tr>
-		           <th>
-		               <span>&{'patient'}</span>
-		           </th>
-		           <th>
-		               <span>&{'creationDate'}</span>
-		           </th>
-		           <th>
-		               <span>&{'otherInfo'}</span>
-		           </th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		    #{list patients, as:'patient'}
-			    <tr>
-	               <td>
-	               		<span class="hiddenLinks">@{admin.Patients.show(patient.patientId)}</span>
-	                    &{patient}
-		   		   </td>
-	               <td>
-	               	   <span class="hiddenLinks">@{admin.MedicineCards.show(patient.medicineCard.medicineCardId)}</span>
-	                   &{patient.medicineCard.creationDate.format()}
-		   		   </td>
-	               <td class="hidden">
-	               		<span class="hiddenLinks">@{admin.MedicineCards.show(patient.medicineCard.medicineCardId)}</span>
-                   		#{if patient.medicineCard.otherInfo != null }
-	                   		&{patient.medicineCard.otherInfo}
-						#{/if}
-	               </td>
-	            </tr>
-			    #{/list}
-		    </tbody>
-	    
-	    </table>
+    	#{crud.table fields: ['patient', 'creationDate', 'surveys','otherInfo']}
+    		<!-- Patient -->
+    		#{crud.custom 'patient'}
+				#{a @admin.Patients.show(object.patient._key())}
+				    ${object.patient}
+				#{/a}    		
+    		#{/crud.custom}
+    		<!-- Surveys -->
+    		#{crud.custom 'surveys'}
+    			#{if object.surveys.isEmpty()}
+    				&{'crud.list.empty'}
+    			#{/if}
+    			#{else}
+    				<ul>
+	    				#{list object.surveys}
+							<li>
+								#{a @admin.Surveys.show(_.key())}
+									&{_.surveyDate.format()}
+								#{/a}
+							</li>	    					
+	    				#{/list}
+    				</ul>
+    			#{/else}
+    		#{/crud.custom}
+    	#{/crud.table}
     </div>
-
-    <div id="crudListPagination">
-        &{'total', models.MedicineCard.count()}
-    </div>
-    
+	#{crud.pagination /}    
 </div>

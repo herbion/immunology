@@ -1,38 +1,50 @@
 #{extends 'CRUD/layout.html' /}
-#{set title:messages.get('roles') /}
-<script>
-    #{include '/public/javascripts/roles-list.js'/}
-</script>
-
+#{set title:messages.get('crud.list.title', type.name) /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
 
 <div id="crudList" class="${type.name}">
+    <!-- Block title -->
+    #{set 'block-title'}
+        <a href="@{blank()}" class="tooltip-top" data-original-title="${ messages.get('crud.blank.title', translatedTitle ) }">
+            <i class="icon-plus-sign"></i>
+        </a>
+        ${translatedTitle}
+    #{/set}
 
-    <h2 id="crudListTitle">&{'roles'}</h2>
+    <!-- Add additional info about entity to block -->
+    #{set 'info' }
+        '&{'total', models.ComplaintType.count()}'
+    #{/set}
 
-    <div id="crudListSearch">
-    #{crud.search /}
-    </div>
-
+    <!-- Add search input to block -->
+    #{set 'search'}
+        #{crud.search /}
+    #{/set}
+    
     <div id="crudListTable">
-    #{crud.table fields:['roleName', 'users']}
-        #{crud.custom 'roleName'}
-            <span class="hiddenLinks">@{admin.Roles.show(object.roleId)}</span>
-        ${object.roleName}
-        #{/crud.custom}
-        #{crud.custom 'users'}
-            <span class="hiddenLinks">@{admin.Users.list()}</span>
-        ${object.users}
-        #{/crud.custom}
-    #{/crud.table}
+        #{crud.table fields: type.fields.collect { it.name  } }
+            #{crud.custom 'users'}
+                #{if object.users}
+                    <ul>
+                        #{list object.users}
+                            <li>
+                                #{a @admin.Users.show(_._key())}
+                                    ${_}
+                                #{/a}
+                            </li>
+                        #{/list}
+                    </ul>                
+                #{/if}
+                #{else}
+                    &{'crud.list.empty'}
+                #{/else}
+            #{/crud.custom}
+        #{/crud.table}
     </div>
 
     <div id="crudListPagination">
-    &{'total', models.Role.count()}
-        #{pagination /}
+        #{crud.pagination /}
     </div>
-
-    <p id="crudListAdd">
-        <a href="@{blank()}">&{'roles.add'}</a>
-    </p>
-
 </div>

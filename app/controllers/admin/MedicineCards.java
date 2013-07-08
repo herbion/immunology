@@ -18,10 +18,4 @@ public class MedicineCards extends CRUD {
 		Patient patient = Patient.find("byMedicineCard", medicineCard).first();
 		return patient.patientId;
 	}
-
-	public static void list() {
-		List<Patient> patients = Patient.all().fetch();
-		render(patients);
-	}
-
 }

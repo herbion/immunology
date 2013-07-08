@@ -6,7 +6,7 @@
 *      /                						module:secure
 *	   /admin/classic							admin.MainController.oldIndex
 *	   /admin									module:crud
-* /asd module:crud
+
 # Home page
 *      /                						Application.index
 

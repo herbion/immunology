@@ -1,4 +1,92 @@
 #{extends 'CRUD/layout.html' /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
+#{set title:messages.get('crud.show.title', translatedTitle) /}
+
+<div id="crudShow" class="${type.name}">
+    #{set 'block-title'}
+        ${ messages.get('crud.show.title', translatedTitle ) }
+    #{/set}
+
+    #{set 'info'}
+        Edit id:${object._key()}
+    #{/set}
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data', class:'form-horizontal'}
+        #{crud.form fields: ['patient', 'creationDate', 'surveys', 'otherInfo']}
+        	#{crud.custom 'patient'}
+				<div class="control-group">
+				    <label class="control-label" for="survey.patient.id">
+				        &{'patient'}
+				    </label>
+				    <div class="controls">
+					    <input id="survey.patient.id" 
+					    	class="input-xlarge focused" 
+					    	type="text" name="${object.patient}" 
+					    	value="${object.patient}" size="50" />
+					    #{ifError 'patient'}
+				        	<span class="help-inline error"></span>
+				    	#{/ifError}
+					</div>
+				</div>
+        	#{/crud.custom}
+        	#{crud.custom 'surveys'}
+        		<div class="control-group">
+				    <label class="control-label" for="survey.patient.id">
+				        &{'objects.surveys'}
+				    </label>
+				    <div class="controls">
+						#{if object.surveys.isEmpty()}
+							<span class="label label-important">&{'crud.list.empty'}</span>
+		    			#{/if}
+		    			#{else}
+		    				<ul>
+			    				#{list object.surveys}
+									<li>
+										#{a @admin.Surveys.show(_.key())}
+											&{_.surveyDate.format()}
+										#{/a}
+									</li>	    					
+			    				#{/list}
+		    				</ul>
+		    			#{/else}
+					</div>
+				</div>
+
+        	#{/crud.custom}
+        #{/crud.form}
+        <div class="form-actions">
+           <button type="submit" 
+                   name="_save" 
+                   class="btn btn-primary">
+                   &{'crud.save', type.modelName}
+           </button>
+           <button type="button" class="btn">
+            &{'crud.cancel', type.modelName}
+           </button>
+           <button type="submit" 
+                  class="btn btn-danger pull-right" 
+                  name="_delete" 
+                  onclick="if (confirm('&{'crud.delete', object}')) { $('#deleteObject').submit();} return false;  "
+                value="" > &{'crud.delete', ''}
+            </button> 
+        </div>
+    #{/form}
+    </div>
+    #{form @delete(object._key()), 
+           id:"deleteObject", 
+           class: "invisible"}
+    #{/form}
+</div>
+
+
+
+
+*{
+
+#{extends 'CRUD/layout.html' /}
 #{set title:messages.get('medicineCard.edit.title') /}
 <script>
     #{include '/public/javascripts/medicine-cards-show.js'/}
@@ -93,3 +181,5 @@
     #{/form}
     </div>
 </div>
+
+}*

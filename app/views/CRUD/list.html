@@ -15,20 +15,34 @@
 
     <!-- Add additional info about entity to block -->
     #{set 'info' }
-        '&{'total', models.ComplaintType.count()}'
+        '&{'total', type.count("","","1=1")}'
     #{/set}
 
-    <!-- Add search input to block -->
-    #{set 'search'}
-        #{crud.search /}
-    #{/set}
-    
-    <div id="crudListTable">
-        #{crud.table }
-        #{/crud.table}
-    </div>
+    #{if type.count("","","1=1") }
+        <!-- Add search input to block -->
+        #{set 'search'}
+            #{crud.search /}
+        #{/set}
 
-    <div id="crudListPagination">
-        #{crud.pagination /}
-    </div>
+        <div id="crudListTable">
+            #{crud.table fields: type.fields.collect { it.name  } }
+            #{/crud.table}
+        </div>
+
+        <div id="crudListPagination">
+            #{crud.pagination /}
+        </div>    
+    #{/if}
+    #{else}
+        <center>
+            <blockquote>
+                <h3 class="muted">Халепа :(</h3>
+                <p>Ого, &{'crud.list.empty'}! </p>
+                <small>Спробуйте <cite title="">
+                    %{ def obj = 'objects.'  + type.name.toLowerCase() }%
+                    <a href="${type.blankAction}" class="btn btn-mini btn-primary">додати</a> обєкт "&{obj}"
+                </cite></small>
+            </blockquote>
+        </center>
+    #{/else}
 </div>

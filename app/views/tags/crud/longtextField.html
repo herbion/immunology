@@ -1,9 +1,12 @@
 #{field 'object.' + _name}
-    <label for="${field.id}">
-        &{_name}
-    </label>
-    <textarea id="${field.id}" cols="48" rows="5" class="${field.errorClass}" name="${field.name}">${params[field.name]?.escape()?.raw() ?: field.error?.message == 'validation.required' ? '' : _value?.escape()?.raw()}</textarea>
-    #{ifError field.name}
-        <span class="error">${field.error.raw()}</span>
-    #{/ifError}
+	<div class="control-group">
+		<label class="control-label" for="${field.id}">&{_name}</label>
+		<div class="controls">
+		    <textarea id="${field.id}" cols="48" rows="5" class="${field.errorClass}" name="${field.name}">${params[field.name]?.escape()?.raw() ?: field.error?.message == 'validation.required' ? '' : _value?.escape()?.raw()}</textarea>
+		    #{ifError field.name}
+		        <span class="error help-inline">${field.error.raw()}</span>
+		    #{/ifError}
+		</div>
+	</div>
+
 #{/field}
