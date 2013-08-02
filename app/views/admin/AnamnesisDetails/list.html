@@ -1,36 +1,58 @@
 #{extends 'CRUD/layout.html' /}
-#{set title:messages.get('objects.anamnesisdetails') /}
+#{set title:messages.get('crud.list.title', type.name) /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
 
 <div id="crudList" class="${type.name}">
+    <!-- Block title -->
+    #{set 'block-title'}
+        <a href="@{blank()}" class="tooltip-top" data-original-title="${ messages.get('crud.blank.title', translatedTitle ) }">
+            <i class="icon-plus-sign"></i>
+        </a>
+        ${translatedTitle}
+    #{/set}
 
-    <h2 id="crudListTitle">&{'objects.anamnesisdetails'}</h2>
+    <!-- Add additional info about entity to block -->
+    #{set 'info' }
+        '&{'total', type.count("","","1=1")}'
+    #{/set}
 
-    <div id="crudListSearch">
-        #{crud.search /}
-    </div>
+    #{if type.count("","","1=1") }
+        <!-- Add search input to block -->
+        #{set 'search'}
+            #{crud.search /}
+        #{/set}
 
-    <div id="crudListTable">
-        #{crud.table fields:['anamnesisDetailName', 'anamnesis']}
-        	#{crud.custom 'anamnesisDetailName'}
-           	  <span class="hiddenLinks">@{admin.AnamnesisDetails.show(object.anamnesisDetailId)}</span>
-		      ${object.anamnesisDetailName}
-		   	#{/crud.custom}
-        	#{crud.custom 'anamnesis'}
-              #{if object.anamnesis != null}
-	           	  <span class="hiddenLinks">@{admin.Anamnesiss.show(object.anamnesis.anamnesisId)}</span>
-			      ${object.anamnesis.anamnesisName}
-		      #{/if}
-		   #{/crud.custom}
-        #{/crud.table}
-    </div>
+        <div id="crudListTable">
+            #{crud.table fields: type.fields.collect { it.name  } }
+                #{crud.custom 'anamnesis'}
+                    <a class="muted details" href="@{admin.Anamnesiss.show(object.anamnesis._key())}">${object.anamnesis}</a>            
+                #{/crud.custom}
+                #{crud.custom 'anamnesisDetailValues'}
+                    <ul>
+                        #{list object.anamnesisDetailValues}
+                            <li>${_}</li>
+                        #{/list}
+                    </ul>
+                #{/crud.custom}
+            #{/crud.table}
+        </div>
 
-    <div id="crudListPagination">
-        &{'total', models.Anamnesis.count()}
-        #{pagination /}
-    </div>
-
-    <p id="crudListAdd">
-        <a href="@{blank()}">&{'anamnesisdetail.add'}</a>
-    </p>
-
+        <div id="crudListPagination">
+            #{crud.pagination /}
+        </div>    
+    #{/if}
+    #{else}
+        <center>
+            <blockquote>
+                <h3 class="muted">Халепа :(</h3>
+                <p>Ого, &{'crud.list.empty'}! </p>
+                <small>Спробуйте <cite title="">
+                    %{ def obj = 'objects.'  + type.name.toLowerCase() }%
+                    <a href="${type.blankAction}" class="btn btn-mini btn-primary">додати</a> обєкт "&{obj}"
+                </cite></small>
+            </blockquote>
+        </center>
+    #{/else}
 </div>

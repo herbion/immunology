@@ -48,6 +48,7 @@ crud.help.before=Перед %s.
 crud.help.range=Между %d и %d
 
 # ================= CRUD Main Page =====================
+objects.counters = Счетчики
 objects.complaints=Жалобы
 objects.complainttypes=Типы жалоб
 #ComplaintTypes=Типы жалоб

@@ -62,7 +62,16 @@
                                 
                              %{ } }%
                         %{ } else { }%
-                            ${object[field]?.escape()?.raw()}
+                            ${object[field]?.escape()?.raw()} 
+                        *{
+                            %{
+                            out.write(_caller.type.getField(field).type)
+                                if (_caller.type.getField(field).type == 'relation') {
+                            out.write(_('controllers.CRUD$ObjectType').forClass(object[field].getClass().getName()).controllerName);
+                                
+                            }
+                            }%
+                        }*
                         %{ } }%
                     %{ } }%
                 %{ } }%

@@ -34,12 +34,8 @@
         <div class="well">
             <h2>&{'crud.index.title'}</h2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+
             </p>
             <a href="@{admin.MainController.oldIndex()}" class="btn btn-primary pull-right">Link to <i>Classic</i> page</a>
         </div>
@@ -121,11 +117,16 @@
         </div>
         #{set 'moreSideBars'}
             <div class="counters">
-                #{admin.block span:10, title: 'counters'}
+                #{admin.block span:11, title: 'counters'}
                      #{crud.types}
+                     %{ 
+                        def count = type.count(null, '', '1=1');
+                        def label = count != 0 ? 'label-info' : 'label-warning'; 
+                     }%
                      <blockquote>
                         <p>
-                            <a href="${type.listAction}">&{'objects.' + type.name.toLowerCase()} <span class="badge badge-info">${type.count(null, '', '1=1')}</span></a>
+                            <span class="label ${label}" > ${count}</span>
+                            <a href="${type.listAction}"> &{'objects.' + type.name.toLowerCase()}</a>
                         </p>
                     </blockquote>
                     #{/crud.types}

@@ -272,3 +272,20 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.5);
 .counters {
   margin-left: 0px;
 }
+.counters .label {
+  width:20px; 
+  text-align: center;
+}
+
+.counters blockquote {
+  margin-bottom: 0px;
+}
+
+.counters blockquote a {
+  font-size: 14px;
+  border-bottom: 1px dotted #005580;
+}
+
+.counters blockquote a:hover {
+  text-decoration: none;
+}

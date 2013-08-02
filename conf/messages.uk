@@ -48,6 +48,7 @@ crud.help.before=Перед %s.
 crud.help.range=Між %d та %d
 
 # ================= CRUD Main Page =====================
+objects.counters = Звіти
 objects.complaints=Скарги
 objects.complainttypes=Типи скарг
 objects.medicinecards=Медичні картки

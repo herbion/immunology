@@ -51,6 +51,7 @@ crud.help.before=Before %s.
 crud.help.range=Between %d and %d
 
 # ================= CRUD Main Page =====================
+objects.counters = Counters
 objects.complaints=Complaints
 objects.complainttypes=Complaint types
 objects.medicinecards=Medicine cards

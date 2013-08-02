@@ -26,16 +26,16 @@
 
         <div id="crudListTable">
             #{crud.table fields: type.fields.collect { it.name  } }
-                #{crud.custom 'anamnesisDetails'}
-                  <ul>
-                      #{list items:object.anamnesisDetails}
-                          <li>
-                              <a class="muted details " 
-                                 
-                                 href="@{admin.AnamnesisDetails.show(_._key())}">${_}</a> <i class="icon-search tooltip-right" data-original-title="Відкрити деталі"></i>
-                          </li>
-                      #{/list}
-                  </ul>
+                #{crud.custom 'medicationDetails'}
+                    <ul>
+                        #{list items:object.medicationDetails}
+                            <li>
+                                <a class="muted details " 
+                                   
+                                   href="@{admin.MedicationDetails.show(_._key())}">${_}</a> <i class="icon-search tooltip-right" data-original-title="Відкрити деталі"></i>
+                            </li>
+                        #{/list}
+                    </ul>
                 #{/crud.custom}
             #{/crud.table}
         </div>
