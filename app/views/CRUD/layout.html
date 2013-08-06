@@ -128,6 +128,22 @@
             $('span.label.label-info').filter(function() { 
                 return $.trim($(this).text()) === ''
             }).remove();
+
+            
+            $('.icon-chevron-down').parents('a').each(function() {
+                var block = $(this).parents('.block').find('.block-content');
+                var $icon = $(this).find('i');
+                $(this).click(function() {
+                    if ($icon.hasClass('icon-chevron-down')) {
+                        $(block).fadeOut(300);
+                        $icon.removeClass('icon-chevron-down').addClass('icon-chevron-up');                        
+                    } else {
+                        $(block).fadeIn(300);
+                        $icon.removeClass('icon-chevron-up').addClass('icon-chevron-down');  
+                    }
+                    return false;
+                });
+            })
         </script>
     </body>
 

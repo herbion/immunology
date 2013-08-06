@@ -1,5 +1,6 @@
 # crud sections
-#crud.dashboard
+crud.objects=Objects
+crud.settings=Settings
 
 # EN locale CRUD messages
 crud.title=Administration

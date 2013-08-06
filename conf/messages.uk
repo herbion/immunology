@@ -1,3 +1,7 @@
+# crud sections
+crud.objects=Обєкти
+crud.settings=Настройки
+
 UK locale CRUD messages
 crud.title=Адміністрування
 crud.home=Головна

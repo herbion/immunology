@@ -1,6 +1,6 @@
     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
         <li>
-            <a href="@{CRUD.index()}"><i class="icon-chevron-right"></i> Категорії</a>
+            <a href="@{CRUD.index()}"><i class="icon-chevron-right"></i> &{'crud.objects'}</a>
         </li>
         <li>
             <a href="@{admin.ComplaintTypes.list()}"><i class="icon-chevron-right"></i> &{'objects.complaints'}</a>
@@ -12,6 +12,6 @@
             <a href="@{admin.ClinicalManifestations.list()}"><i class="icon-chevron-right"></i> &{'objects.clinicalmanifestations'}</a>
         </li>
         <li>
-            <a href="@{admin.MedicineCards.list()}"><span class="badge badge-info pull-right">${models.MedicineCard.count()}</span> Медичні картки</a>
+            <a href="@{admin.MedicineCards.list()}"><span class="badge badge-info pull-right">${models.MedicineCard.count()}</span> &{'objects.medicinecards'}</a>
         </li>
     </ul>

@@ -24,41 +24,27 @@
                     </ul>
                     <ul class="nav">
                         <li class="active">
-                            <a href="@{CRUD.index()}">Dashboard</a>
+                            <a href="@{CRUD.index()}">&{'crud.title'}</a>
                         </li>
                         <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Settings <b class="caret"></b>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">&{'crud.settings'} <b class="caret"></b>
 
                             </a>
                             <ul class="dropdown-menu" id="menu1">
                                 <li>
-                                    <a href="#">Tools <i class="icon-arrow-right"></i>
-
+                                    <a href='@{Application.changeLanguage("uk", request.url)}'>
+                                        <img border="0" src='/public/images/flags/ua.png' title="Українська" alt="Українська" width="32" height="32"/> Українська
                                     </a>
-                                    <ul class="dropdown-menu sub-menu">
-                                        <li>
-                                            <a href="#">Reports</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Logs</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Errors</a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li>
-                                    <a href="#">ru</a>
+                                    <a href='@{Application.changeLanguage("ru", request.url)}'>
+                                        <img border="0" src='/public/images/flags/ru.png' title="Русский" alt="Русский" width="32" height="32"/> Русский
+                                    </a> 
                                 </li>
                                 <li>
-                                    <a href="#">en</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">Other Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Other Link</a>
+                                    <a href='@{Application.changeLanguage("en", request.url)}'>
+                                        <img border="0" src='/public/images/flags/uk.png' title="English" alt="English" width="32" height="32"/> English
+                                    </a> 
                                 </li>
                             </ul>
                         </li>
