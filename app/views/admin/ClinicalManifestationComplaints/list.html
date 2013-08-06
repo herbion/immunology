@@ -24,11 +24,7 @@
             #{crud.search /}
         #{/set}
         <div id="crudListTable">
-            #{crud.table fields: [
-                'clinicalManifestationComplainName',
-                'clinicalManifestations',
-                'multyplier']}
-
+            #{crud.table fields: ['clinicalManifestationComplainName',  'clinicalManifestations', 'multyplier']}
                 #{crud.custom 'clinicalManifestations'}
                     <ul>
                         #{list items:object.clinicalManifestations}

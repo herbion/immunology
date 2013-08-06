@@ -37,7 +37,7 @@
     				<ul>
 	    				#{list object.surveys}
 							<li>
-								#{a @admin.Surveys.show(_.key())}
+								#{a @admin.Surveys.show(_._key())}
 									&{_.surveyDate.format()}
 								#{/a}
 							</li>	    					
