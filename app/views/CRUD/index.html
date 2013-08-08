@@ -1,7 +1,6 @@
 #{extends 'CRUD/layout.html' /}
 #{set title:messages.get('crud.title') /}
 
-
 %{
     models = [];
     for(controllerClass in play.Play.classloader.getAssignableClasses(_('controllers.CRUD'))) {
@@ -32,6 +31,10 @@
 <div id="index" class="">
     <div class="hero-unit">
         <div class="well">
+		    		
+		    <p> 
+		    	#{admin.search /}
+		    </p>   
             <h2>&{'crud.index.title'}</h2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -41,6 +44,7 @@
         </div>
     <!-- </div> -->
             <div class="row">
+	    
                 #{ admin.block title:'patients' }
                     #{admin.mini type: attrs.get('Patient') /}
                     #{admin.mini type: attrs.get('User') /}
@@ -114,22 +118,33 @@
                     #{admin.mini type: attrs.get('ComplaintType') /}
                 #{/admin.block }
             </div>
+               
         </div>
         #{set 'moreSideBars'}
             <div class="counters">
+             	%{ 
+                   def all_count = 0;
+                }%
+                
+                
                 #{admin.block span:11, title: 'counters'}
                      #{crud.types}
-                     %{ 
-                        def count = type.count(null, '', '1=1');
-                        def label = count != 0 ? 'label-info' : 'label-warning'; 
-                     }%
-                     <blockquote>
-                        <p>
-                            <span class="label ${label}" > ${count}</span>
-                            <a href="${type.listAction}"> &{'objects.' + type.name.toLowerCase()}</a>
-                        </p>
-                    </blockquote>
+	                     %{ 
+	                        def count = type.count(null, '', '1=1');
+	                        all_count += count;
+	                        def label = count != 0 ? 'label-info' : 'label-warning'; 
+	                     }%
+	                     <blockquote>
+	                        <p>
+	                            <span class="label ${label}" > ${count}</span>
+	                            <a href="${type.listAction}"> &{'objects.' + type.name.toLowerCase()}</a>
+	                        </p>
+	                    </blockquote>
                     #{/crud.types}
+                    
+                    <blockquote>
+                        <p><span class="label label-info" > ${all_count}</span></p>
+                    </blockquote>
                 #{/admin.block}
             </div>
         #{/set}
