@@ -8,13 +8,13 @@ $(function() {
 	};
 	init();
 
-	$("input[name='synd_radio']").change(function() {
-		$('#tabs').html('Loading');
-		console.log('reloading content id=' + $(this).val());
+	$('#choose').click(function() {
+		var id = $('#choose-survey-obj').val();
+		$('#tabs').html('Loading ... ');
+
+		console.log('reloading content id=' + id);
 
 		var updateAction = #{jsAction @loadContentFrom(':idSurveyObject') /};
-		var id = $(this).val();
-
 		$('#tabs').html("<center><h1>Loading stuff, wait a sec folks ... <h1></center>");
 
 		$.post(updateAction({
@@ -25,6 +25,24 @@ $(function() {
 			init();
 		});
 	});
+
+	// $("input[name='synd_radio']").change(function() {
+	// 	$('#tabs').html('Loading');
+	// 	console.log('reloading content id=' + $(this).val());
+
+	// 	var updateAction = #{jsAction @loadContentFrom(':idSurveyObject') /};
+	// 	var id = $(this).val();
+
+	// 	$('#tabs').html("<center><h1>Loading stuff, wait a sec folks ... <h1></center>");
+
+		// $.post(updateAction({
+		// 	idSurveyObject: id
+		// }),	function(content) {
+		// 	$('#tabs').html(content);
+		// 	$('#tabs').tabs('destroy'); // ~~~~~~~~ REMOVE THIS LATER ~~~~~~
+		// 	init();
+		// });
+	// });
 
 	var signRightNav = $('<img/>').attr('src', '/public/images/elements/sign-right-nav.gif').addClass('signRightNav');
 	var patientAnchor = $('<a></a>').text("${medicineCard.patient.lastName}" + " " +
@@ -38,4 +56,5 @@ $(function() {
 					.append(signRightNav.clone())
 					.append(surveyAnchor);
 	
+    $('.chosen').chosen();
 });

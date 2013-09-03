@@ -62,7 +62,7 @@ public class Survey extends GenericModel {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "survey")
 	public List<SurveyTreatment> surveyTreatments;
 
-	@OneToOne
+	@ManyToOne
 	public Syndrome syndrome;
 
 	@OneToOne

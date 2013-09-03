@@ -16,7 +16,7 @@ var saveComplaints = function () {
 	var complaintsJSON = {
 		surveyId : $("#hidden-survey-id").val(),
 		medicineCardId : $("#hidden-med-card-id").val(),
-		syndromeId : $("input[name='synd_radio']:checked").attr('value'),
+		syndromeId : $('#choose-survey-obj').val(), //$("input[name='synd_radio']:checked").attr('value'),
 		complaints : []
 	};
 

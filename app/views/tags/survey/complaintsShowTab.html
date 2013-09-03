@@ -7,14 +7,14 @@
 
 <div id="survey-info">
 	#{if contentMap != null}
-		#{list items:contentMap.keySet(), as:'comaplaintType'}
+		#{list items:contentMap.keySet(), as:'complaintType'}
 			<div class="complaintTypeName">
-				${comaplaintType.complaintTypeName}
+				${complaintType.complaintTypeName}
 				<div class="complaint-type-value"></div>
-				<input class="hidden-complaint-type-value" type="text" value="${comaplaintType.complaints.size()}" >
+				<input class="hidden-complaint-type-value" type="text" value="${complaintType.complaints.size()}" >
 			</div>
 			<ul>
-				#{list items:contentMap.get(comaplaintType), as:'surveyAnswer'}
+				#{list items:contentMap.get(complaintType), as:'surveyAnswer'}
 					<li>
 						<div class="complaintName">${surveyAnswer.complaint.complaintName}</div>
 						<div class="answerValue">${surveyAnswer.answerValue}</div>
@@ -23,4 +23,7 @@
 			</ul>
 		#{/list}
 	#{/if}
+	#{else}
+		Complaints tab is empty.
+	#{/else}
 </div>

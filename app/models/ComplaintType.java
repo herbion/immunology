@@ -33,8 +33,8 @@ public class ComplaintType extends GenericModel {
     @Column(name = "name")
     public String complaintTypeName;
     
-    // @ManyToMany(mappedBy = "complaintTypes")
-    // public List<Syndrome> syndrome;
+    @ManyToMany //(mappedBy = "complaintTypes")
+    public List<SurveyObject> syndrome;
 
     // @ManyToMany(mappedBy = "complaintTypes")
     // public List<Nosology> nosology;

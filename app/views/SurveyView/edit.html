@@ -11,14 +11,19 @@
 
 <div id="surveyEditTitleContainer">
 	<h2 id="surveyEditTitleContainer">&{'survey.edit.title'}</h2>
-	<div id="selectSyndromeBlock">
-		#{list items:syndromes, as:'synd'}
-   			<div class="radio">
-		        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
-		        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
-			</div>
-		#{/list}
-	</div>
+*{
+	<!-- 	
+		<div id="selectSyndromeBlock">
+			#{list items:syndromes, as:'synd'}
+	   			<div class="radio">
+			        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
+			        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.title}</label>
+				</div>
+			#{/list}
+		</div> 
+	-->
+
+}*
 </div>
 
 <div id="survey-edit-tabs">

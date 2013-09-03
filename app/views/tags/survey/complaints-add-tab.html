@@ -15,13 +15,13 @@
 					<div class="answerValue">
 						<div class="radio">
 							#{list items:0..3, as: 'i'}
-					        	<label for="radio_${complaint.complaintId}_${i}" 
+					        	<label for="radio_${complaint._key()}_${i}" 
 					        		class="surveyAnswerBtn">${i}
 					        	</label>
 						        <input class="radio-button" 
 						        	type="radio" 
-						        	id="radio_${complaint.complaintId}_${i}" 
-						        	name="${complaint.complaintId}" 
+						        	id="radio_${complaint._key()}_${i}" 
+						        	name="${complaint._key()}" 
 						        	value="${i}" 
 						        	${i_isFirst ? checked="checked" : ''}>
 						        </input>

@@ -17,7 +17,7 @@
 		   	#{/crud.custom}
 		   	#{crud.custom 'syndrome'}
 		   		#{if object.syndrome != null}
-	           	  	<span class="hiddenLinks">@{admin.Syndromes.show(object.syndrome.syndromeId)}</span>
+	           	  	<span class="hiddenLinks">@{admin.Syndromes.show(object.syndrome._key())}</span>
 			      	${object.syndrome.name}
 		      	#{/if}
 		   	#{/crud.custom}

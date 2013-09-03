@@ -3,39 +3,38 @@
 
 #{stylesheet 'survey-view-add.css'/}
 
+#{stylesheet "vendors/chosen.css" /}
+#{script "vendors/jquery.chosen.min.js" /}
+
+
 <script>
     #{include '/public/javascripts/survey-view-add.js'/}
 </script>
 
-<div id="survey-types">
+<!-- <div id="survey-types">
 	#{list items:surveyObjects}
 		#{a @reloadTabs(_.id, medicineCard.medicineCardId)}
 			[${_.title}]
 		#{/a}
 	#{/}
-</div>
+</div> -->
 
 <div id="surveyEditTitleContainer">
-	<h2 class="listTitle">&{'survey.new'}: </h2>
-	<div id="selectSyndromeBlock">
-		#{list items:surveyObjects}
-			<!-- TODO: Maybe later we could restore it. 
-				That buttons was not bad idea after all. -->
-	   			<div class="radio">
-			        <input type="radio" id="radio_${_.id}" name="synd_radio" value="${_.id}"/>
-			        <label for="radio_${_.id}" class="syndromeLabel">${_.title}</label>
-				</div> 
-   			
-		#{/list}
-	</div>
-	#{select 'surveyObjects', 
-			items: surveyObjects, 
-			valueProperty: 'id', 
-			labelProperty: 'title', 
-			value: 0, 
-			class: 'select-survey-object'
-	/}
-	<button id="choose">go</button>
+ 	<div class="form-horizontal choose-survey-object">
+	 	<div class="control-group">
+	 		<label class="control-label">&{'survey.new'}</label>
+	 		<div class="controls">
+			 	<select id="choose-survey-obj" class="chosen">
+					#{list items:surveyObjects}
+						<option value="${_._key()}">
+							${_.title}
+						</option>
+					#{/list}
+				</select>
+				<button id="choose" class="btn btn-small btn-primary">Choose</button>
+	 		</div>
+	 	</div>
+ 	</div>
 </div>
 
 <div id="survey-add-tabs">
