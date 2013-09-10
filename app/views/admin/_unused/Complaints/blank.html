@@ -1,0 +1,25 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('complaints.add') /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'complaints.add'}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+        #{crud.form }
+			#{crud.custom 'complaintType'}
+        	    <label for="${medicineCard}">&{'complaintType'}</label>
+		       #{select 'object.complaintType.complaintTypeId', items:models.ComplaintType.findAll(), valueProperty:'complaintTypeId', 
+		       		labelProperty:'complaintTypeName', value:object.complaintType, id:'complaintTypeSelector' /}
+        	#{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

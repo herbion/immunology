@@ -3,26 +3,32 @@
 
 #{stylesheet 'survey-view-show.css'/}
 
+#{stylesheet "vendors/chosen.css" /}
+#{script "vendors/jquery.chosen.min.js" /}
+
+
 <script>
     #{include '/public/javascripts/survey-view-show.js'/}
+
 </script>
 
 
 
 <div id="surveyEditTitleContainer">
 	<h2 id="surveyShowTitleContainer" class="listTitle">&{'survey.show'}</h2>
-	<div id="selectSyndromeBlock">
+<!-- 
+ 	<select id="choose-survey-obj" class="chosen">
 		#{list items:syndromes, as:'synd'}
-   			<div class="radio">
-		        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
-		        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
-			</div>
+			<option value="${synd._key()}">
+				${synd.title}
+			</option>
 		#{/list}
-	</div>
+	</select>
+ -->
 </div>
 
 <div class="syndromeTitleContainer">
-	<a class="editButton" href="@{surveyView.edit(survey.surveyId)}">&{'title.edit'}</a>
+	<a class="editButton" href="@{SurveyView.edit(survey.surveyId)}">&{'title.edit'}</a>
 </div>
 
 <div id="survey-show-tabs">
@@ -35,7 +41,7 @@
 			<li><a href="#tabs-5">&{'survey.nosology'}</a></li>
 		</ul>
 		<div id="tabs-1">
-			#{include 'tags/survey/complaintsShowTab.html' /}
+			#{render 'tags/survey/complaintsShowTab.html' /}
 		</div>
 		<div id="tabs-2">
 			#{include 'tags/survey/analysesShowTab.html' /}
@@ -51,3 +57,13 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	// *{
+	    // var showComplaintsAction = #{jsAction @SurveyView.show(':syndromeId', ':surveyId') /}
+	    
+	    // var displayUserDetail = function(userId) {
+	    //     $('userDetail').load( showComplaintsAction({id: userId}) )
+	    // }
+	// }*
+</script>

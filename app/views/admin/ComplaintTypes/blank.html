@@ -1,0 +1,34 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('complaintTypes.add') /}
+
+#{set 'block-title'}
+    &{'complaintTypes.add'}
+#{/set}
+
+<div id="crudBlank" class="${type.name}">
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data', class:"form-horizontal"}
+        #{crud.form fields:['complaintTypeName', 'multyplier', 'complaints'] }
+        #{/crud.form}
+        <div class="form-actions">
+            <button type="submit" 
+                    class="btn btn-primary" 
+                    name="_save" 
+                    value="" > &{'crud.save', type.modelName} 
+            </button>
+            <button type="submit" 
+                    class="btn" 
+                    name="_cancel" 
+                    value="" > &{'crud.cancel', type.modelName} 
+            </button>
+        </div>
+<!--         <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p> -->
+    #{/form}
+    </div>
+
+</div>

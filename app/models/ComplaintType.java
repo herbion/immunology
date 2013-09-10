@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
@@ -32,10 +33,13 @@ public class ComplaintType extends GenericModel {
     @Column(name = "name")
     public String complaintTypeName;
     
-    @ManyToOne
-    public Syndrome syndrome;
+    @ManyToMany //(mappedBy = "complaintTypes")
+    public List<SurveyObject> syndrome;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "complaintType")
+    // @ManyToMany(mappedBy = "complaintTypes")
+    // public List<Nosology> nosology;
+
+    @OneToMany
     public List<Complaint> complaints;
 
     @Override
@@ -46,7 +50,6 @@ public class ComplaintType extends GenericModel {
 	result = prime * result + ((complaintTypeName == null) ? 0 : complaintTypeName.hashCode());
 	result = prime * result + ((complaints == null) ? 0 : complaints.hashCode());
 	result = prime * result + ((multyplier == null) ? 0 : multyplier.hashCode());
-	result = prime * result + ((syndrome == null) ? 0 : syndrome.hashCode());
 	return result;
     }
 
@@ -78,11 +81,6 @@ public class ComplaintType extends GenericModel {
 	    if (other.multyplier != null)
 		return false;
 	} else if (!multyplier.equals(other.multyplier))
-	    return false;
-	if (syndrome == null) {
-	    if (other.syndrome != null)
-		return false;
-	} else if (!syndrome.equals(other.syndrome))
 	    return false;
 	return true;
     }

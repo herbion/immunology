@@ -4,15 +4,17 @@
 
 # Import Secure routes
 *      /                						module:secure
-*      /objects                					module:crud
+*	   /admin/classic							admin.MainController.oldIndex
+*	   /admin									module:crud
 
 # Home page
 *      /                						Application.index
 
-*      /patientView/list						PatientView.patients
-*	   /patientView/show/{id}					PatientView.show
-*	   /patientView/add							PatientView.add
-*      /patientView/{type}      				PatientView.updatePatientsTable
+GET      /patients                              PatientView.patients
+*      	 /patients/list						    PatientView.patients
+*	     /patients/show/{id}					PatientView.show
+*	     /patients/add							PatientView.add
+*        /patients/{type}      				    PatientView.updatePatientsTable
 
 *      /userView/show							UserView.showUser
 
@@ -24,6 +26,6 @@
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
-
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+#*       /admin/{controller}/{action}            admin.{controller}.{action}

@@ -1,54 +1,51 @@
 package models;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
 
-import com.immunology.enums.AnalysisType;
-
 @Entity
 @Table(name = "nosology_clinical_manifestation")
 @SequenceGenerator(name = "nosology_clinical_manifestation_sequence", sequenceName = "nosology_clinical_manifestation_sequence", allocationSize = 1)
 public class NosologyClinicalManifestation extends GenericModel {
 
-    @Id
-    @Column(name = "nosology_clinical_manifestation_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nosology_clinical_manifestation_sequence")
-    public Long Id;
+	@Id
+	@Column(name = "nosology_clinical_manifestation_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nosology_clinical_manifestation_sequence")
+	public Long Id;
 
-    @Required
-    @Column(name = "clinical_manifestation_id")
-    public Integer clinicalManifestationId;
-    
-    @Required
-    @Column(name = "multyplier")
-    public Double multyplier;
-    
-    @ManyToOne
-    public Nosology nosology;
+	@Required
+	@Column(name = "clinical_manifestation_id")
+	public Integer clinicalManifestationId;
+
+	@Required
+	@Column(name = "multyplier")
+	public Double multyplier;
+
+	@ManyToOne
+	public Nosology nosology;
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
-		result = prime * result + ((clinicalManifestationId == null) ? 0 : clinicalManifestationId.hashCode());
-		result = prime * result + ((multyplier == null) ? 0 : multyplier.hashCode());
-		result = prime * result + ((nosology == null) ? 0 : nosology.hashCode());
+		result = prime
+				* result
+				+ ((clinicalManifestationId == null) ? 0
+						: clinicalManifestationId.hashCode());
+		result = prime * result
+				+ ((multyplier == null) ? 0 : multyplier.hashCode());
+		result = prime * result
+				+ ((nosology == null) ? 0 : nosology.hashCode());
 		return result;
 	}
 
@@ -69,7 +66,8 @@ public class NosologyClinicalManifestation extends GenericModel {
 		if (clinicalManifestationId == null) {
 			if (other.clinicalManifestationId != null)
 				return false;
-		} else if (!clinicalManifestationId.equals(other.clinicalManifestationId))
+		} else if (!clinicalManifestationId
+				.equals(other.clinicalManifestationId))
 			return false;
 		if (multyplier == null) {
 			if (other.multyplier != null)
@@ -86,8 +84,8 @@ public class NosologyClinicalManifestation extends GenericModel {
 
 	@Override
 	public String toString() {
-		return "Id=" + Id + ", clinicalManifestationId=" + clinicalManifestationId + ", multyplier="
-				+ multyplier + "]";
+		return "Id=" + Id + ", clinicalManifestationId="
+				+ clinicalManifestationId + ", multyplier=" + multyplier + "]";
 	}
-    
+
 }

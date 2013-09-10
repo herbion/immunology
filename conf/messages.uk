@@ -1,3 +1,7 @@
+# crud sections
+crud.objects=Обєкти
+crud.settings=Настройки
+
 UK locale CRUD messages
 crud.title=Адміністрування
 crud.home=Головна
@@ -6,6 +10,7 @@ crud.index.title=Виберіть об'єкт для редагування
 crud.index.objectType=Тип об'єкта
 crud.index.action=
 crud.index.add=Додати
+crud.index.list=Список
 crud.add=Додати &{%s}
 crud.list.title=&{%s}
 crud.list.size=%d &{%s}
@@ -47,6 +52,7 @@ crud.help.before=Перед %s.
 crud.help.range=Між %d та %d
 
 # ================= CRUD Main Page =====================
+objects.counters = Звіти
 objects.complaints=Скарги
 objects.complainttypes=Типи скарг
 objects.medicinecards=Медичні картки
@@ -152,7 +158,7 @@ syndrome.autoimmune=Автоімунний
 syndrome.immunodeficiencyInfective=Імунодефіцит-інфекційний
 syndrome=синдром
 
-# ================ Complaints ================
+# ================ __Complaints ================
 complaints=Скарги
 complaints.add=Додати скаргу
 complaints.edit.title=Редагування скарги

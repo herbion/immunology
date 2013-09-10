@@ -1,0 +1,24 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('roles.add') /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'roles.add'}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+        #{crud.form fields:['roleName']}
+	    	#{crud.custom 'roleName'}
+	    	   <label for="object_roleName">&{'roleName'}</label>
+	    	   <input id="object_roleName" class="" type="text" name="object.roleName" value="" size="50">
+	    	#{/crud.custom}
+	    #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

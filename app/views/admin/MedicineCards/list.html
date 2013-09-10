@@ -1,0 +1,51 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('medicineCards') /}
+
+<script>
+    #{include '/public/javascripts/medicine-cards-list.js'/}
+</script>
+
+
+<div id="crudList" class="${type.name}">
+	#{set 'block-title'}
+	    <a href="@{blank()}" class="tooltip-top" data-original-title="&{'MedicineCards.add'}">
+            <i class="icon-plus-sign"></i>
+        </a>
+		&{'medicineCards'}
+	#{/set}
+	#{set 'info'}
+		&{'total', models.MedicineCard.count()}
+	#{/set}
+    #{set 'search'}
+    	#{crud.search /}
+    #{/set}
+   
+    <div id="crudListTable">
+    	#{crud.table fields: ['patient', 'creationDate', 'surveys','otherInfo']}
+    		<!-- Patient -->
+    		#{crud.custom 'patient'}
+				#{a @admin.Patients.show(object.patient._key())}
+				    ${object.patient}
+				#{/a}    		
+    		#{/crud.custom}
+    		<!-- Surveys -->
+    		#{crud.custom 'surveys'}
+    			#{if object.surveys.isEmpty()}
+    				&{'crud.list.empty'}
+    			#{/if}
+    			#{else}
+    				<ul>
+	    				#{list object.surveys}
+							<li>
+								#{a @admin.Surveys.show(_._key())}
+									&{_.surveyDate.format()}
+								#{/a}
+							</li>	    					
+	    				#{/list}
+    				</ul>
+    			#{/else}
+    		#{/crud.custom}
+    	#{/crud.table}
+    </div>
+	#{crud.pagination /}    
+</div>

@@ -2,7 +2,6 @@ package models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +11,6 @@ import javax.persistence.Table;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
-
-import com.immunology.enums.AnamnesisType;
 
 @Entity
 @Table(name = "allergen")
@@ -36,9 +33,13 @@ public class Allergen extends GenericModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((allergenId == null) ? 0 : allergenId.hashCode());
-		result = prime * result + ((allergenName == null) ? 0 : allergenName.hashCode());
-		result = prime * result + ((medicationDetail == null) ? 0 : medicationDetail.hashCode());
+		result = prime * result
+				+ ((allergenId == null) ? 0 : allergenId.hashCode());
+		result = prime * result
+				+ ((allergenName == null) ? 0 : allergenName.hashCode());
+		result = prime
+				* result
+				+ ((medicationDetail == null) ? 0 : medicationDetail.hashCode());
 		return result;
 	}
 

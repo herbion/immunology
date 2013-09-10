@@ -1,0 +1,104 @@
+%{
+    // Eval fields tags
+    def fieldsHandler = [:]
+    if(_body) {
+        _body.setProperty('fieldsHandler', fieldsHandler);
+}%
+        #{doBody as:'skip' /}
+%{
+    }
+}%
+
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+        %{ if(_fields) { }%
+            %{ _fields.each() { }%
+            <th>
+                %{ if(!_sort || _sort.contains(it)) { }%
+                <a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC'))}">
+                    &{it}
+                </a>
+                %{ } else { }%
+                    &{it}
+                %{ } }%
+            </th>
+            %{ } }%
+        %{ } else { }%
+            <th>
+                <a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC'))}">
+                    &{_caller.type.name}
+                </a>
+            </th>
+
+        %{ } }%
+            <th>
+                &{'crud.customEditing'}
+            </th>
+        </tr>
+    </thead>
+    %{ _caller.objects.eachWithIndex() { object, k -> }%
+    <tr class="${k % 2 ? 'even' : 'odd'}">
+        %{ if(_fields) { }%
+            %{ _fields.eachWithIndex() { field, i -> }%
+            <td>
+                %{ if(fieldsHandler[field]) { }%
+                    %{
+                        def handler = fieldsHandler[field];
+                        handler.setProperty('object', object);
+                    }%
+                    #{doBody body:handler /}
+                    %{
+                        handler.setProperty('object', null);
+                    }%
+                %{ } else { }%
+                    %{ if(i == 0) { }%
+                        <a href="@{show(object._key())}">${object[field]?.toString()?.escape()?.raw() ?: '(no value)'}</a>
+                    %{ } else { }%
+                        %{ if(_caller.type.getField(field).type == 'file') { }%
+                            %{ if(object[field]) { }%
+                                <a class="currentAttachment" href="@{attachment(object.id, field)}">${object[field].filename} (${object[field].get().size().formatSize()})</a>
+                             %{ } else { }%
+                                
+                             %{ } }%
+                        %{ } else { }%
+                            ${object[field]?.escape()?.raw()} 
+                        *{
+                            %{
+                            out.write(_caller.type.getField(field).type)
+                                if (_caller.type.getField(field).type == 'relation') {
+                            out.write(_('controllers.CRUD$ObjectType').forClass(object[field].getClass().getName()).controllerName);
+                                
+                            }
+                            }%
+                        }*
+                        %{ } }%
+                    %{ } }%
+                %{ } }%
+            </td>
+            %{ } }%
+        %{ } else { }%
+            %{ if(fieldsHandler['default']) { }%
+                %{
+                    def handler = fieldsHandler['default'];
+                    handler.setProperty('object', object);
+                }%
+                #{doBody body:handler /}
+            %{ } else { }%
+                <td>
+                    <a href="@{show(object._key())}">${object.toString()?.escape()?.raw() ?: '(no value)'}</a>
+                </td>
+            %{ } }%
+        %{ } }%
+        <td>
+            <a href="@{show(object._key())}">
+                    <span title="Редагувати" class="icon32 icon-orange icon-edit"></span>
+            </a>
+            
+            <a href="@{delete(object._key())}" id="deleteLink">
+                    <span title="Видалити" class="icon32 icon-red icon-trash"></span>
+            </a>
+        </td>
+    </tr>
+    %{ } }%
+</table>

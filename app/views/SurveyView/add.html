@@ -3,48 +3,44 @@
 
 #{stylesheet 'survey-view-add.css'/}
 
+#{stylesheet "vendors/chosen.css" /}
+#{script "vendors/jquery.chosen.min.js" /}
+
+
 <script>
     #{include '/public/javascripts/survey-view-add.js'/}
 </script>
 
+<!-- <div id="survey-types">
+	#{list items:surveyObjects}
+		#{a @reloadTabs(_.id, medicineCard.medicineCardId)}
+			[${_.title}]
+		#{/a}
+	#{/}
+</div> -->
 
 <div id="surveyEditTitleContainer">
-	<h2 class="listTitle">&{'survey.new'}</h2>
-	<div id="selectSyndromeBlock">
-		#{list items:syndromes, as:'synd'}
-   			<div class="radio">
-		        <input type="radio" id="radio_${synd.syndromeId}" name="synd_radio" value="${synd.syndromeId}"/>
-		        <label for="radio_${synd.syndromeId}" class="syndromeLabel">${synd.name}</label>
-			</div>
-		#{/list}
-	</div>
+ 	<div class="form-horizontal choose-survey-object">
+	 	<div class="control-group">
+	 		<label class="control-label">&{'survey.new'}</label>
+	 		<div class="controls">
+			 	<select id="choose-survey-obj" class="chosen">
+					#{list items:surveyObjects}
+						<option value="${_._key()}">
+							${_.title}
+						</option>
+					#{/list}
+				</select>
+				<button id="choose" class="btn btn-small btn-primary">Choose</button>
+	 		</div>
+	 	</div>
+ 	</div>
 </div>
 
 <div id="survey-add-tabs">
 	<input id="hidden-survey-id" type="text" value="-1">
 	<input id="hidden-med-card-id" type="text" value="${medicineCard.medicineCardId}">
 	<div id="tabs">
-		<ul>
-			<li><a href="#tabs-1">&{'complaints'}</a></li>
-			<li><a href="#tabs-2">&{'survey.laboratory'}</a></li>
-			<li><a href="#tabs-3">&{'survey.clinic'}</a></li>
-			<li><a href="#tabs-4">&{'survey.treatment'}</a></li>
-			<li><a href="#tabs-5">&{'survey.nosology'}</a></li>
-		</ul>
-		<div id="tabs-1">
-			#{include 'tags/survey/complaintsAddTab.html' /}
-		</div>
-		<div id="tabs-2">
-			#{include 'tags/survey/analysesAddTab.html' /}
-		</div>
-		<div id="tabs-3">
-			#{include 'tags/survey/clinicsAddTab.html' /}
-		</div>
-		<div id="tabs-4">
-			#{include 'tags/survey/treatmentsAddTab.html' /}
-		</div>
-		<div id="tabs-5">
-			#{include 'tags/survey/nosologyAddTab.html' /}
-		</div>
+		#{survey-tabs surveyObject: surveyObject /}
 	</div>
 </div>

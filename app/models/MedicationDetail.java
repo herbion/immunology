@@ -24,65 +24,72 @@ import play.db.jpa.GenericModel;
 @SequenceGenerator(name = "medication_detail_sequence", sequenceName = "medication_detail_sequence", allocationSize = 1)
 public class MedicationDetail extends GenericModel {
 
-    @Id
-    @Column(name = "medication_detail_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_detail_sequence")
-    public Long medicationDetailId;
+	@Id
+	@Column(name = "medication_detail_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_detail_sequence")
+	public Long medicationDetailId;
 
-    @Required
-    @Column(name = "name")
-    public String medicationDetailName;
+	@Required
+	@Column(name = "name")
+	public String medicationDetailName;
 
-    @ManyToOne
-    public Medication medication;
+	@ManyToOne
+	public Medication medication;
 
-    @ManyToMany
-    @JoinTable(name = "medicationDetail_insertion", joinColumns = @JoinColumn(name = "medication_detail_id", referencedColumnName = "medication_detail_id"), inverseJoinColumns = @JoinColumn(name = "insertion_id", referencedColumnName = "insertion_id"))
-    public List<Insertion> insertions;
+	@ManyToMany
+	@JoinTable(name = "medicationDetail_insertion", joinColumns = @JoinColumn(name = "medication_detail_id", referencedColumnName = "medication_detail_id"), inverseJoinColumns = @JoinColumn(name = "insertion_id", referencedColumnName = "insertion_id"))
+	public List<Insertion> insertions;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicationDetail")
-    public List<Allergen> allergens;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicationDetail")
+	public List<Allergen> allergens;
 
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = super.hashCode();
-	result = prime * result + ((medication == null) ? 0 : medication.hashCode());
-	result = prime * result + ((medicationDetailId == null) ? 0 : medicationDetailId.hashCode());
-	result = prime * result + ((medicationDetailName == null) ? 0 : medicationDetailName.hashCode());
-	return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((medication == null) ? 0 : medication.hashCode());
+		result = prime
+				* result
+				+ ((medicationDetailId == null) ? 0 : medicationDetailId
+						.hashCode());
+		result = prime
+				* result
+				+ ((medicationDetailName == null) ? 0 : medicationDetailName
+						.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (!super.equals(obj))
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	MedicationDetail other = (MedicationDetail) obj;
-	if (medication == null) {
-	    if (other.medication != null)
-		return false;
-	} else if (!medication.equals(other.medication))
-	    return false;
-	if (medicationDetailId == null) {
-	    if (other.medicationDetailId != null)
-		return false;
-	} else if (!medicationDetailId.equals(other.medicationDetailId))
-	    return false;
-	if (medicationDetailName == null) {
-	    if (other.medicationDetailName != null)
-		return false;
-	} else if (!medicationDetailName.equals(other.medicationDetailName))
-	    return false;
-	return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MedicationDetail other = (MedicationDetail) obj;
+		if (medication == null) {
+			if (other.medication != null)
+				return false;
+		} else if (!medication.equals(other.medication))
+			return false;
+		if (medicationDetailId == null) {
+			if (other.medicationDetailId != null)
+				return false;
+		} else if (!medicationDetailId.equals(other.medicationDetailId))
+			return false;
+		if (medicationDetailName == null) {
+			if (other.medicationDetailName != null)
+				return false;
+		} else if (!medicationDetailName.equals(other.medicationDetailName))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-	return medicationDetailName;
-    }
+	@Override
+	public String toString() {
+		return medicationDetailName;
+	}
 
 }

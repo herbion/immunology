@@ -3,15 +3,22 @@
 <html>
 <head>
 	<title>#{get 'title' /}</title>
-    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/admin.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/secure.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery-ui-1.8.20.custom.css'}">
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/jquery-overrides.css'}">
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery.dataTables.css'}">
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jquery.dataTables_themeroller.css'}">
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/jquery/jqPlot/jquery.jqplot.css'}">
+    
+<!-- 	
+	#{stylesheet "bootstrap/bootstrap.min.css" /}
+	#{stylesheet "bootstrap/bootstrap-responsive.min.css" /}
+ -->
+	#{stylesheet "crud.css" /}
+    
+	#{stylesheet "main.css" /}
+	#{stylesheet "admin.css" /}
+	#{stylesheet "secure.css" /}
+
+    <link rel="stylesheet" type="text/css" href="@{'/public/jquery/jquery-ui-1.8.20.custom.css'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/jquery-overrides.css'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/jquery/jquery.dataTables.css'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/jquery/jquery.dataTables_themeroller.css'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/jquery/jqPlot/jquery.jqplot.css'}">
 	<script type="text/javascript" src="@{'/public/jquery/jquery-1.7.2.min.js'}"></script>
 	<script type="text/javascript" src="@{'/public/jquery/jquery.dataTables.js'}"></script>
 	<script type="text/javascript" src="/public/jquery/jquery-ui-1.8.20.custom.min.js"></script>
@@ -31,15 +38,23 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+	
 	#{get 'moreStyles' /}
 	#{get 'moreScripts' /}
 </head>
 <body id="immunology">
+
+	
 	#{header /}
 	#{breadcrumb user: user/}
 	
 	<div id="content">
 		#{doLayout /}
 	</div>
+	
+	#{secure.check "admin"}
+		<p style="text-align: center; margin-bottom: 20px;">So, you're kind of admin guy here is your page -> 
+			<a href="@{CRUD.index()}">Administration page</a></p>
+	#{/secure.check}
 </body>
 </html>

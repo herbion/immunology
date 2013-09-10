@@ -1,0 +1,55 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('complaintTypes') /}
+
+
+<div id="crudList" class="${type.name}">
+    <!-- Block title -->
+    #{set 'block-title'}
+        <a href="@{blank()}" class="tooltip-top" data-original-title="&{'complaintTypes.add'}">
+            <i class="icon-plus-sign"></i>
+        </a>
+        &{'complaintTypes'}
+    #{/set}
+
+    <!-- Add additional info about entity to block -->
+    #{set 'info' }
+        &{'total', models.ComplaintType.count()}
+    #{/set}
+
+    <!-- Add search input to block -->
+    #{set 'search'}
+        #{crud.search /}
+                <a href="@{blank()}" class="btn btn-success tooltip-top" data-original-title="&{'complaintTypes.add'}" style="margin-left:20px">
+            <i class="icon-plus-sign"></i> &{'complaintTypes.add'}
+        </a>
+    #{/set}
+    <div id="crudListTable">
+        #{crud.table fields:['complaintTypeName', 'multyplier', 'complaints'] }
+            <!-- Complaint name -->
+            #{crud.custom 'complaintTypeName'}
+                    <a href="@{show(object._key())}" >
+                        ${object.complaintTypeName} 
+                    </a>
+            #{/crud.custom}
+
+            <!-- Multyplier -->
+            #{crud.custom 'multyplier'}
+                ${object.multyplier}
+            #{/crud.custom}
+
+            <!-- Complaints -->
+            #{crud.custom 'complaints'}
+                <ul>
+                    #{list items:object.complaints}
+                        <li>
+                            <a class="muted details " 
+                               
+                               href="@{admin.Complaints.show(_._key())}">${_}</a> <i class="icon-search tooltip-right" data-original-title="Відкрити деталі"></i>
+                        </li>
+                    #{/list}
+                </ul>
+            #{/crud.custom}
+        #{/crud.table}
+    </div>    
+    #{crud.pagination /}
+</div>

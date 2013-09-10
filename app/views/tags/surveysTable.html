@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$('#object_otherInfo').removeAttr('cols');
 	
-    var deleteSurvey = #{jsAction @Surveys.delete(':id')/}
+    var deleteSurvey = #{jsAction @admin.Surveys.delete(':id')/}
     $(".surveyDelete").click(function(event) {
         var id = event.target.id;
         $.ajax({
@@ -26,14 +26,14 @@ $(document).ready(function() {
    		<div id="surveyRow">
 	   		${survey_index}. &nbsp; ${survey.surveyDate.format()}
    			<a id="&{survey.surveyId}" class="surveyDelete" href="#">&{'delete'}</a>
-   			<a href="@{Surveys.show(survey.surveyId)}" class="surveyShow">&{'view'}</a>
+   			<a href="@{admin.Surveys.show(survey.surveyId)}" class="surveyShow">&{'view'}</a>
    		</div>	
 	#{/list}
 	
 	<div id="surveySize">
 	&{_surveyList.isEmpty() ? messages.get('no.surveys') : '<br>' + messages.get('total', _surveyList.size())}
 	<p id="surveyAdd">
-       	<a href="@{Surveys.blank()}">&{'survey.add'}</a>
+       	<a href="@{admin.Surveys.blank()}">&{'survey.add'}</a>
   	</p>
 	</div>
 </div>

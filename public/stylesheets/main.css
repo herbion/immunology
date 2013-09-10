@@ -10,14 +10,21 @@
 .header {
 	background: url(/public/images/elements/immunologyHeaderLine.png) repeat-x;
 	position: relative;
+	background-size: contain;
 }
 
 .header a {
-	float: left;
-	font-size: 30px;
+	/*float: left;*/
+	/*font-size: 30px;*/
 	text-decoration: none;
-	color: darkRed;
-	margin: 20px 0px 20px 10px;
+	/*color: darkRed;*/
+	/*margin: 20px 0px 20px 10px;*/
+}
+
+#lang {
+	position: absolute;
+	top: 10px;
+	left: 10px;
 }
 
 #navigation {
@@ -27,7 +34,8 @@
 }
 
 #navigation div {
-	font-size: 80%;
+	font-size: 12px;
+	line-height: 16px;
 }
 
 #breadcrumb {
@@ -448,4 +456,11 @@
 .signRightNav {
 	padding: 2px 5px;
 	vertical-align: middle;
+}
+
+
+/* Override bootstrap */
+body {
+	line-height: initial !important;
+	background: transparent !important;
 }

@@ -1,0 +1,58 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
+
+<div id="crudList" class="${type.name}">
+    <!-- Block title -->
+    #{set 'block-title'}
+        <a href="@{blank()}" class="tooltip-top" data-original-title="${ messages.get('crud.blank.title', translatedTitle ) }">
+            <i class="icon-plus-sign"></i>
+        </a>
+        ${translatedTitle}
+    #{/set}
+
+    <!-- Add additional info about entity to block -->
+    #{set 'info' }
+        '&{'total', type.count("","","1=1")}'
+    #{/set}
+
+    #{if type.count("","","1=1") }
+        <!-- Add search input to block -->
+        #{set 'search'}
+            #{crud.search /}
+        #{/set}
+        <div id="crudListTable">
+            #{crud.table fields: ['clinicalManifestationComplainName',  'clinicalManifestations', 'multyplier']}
+                #{crud.custom 'clinicalManifestations'}
+                    <ul>
+                        #{list items:object.clinicalManifestations}
+                            <li>
+                                <a class="muted details " 
+                                   
+                                   href="@{admin.ClinicalManifestations.show(_._key())}">${_}</a> <i class="icon-search tooltip-right" data-original-title="Відкрити деталі"></i>
+                            </li>
+                        #{/list}
+                    </ul>
+                #{/crud.custom}
+            #{/crud.table}
+        </div>
+
+        <div id="crudListPagination">
+            #{crud.pagination /}
+        </div>    
+    #{/if}
+    #{else}
+        <center>
+            <blockquote>
+                <h3 class="muted">Халепа :(</h3>
+                <p>Ого, &{'crud.list.empty'}! </p>
+                <small>Спробуйте <cite title="">
+                    %{ def obj = 'objects.'  + type.name.toLowerCase() }%
+                    <a href="${type.blankAction}" class="btn btn-mini btn-primary">додати</a> обєкт "&{obj}"
+                </cite></small>
+            </blockquote>
+        </center>
+    #{/else}
+</div>

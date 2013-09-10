@@ -1,84 +1,52 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import models.Allergen;
-import models.Analysis;
-import models.AnalysisNorm;
-import models.ClinicalManifestation;
-import models.ClinicalManifestationComplaint;
-import models.ClinicalManifestationNorm;
-import models.Complaint;
-import models.ComplaintType;
-import models.Insertion;
-import models.MedicationDetail;
-import models.MedicineCard;
-import models.Nosology;
-import models.NosologyAnalysis;
-import models.NosologyClinicalManifestation;
-import models.NosologyComplaintType;
-import models.Survey;
-import models.SurveyAnalysis;
-import models.SurveyAnswer;
-import models.SurveyClinicalManifestation;
-import models.SurveyTreatment;
-import models.Syndrome;
-import models.User;
+import java.util.*;
+import models.*;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.With;
-import wrappers.AnalysisNormWrapper;
-import wrappers.ClinicalManifestationNormWrapper;
-import wrappers.ComplaintWrapper;
-import wrappers.SurveyAnswerWrapper;
-import wrappers.SurveyWrapper;
-import wrappers.TreatmentWrapper;
+import wrappers.*;
+import play.mvc.*;
 
 import com.google.gson.Gson;
 import com.immunology.enums.TherapyType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @With(Secure.class)
 public class SurveyView extends Controller {
+	private static final Logger log = LoggerFactory.getLogger(SurveyView.class);
+	
+	@Before
+	public static void intercept() {
+		log.info(request.controller + "." + request.actionMethod 
+			+ " ::: " + request.current()
+			// + request.params
+			);
+	}
 
 	public static void add(Long id) {
 		User user = User.find("byLogin", Security.connected()).first();
-		List<Syndrome> syndromes = Syndrome.findAll();
+		List<SurveyObject> surveyObjects = SurveyObject.findAll();
 		MedicineCard medicineCard = MedicineCard.findById(id);
-
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("user", user);
-		model.put("syndromes", syndromes);
-		model.put("medicineCardId", medicineCard.medicineCardId);
-		model.put("medicineCard", medicineCard);
-
-		renderTemplate(model);
+		render(user, surveyObjects, medicineCard);
 	}
 
     public static void addNosology(Long id) {
         User user = User.find("byLogin", Security.connected()).first();
-        List<Syndrome> syndromes = Syndrome.findAll();
+        List<Nosology> surveyObjects = Nosology.findAll();
         MedicineCard medicineCard = MedicineCard.findById(id);
-
-        render(user, syndromes, medicineCard.medicineCardId, medicineCard);
+        renderTemplate("SurveyView/add.html", user, surveyObjects, medicineCard.medicineCardId, medicineCard);
     }
 
 
     public static void edit(Long id) {
 		User user = User.find("byLogin", Security.connected()).first();
 		Survey survey = Survey.findById(id);
-
 		List<Syndrome> syndromes = Syndrome.findAll();
 
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("user", user);
-		model.put("survey", survey);
-		model.put("syndromes", syndromes);
-
-		renderTemplate(model);
+		render(user, survey, syndromes);
 	}
 
 	public static void delete() {
@@ -96,7 +64,7 @@ public class SurveyView extends Controller {
 		User user = User.find("byLogin", Security.connected()).first();
 		Survey survey = Survey.findById(id);
 
-		List<Syndrome> syndromes = Syndrome.findAll();
+		List<SurveyObject> syndromes = SurveyObject.findAll();
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("user", user);
@@ -106,8 +74,32 @@ public class SurveyView extends Controller {
 		renderTemplate(model);
 	}
 
+	public static void reloadTabs(Long idSurveyObject, Long cardId) {
+		// user chooses another nosolody or syndrome 
+		// -> re-render page with new information
+		User user = User.find("byLogin", Security.connected()).first();
+		List<? extends SurveyObject> surveyObjects = SurveyObject.findAll();
+		MedicineCard medicineCard = MedicineCard.findById(cardId);
+		SurveyObject surveyObject = SurveyObject.findById(idSurveyObject);
+		
+		renderTemplate("SurveyView/add.html", surveyObject, medicineCard, surveyObjects, user);
+	}
+
+	public static void loadContentFrom(Long idSurveyObject) {
+		SurveyObject surveyObject = SurveyObject.findById(idSurveyObject);
+		render("tags/survey-tabs.html", surveyObject);
+	}
+
 	public static void reloadComplaints(Long id) {
-		Syndrome syndrome = Syndrome.findById(id);
+		SurveyObject surveyObject = SurveyObject.findById(id);
+		render("tags/survey/complaints-add-tab.html", surveyObject.complaintTypes);
+
+		// Syndrome syndrome = Syndrome.findById(id);		
+		// render("tags/survey/complaintsAddTab.html", syndrome);
+	}
+
+	public static void reloadComplaintsForNosology(Long id) {
+		Nosology syndrome = Nosology.findById(id);
 		render("tags/survey/complaintsAddTab.html", syndrome);
 	}
 
@@ -133,17 +125,17 @@ public class SurveyView extends Controller {
 
 	public static void showComplaints(Long syndromeId, Long surveyId) {
 		Map<ComplaintType, List<SurveyAnswer>> contentMap = new HashMap<ComplaintType, List<SurveyAnswer>>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyAnswer> surveyAnswers = survey.surveyAnswers;
-
+		log.info("Is empty surveyAnswers? " + surveyAnswers.isEmpty());
 		ComplaintType complaintType = null;
 		List<SurveyAnswer> surveyAnswerList = null;
 		for (SurveyAnswer surveyAnswer : surveyAnswers) {
 			if (surveyAnswer.answerValue > 0) {
 				complaintType = surveyAnswer.complaint.complaintType;
-				if (complaintType.syndrome.equals(syndrome)) {
+				// if (complaintType.syndrome.equals(syndrome)) {
 					if (contentMap.containsKey(complaintType)) {
 						contentMap.get(complaintType).add(surveyAnswer);
 					} else {
@@ -151,24 +143,25 @@ public class SurveyView extends Controller {
 						surveyAnswerList.add(surveyAnswer);
 						contentMap.put(complaintType, surveyAnswerList);
 					}
-				}
+				// }
 			}
 		}
+		
 		render("tags/survey/complaintsShowTab.html", contentMap);
 	}
 
 	public static void showAnalysis(Long syndromeId, Long surveyId) {
 		List<SurveyAnalysis> surveyAnalyses = new ArrayList<SurveyAnalysis>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyAnalysis> surveyAnalysisList = survey.surveyAnalyses;
 
 		for (SurveyAnalysis surveyAnalysis : surveyAnalysisList) {
 			if (surveyAnalysis.isChecked) {
-				if (surveyAnalysis.analysisNorm.analysis.syndrome.equals(syndrome)) {
+				// if (surveyAnalysis.analysisNorm.analysis.syndrome.equals(syndrome)) {
 					surveyAnalyses.add(surveyAnalysis);
-				}
+				// }
 			}
 		}
 		render("tags/survey/analysesShowTab.html", surveyAnalyses);
@@ -176,7 +169,7 @@ public class SurveyView extends Controller {
 
 	public static void showClinicalManifestations(Long syndromeId, Long surveyId) {
 		Map<ClinicalManifestationComplaint, List<SurveyClinicalManifestation>> contentMap = new HashMap<ClinicalManifestationComplaint, List<SurveyClinicalManifestation>>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyClinicalManifestation> surveyClinicalManifestationList = null;
@@ -185,7 +178,7 @@ public class SurveyView extends Controller {
 		for (SurveyClinicalManifestation surveyClinicalManifestation : clinicalManifestationList) {
 			if (surveyClinicalManifestation.isChecked) {
 				clinicalManifestationComplaint = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation.clinicalManifestationComplaint;
-				if (clinicalManifestationComplaint.syndrome.equals(syndrome)) {
+				// if (clinicalManifestationComplaint.syndrome.equals(syndrome)) {
 					if (contentMap.containsKey(clinicalManifestationComplaint)) {
 						contentMap.get(clinicalManifestationComplaint).add(surveyClinicalManifestation);
 					} else {
@@ -193,7 +186,7 @@ public class SurveyView extends Controller {
 						surveyClinicalManifestationList.add(surveyClinicalManifestation);
 						contentMap.put(clinicalManifestationComplaint, surveyClinicalManifestationList);
 					}
-				}
+				// }
 			}
 		}
 		render("tags/survey/clinicsShowTab.html", contentMap);
@@ -201,29 +194,31 @@ public class SurveyView extends Controller {
 
 	public static void showTreatments(Long syndromeId, Long surveyId) {
 		List<SurveyTreatment> surveyTreatments = new ArrayList<SurveyTreatment>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyTreatment> clinicalTreatmentList = survey.surveyTreatments;
 
 		for (SurveyTreatment surveyTreatment : clinicalTreatmentList) {
-			if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome.equals(syndrome)) {
+			// if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome.equals(syndrome)) {
 				surveyTreatments.add(surveyTreatment);
-			}
+			// }
 		}
+		log.info("Returning ->>" + clinicalTreatmentList);
 		render("tags/survey/treatmentsShowTab.html", surveyTreatments);
 	}
 
 	public static void showNosology(Long syndromeId, Long surveyId) {
-		Survey survey = Survey.findById(surveyId);
+		// Survey survey = Survey.findById(surveyId);
 
-		Nosology nosology = survey.nosology;
-		render("tags/survey/nosologyShowTab.html", nosology);
+		// Nosology nosology = survey.nosology;
+		// render("tags/survey/nosologyShowTab.html", nosology);
 	}
 
 	public static void editComplaints(Long syndromeId, Long surveyId) {
+		log.debug("[Survey] Edit complaints");
 		Map<ComplaintType, List<SurveyAnswer>> contentMap = new HashMap<ComplaintType, List<SurveyAnswer>>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject surveyObject = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyAnswer> surveyAnswers = survey.surveyAnswers;
@@ -233,7 +228,7 @@ public class SurveyView extends Controller {
 		for (SurveyAnswer surveyAnswer : surveyAnswers) {
 			complaintType = surveyAnswer.complaint.complaintType;
 
-			if (complaintType.syndrome.equals(syndrome)) {
+			// if (complaintType.syndrome.contains(surveyObject)) {
 				if (contentMap.containsKey(complaintType)) {
 					contentMap.get(complaintType).add(surveyAnswer);
 				} else {
@@ -241,29 +236,29 @@ public class SurveyView extends Controller {
 					surveyAnswerList.add(surveyAnswer);
 					contentMap.put(complaintType, surveyAnswerList);
 				}
-			}
+			// }
 		}
 		render("tags/survey/complaintsEditTab.html", contentMap);
 	}
-
+ 
 	public static void editAnalysis(Long syndromeId, Long surveyId) {
 		List<SurveyAnalysis> surveyAnalyses = new ArrayList<SurveyAnalysis>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyAnalysis> surveyAnalysisList = survey.surveyAnalyses;
 
 		for (SurveyAnalysis surveyAnalysis : surveyAnalysisList) {
-			if (surveyAnalysis.analysisNorm.analysis.syndrome.equals(syndrome)) {
+			// if (surveyAnalysis.analysisNorm.analysis.syndrome.equals(syndrome)) {
 				surveyAnalyses.add(surveyAnalysis);
-			}
+			// }
 		}
 		render("tags/survey/analysesEditTab.html", surveyAnalyses);
 	}
 
 	public static void editClinicalManifestations(Long syndromeId, Long surveyId) {
 		Map<ClinicalManifestationComplaint, List<SurveyClinicalManifestation>> contentMap = new HashMap<ClinicalManifestationComplaint, List<SurveyClinicalManifestation>>();
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		Survey survey = Survey.findById(surveyId);
 
 		List<SurveyClinicalManifestation> surveyClinicalManifestationList = null;
@@ -271,7 +266,7 @@ public class SurveyView extends Controller {
 		ClinicalManifestationComplaint clinicalManifestationComplaint = null;
 		for (SurveyClinicalManifestation surveyClinicalManifestation : clinicalManifestationList) {
 			clinicalManifestationComplaint = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation.clinicalManifestationComplaint;
-			if (clinicalManifestationComplaint.syndrome.equals(syndrome)) {
+			// if (clinicalManifestationComplaint.syndrome.equals(syndrome)) {
 				if (contentMap.containsKey(clinicalManifestationComplaint)) {
 					contentMap.get(clinicalManifestationComplaint).add(surveyClinicalManifestation);
 				} else {
@@ -279,40 +274,42 @@ public class SurveyView extends Controller {
 					surveyClinicalManifestationList.add(surveyClinicalManifestation);
 					contentMap.put(clinicalManifestationComplaint, surveyClinicalManifestationList);
 				}
-			}
+			// }
 		}
 		render("tags/survey/clinicsEditTab.html", contentMap);
 	}
 
 	public static void editTreatments(Long syndromeId, Long surveyId) {
 		Survey survey = Survey.findById(surveyId);
-		Syndrome syndrome = Syndrome.findById(syndromeId);
+		SurveyObject syndrome = SurveyObject.findById(syndromeId);
 		List<SurveyTreatment> surveyTreatments = new ArrayList<SurveyTreatment>();
 		List<MedicationDetail> medicationDetails = new ArrayList<MedicationDetail>();
 
 		List<SurveyTreatment> clinicalTreatmentList = survey.surveyTreatments;
 
 		for (SurveyTreatment surveyTreatment : clinicalTreatmentList) {
-			if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome.equals(syndrome)) {
+			// if (surveyTreatment.medicationDetail.medication.treatmentType.syndrome.equals(syndrome)) {
 				surveyTreatments.add(surveyTreatment);
 				medicationDetails.add(surveyTreatment.medicationDetail);
-			}
+			// }
 		}
 		render("tags/survey/treatmentsEditTab.html", syndrome, surveyTreatments, medicationDetails);
 	}
 
 	public static void editNosology(Long syndromeId, Long surveyId) {
-		Syndrome syndrome = Syndrome.findById(syndromeId);
-		Survey survey = Survey.findById(surveyId);
+		// SurveyObject syndrome = SurveyObject.findById(syndromeId);
+		// Survey survey = Survey.findById(surveyId);
 
-		Nosology nosology = survey.nosology;
-		render("tags/survey/nosologyEditTab.html", syndrome, nosology);
+		// Nosology nosology = survey.nosology;
+		// render("tags/survey/nosologyEditTab.html", syndrome, nosology);
 	}
 
 	public static void saveComplaints() {
+		log.info("[Survey] Saving complaints.");
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
 		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+
 		Nosology nosology = null;
 
 		Long surveyId = surveyWrapper.surveyId;
@@ -328,7 +325,7 @@ public class SurveyView extends Controller {
 			survey = new Survey();
 			survey.user = user;
 			survey.medicineCard = MedicineCard.findById(medicineCardId);
-			survey.syndrome = Syndrome.findById(syndromeId);
+			survey.syndrome = SurveyObject.findById(syndromeId);
 			survey.surveyDate = new Date();
 			survey.alergeticDifficultyDegree = 0;
 			survey.alergeticInsufficiencyDegree = 0;
@@ -336,21 +333,21 @@ public class SurveyView extends Controller {
 			survey.surveyAnalyses = null;
 		}
 
-		List<NosologyComplaintType> nosologyComplaintTypes = null;
+		// List<NosologyComplaintType> nosologyComplaintTypes = null;
 		double val = 0;
 		double maxVal = 0;
 		int difficultyDegree = 0;
-		if (nosology != null) {
-			nosologyComplaintTypes = nosology.nosologyComplaintTypes;
+		// if (nosology != null) {
+		// 	nosologyComplaintTypes = nosology.nosologyComplaintTypes;
 
-			for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
-				if (surveyClinicalManifestation.multiplier != null) {
-					maxVal += 3 * surveyClinicalManifestation.multiplier;
-					val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
-				}
-			}
+		// 	for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
+		// 		if (surveyClinicalManifestation.multiplier != null) {
+		// 			maxVal += 3 * surveyClinicalManifestation.multiplier;
+		// 			val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+		// 		}
+		// 	}
 
-		}
+		// }
 
 		SurveyAnswer surveyAnswer = null;
 		Complaint complaint = null;
@@ -367,14 +364,14 @@ public class SurveyView extends Controller {
 			surveyAnswer.survey = survey;
 			surveyAnswers.add(surveyAnswer);
 
-			if (nosologyComplaintTypes != null) {
-				for (NosologyComplaintType nosologyComplaintType : nosologyComplaintTypes) {
-					if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
-						surveyAnswer.multiplier = nosologyComplaintType.multyplier;
-						break;
-					}
-				}
-			}
+			// if (nosologyComplaintTypes != null) {
+			// 	for (NosologyComplaintType nosologyComplaintType : nosologyComplaintTypes) {
+			// 		if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
+			// 			surveyAnswer.multiplier = nosologyComplaintType.multyplier;
+			// 			break;
+			// 		}
+			// 	}
+			// }
 			if (surveyAnswer.multiplier != null) {
 				maxVal += 3 * surveyAnswer.multiplier;
 				val += surveyAnswer.answerValue * surveyAnswer.multiplier;
@@ -389,6 +386,7 @@ public class SurveyView extends Controller {
 	}
 
 	public static void saveAnalyses() {
+		log.info("[Survey] Saving analysis.");
 		User user = User.find("byLogin", Security.connected()).first();
 		String jsonString = request.params.get("body");
 		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
@@ -407,7 +405,7 @@ public class SurveyView extends Controller {
 			survey = new Survey();
 			survey.user = user;
 			survey.medicineCard = MedicineCard.findById(medicineCardId);
-			survey.syndrome = Syndrome.findById(syndromeId);
+			survey.syndrome = SurveyObject.findById(syndromeId);
 			survey.surveyDate = new Date();
 			survey.alergeticDifficultyDegree = 0;
 			survey.alergeticInsufficiencyDegree = 0;
@@ -415,10 +413,10 @@ public class SurveyView extends Controller {
 			survey.surveyAnalyses = null;
 		}
 
-		List<NosologyAnalysis> nosologyAnalyses = null;
-		if (nosology != null) {
-			nosologyAnalyses = nosology.nosologyAnalysis;
-		}
+		// List<NosologyAnalysis> nosologyAnalyses = null;
+		// if (nosology != null) {
+		// 	nosologyAnalyses = nosology.nosologyAnalysis;
+		// }
 
 		double val = 0;
 		double maxVal = 0;
@@ -445,14 +443,14 @@ public class SurveyView extends Controller {
 			}
 			surveyAnalyses.add(surveyAnalysis);
 
-			if (nosologyAnalyses != null) {
-				for (NosologyAnalysis nosologyAnalysis : nosologyAnalyses) {
-					if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
-						surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
-						break;
-					}
-				}
-			}
+			// if (nosologyAnalyses != null) {
+			// 	for (NosologyAnalysis nosologyAnalysis : nosologyAnalyses) {
+			// 		if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
+			// 			surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
+			// 			break;
+			// 		}
+			// 	}
+			// }
 			if (surveyAnalysis.multiplier != null) {
 				val += surveyAnalysis.value * surveyAnalysis.multiplier;
 				maxVal += 3 * surveyAnalysis.multiplier;
@@ -464,7 +462,7 @@ public class SurveyView extends Controller {
 		survey.alergeticInsufficiencyDegree = insufficiencyDegree;
 
 		survey = survey.save();
-
+		log.info("Analysis successfully saved");
 		renderJSON(survey.surveyId);
 	}
 
@@ -476,17 +474,18 @@ public class SurveyView extends Controller {
 		Long surveyId = surveyWrapper.surveyId;
 		Long medicineCardId = surveyWrapper.medicineCardId;
 		Long syndromeId = surveyWrapper.syndromeId;
+		
 		List<ClinicalManifestationNormWrapper> clinicalManifestationNormWrappers = surveyWrapper.clinicalManifestationNorms;
 		Nosology nosology = null;
 		Survey survey = null;
 		if (surveyId != -1) {
 			survey = Survey.findById(surveyId);
-			nosology = survey.nosology;
+			// nosology = survey.nosology;
 		} else {
 			survey = new Survey();
 			survey.user = user;
 			survey.medicineCard = MedicineCard.findById(medicineCardId);
-			survey.syndrome = Syndrome.findById(syndromeId);
+			survey.syndrome = SurveyObject.findById(syndromeId);
 			survey.surveyDate = new Date();
 			survey.alergeticDifficultyDegree = 0;
 			survey.alergeticInsufficiencyDegree = 0;
@@ -498,20 +497,20 @@ public class SurveyView extends Controller {
 		double val = 0;
 		double maxVal = 0;
 		int difficultyDegree = 0;
-		List<NosologyClinicalManifestation> nosologyClinicalManifestations = null;
+		// List<NosologyClinicalManifestation> nosologyClinicalManifestations = null;
 		ClinicalManifestationNorm clinicalManifestationNorm = null;
 		SurveyClinicalManifestation surveyClinicalManifestation = null;
 		List<SurveyClinicalManifestation> surveyClinicalManifestations = new ArrayList<SurveyClinicalManifestation>();
-		if (nosology != null) {
-			nosologyClinicalManifestations = nosology.nosologyClinicalManifestations;
+		// if (nosology != null) {
+		// 	nosologyClinicalManifestations = nosology.nosologyClinicalManifestations;
 
-			for (SurveyAnswer surveyAnswer : survey.surveyAnswers) {
-				if (surveyAnswer.multiplier != null) {
-					maxVal += 3 * surveyAnswer.multiplier;
-					val += surveyAnswer.answerValue * surveyAnswer.multiplier;
-				}
-			}
-		}
+		// 	for (SurveyAnswer surveyAnswer : survey.surveyAnswers) {
+		// 		if (surveyAnswer.multiplier != null) {
+		// 			maxVal += 3 * surveyAnswer.multiplier;
+		// 			val += surveyAnswer.answerValue * surveyAnswer.multiplier;
+		// 		}
+		// 	}
+		// }
 
 		for (ClinicalManifestationNormWrapper clinicalManifestationNormWrapper : clinicalManifestationNormWrappers) {
 			clinicalManifestationNorm = ClinicalManifestationNorm.findById(clinicalManifestationNormWrapper.id);
@@ -530,15 +529,15 @@ public class SurveyView extends Controller {
 
 			surveyClinicalManifestations.add(surveyClinicalManifestation);
 
-			if (nosologyClinicalManifestations != null) {
-				for (NosologyClinicalManifestation nosologyClinicalManifestation : nosologyClinicalManifestations) {
-					if (nosologyClinicalManifestation.clinicalManifestationId
-							.equals(clinicalManifestationNorm.clinicalManifestation.id)) {
-						surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
-						break;
-					}
-				}
-			}
+		// 	if (nosologyClinicalManifestations != null) {
+		// 		for (NosologyClinicalManifestation nosologyClinicalManifestation : nosologyClinicalManifestations) {
+		// 			if (nosologyClinicalManifestation.clinicalManifestationId
+		// 					.equals(clinicalManifestationNorm.clinicalManifestation.id)) {
+		// 				surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
 			if (surveyClinicalManifestation.multiplier != null) {
 				val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
 				maxVal += 3 * surveyClinicalManifestation.multiplier;
@@ -614,112 +613,112 @@ public class SurveyView extends Controller {
 	}
 
 	public static void saveNosology() {
-		User user = User.find("byLogin", Security.connected()).first();
-		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		// User user = User.find("byLogin", Security.connected()).first();
+		// String jsonString = request.params.get("body");
+		// SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
 
-		Long surveyId = surveyWrapper.surveyId;
-		Long medicineCardId = surveyWrapper.medicineCardId;
-		Long syndromeId = surveyWrapper.syndromeId;
-		Long nosologyId = surveyWrapper.nosologyId;
+		// Long surveyId = surveyWrapper.surveyId;
+		// Long medicineCardId = surveyWrapper.medicineCardId;
+		// Long syndromeId = surveyWrapper.syndromeId;
+		// Long nosologyId = surveyWrapper.nosologyId;
 
-		Nosology nosology = null;
-		if (nosologyId != null) {
-			nosology = Nosology.findById(nosologyId);
-		}
+		// Nosology nosology = null;
+		// if (nosologyId != null) {
+		// 	nosology = Nosology.findById(nosologyId);
+		// }
 
-		Survey survey = null;
-		if (surveyId != -1) {
-			survey = Survey.findById(surveyId);
-			survey.nosology = nosology;
-			if (nosology != null) {
-				survey.nosology = nosology;
-				// TODO get by syndrome
-				List<SurveyAnswer> surveyAnswers = survey.surveyAnswers;
+		// Survey survey = null;
+		// if (surveyId != -1) {
+		// 	survey = Survey.findById(surveyId);
+		// 	survey.nosology = nosology;
+		// 	if (nosology != null) {
+		// 		survey.nosology = nosology;
+		// 		// TODO get by syndrome
+		// 		List<SurveyAnswer> surveyAnswers = survey.surveyAnswers;
 
-				double val = 0;
-				double maxVal = 0;
-				int difficultyDegree = 0;
-				ComplaintType complaintType = null;
-				for (SurveyAnswer surveyAnswer : surveyAnswers) {
-					surveyAnswer.multiplier = 0.0;
-					complaintType = surveyAnswer.complaint.complaintType;
-					for (NosologyComplaintType nosologyComplaintType : nosology.nosologyComplaintTypes) {
-						if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
-							surveyAnswer.multiplier = nosologyComplaintType.multyplier;
-							break;
-						}
-					}
+		// 		double val = 0;
+		// 		double maxVal = 0;
+		// 		int difficultyDegree = 0;
+		// 		ComplaintType complaintType = null;
+		// 		for (SurveyAnswer surveyAnswer : surveyAnswers) {
+		// 			surveyAnswer.multiplier = 0.0;
+		// 			complaintType = surveyAnswer.complaint.complaintType;
+		// 			for (NosologyComplaintType nosologyComplaintType : nosology.nosologyComplaintTypes) {
+		// 				if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
+		// 					surveyAnswer.multiplier = nosologyComplaintType.multyplier;
+		// 					break;
+		// 				}
+		// 			}
 
-					if (surveyAnswer.multiplier != null) {
-						maxVal += 3 * surveyAnswer.multiplier;
-						val += surveyAnswer.answerValue * surveyAnswer.multiplier;
-					}
-				}
+		// 			if (surveyAnswer.multiplier != null) {
+		// 				maxVal += 3 * surveyAnswer.multiplier;
+		// 				val += surveyAnswer.answerValue * surveyAnswer.multiplier;
+		// 			}
+		// 		}
 
-				ClinicalManifestation clinicalManifestation = null;
-				for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
-					surveyClinicalManifestation.multiplier = 0.0;
-					clinicalManifestation = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation;
+		// 		ClinicalManifestation clinicalManifestation = null;
+		// 		for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
+		// 			surveyClinicalManifestation.multiplier = 0.0;
+		// 			clinicalManifestation = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation;
 
-					for (NosologyClinicalManifestation nosologyClinicalManifestation : nosology.nosologyClinicalManifestations) {
-						if (nosologyClinicalManifestation.clinicalManifestationId.equals(clinicalManifestation.id)) {
-							surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
-							break;
-						}
-					}
+		// 			for (NosologyClinicalManifestation nosologyClinicalManifestation : nosology.nosologyClinicalManifestations) {
+		// 				if (nosologyClinicalManifestation.clinicalManifestationId.equals(clinicalManifestation.id)) {
+		// 					surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
+		// 					break;
+		// 				}
+		// 			}
 
-					if (surveyClinicalManifestation.multiplier != null) {
-						maxVal += 3 * surveyClinicalManifestation.multiplier;
-						val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
-					}
-				}
+		// 			if (surveyClinicalManifestation.multiplier != null) {
+		// 				maxVal += 3 * surveyClinicalManifestation.multiplier;
+		// 				val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+		// 			}
+		// 		}
 
-				difficultyDegree = (int) (val / maxVal * 100);
-				survey.alergeticDifficultyDegree = difficultyDegree;
+		// 		difficultyDegree = (int) (val / maxVal * 100);
+		// 		survey.alergeticDifficultyDegree = difficultyDegree;
 
-				val = 0;
-				maxVal = 0;
-				int insufficiencyDegree = 0;
-				Analysis analysis = null;
-				List<SurveyAnalysis> surveyAnalyses = survey.surveyAnalyses;
-				for (SurveyAnalysis surveyAnalysis : surveyAnalyses) {
-					if (surveyAnalysis.isChecked) {
-						surveyAnalysis.multiplier = null;
-						analysis = surveyAnalysis.analysisNorm.analysis;
-						for (NosologyAnalysis nosologyAnalysis : nosology.nosologyAnalysis) {
-							if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
-								surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
-								break;
-							}
-						}
+		// 		val = 0;
+		// 		maxVal = 0;
+		// 		int insufficiencyDegree = 0;
+		// 		Analysis analysis = null;
+		// 		List<SurveyAnalysis> surveyAnalyses = survey.surveyAnalyses;
+		// 		for (SurveyAnalysis surveyAnalysis : surveyAnalyses) {
+		// 			if (surveyAnalysis.isChecked) {
+		// 				surveyAnalysis.multiplier = null;
+		// 				analysis = surveyAnalysis.analysisNorm.analysis;
+		// 				for (NosologyAnalysis nosologyAnalysis : nosology.nosologyAnalysis) {
+		// 					if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
+		// 						surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
+		// 						break;
+		// 					}
+		// 				}
 
-						if (surveyAnalysis.multiplier != null && surveyAnalysis.multiplier != 0) {
-							maxVal += 3 * surveyAnalysis.multiplier;
-							val += surveyAnalysis.value * surveyAnalysis.multiplier;
-						}
-					}
-				}
+		// 				if (surveyAnalysis.multiplier != null && surveyAnalysis.multiplier != 0) {
+		// 					maxVal += 3 * surveyAnalysis.multiplier;
+		// 					val += surveyAnalysis.value * surveyAnalysis.multiplier;
+		// 				}
+		// 			}
+		// 		}
 
-				insufficiencyDegree = (int) (val / maxVal * 100);
-				survey.alergeticInsufficiencyDegree = insufficiencyDegree;
-			}
-		} else {
-			survey = new Survey();
-			survey.user = user;
-			survey.medicineCard = MedicineCard.findById(medicineCardId);
-			survey.syndrome = Syndrome.findById(syndromeId);
-			survey.surveyDate = new Date();
-			survey.alergeticDifficultyDegree = 0;
-			survey.alergeticInsufficiencyDegree = 0;
-			survey.surveyAnswers = null;
-			survey.surveyAnalyses = null;
-			survey.nosology = nosology;
-		}
+		// 		insufficiencyDegree = (int) (val / maxVal * 100);
+		// 		survey.alergeticInsufficiencyDegree = insufficiencyDegree;
+		// 	}
+		// } else {
+		// 	survey = new Survey();
+		// 	survey.user = user;
+		// 	survey.medicineCard = MedicineCard.findById(medicineCardId);
+		// 	survey.syndrome = Syndrome.findById(syndromeId);
+		// 	survey.surveyDate = new Date();
+		// 	survey.alergeticDifficultyDegree = 0;
+		// 	survey.alergeticInsufficiencyDegree = 0;
+		// 	survey.surveyAnswers = null;
+		// 	survey.surveyAnalyses = null;
+		// 	survey.nosology = nosology;
+		// }
 
-		survey.save();
+		// survey.save();
 
-		renderJSON(survey.surveyId);
+		// renderJSON(survey.surveyId);
 	}
 
 	public static void updateComplaints() {
@@ -744,7 +743,6 @@ public class SurveyView extends Controller {
 					val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
 				}
 			}
-
 		}
 
 		SurveyAnswer surveyAnswer = null;
@@ -779,9 +777,9 @@ public class SurveyView extends Controller {
 		List<AnalysisNormWrapper> analysisNormWrappers = surveyWrapper.analysesNorms;
 
 		Nosology nosology = survey.nosology;
-		List<NosologyAnalysis> nosologyAnalyses = null;
+		List<Analysis> nosologyAnalyses = null;
 		if (nosology != null) {
-			nosologyAnalyses = nosology.nosologyAnalysis;
+			nosologyAnalyses = nosology.analyzes;
 		}
 
 		double val = 0;
@@ -808,14 +806,14 @@ public class SurveyView extends Controller {
 			}
 			surveyAnalyses.add(surveyAnalysis);
 
-			if (nosologyAnalyses != null) {
-				for (NosologyAnalysis nosologyAnalysis : nosologyAnalyses) {
-					if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
-						surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
-						break;
-					}
-				}
-			}
+			// if (nosologyAnalyses != null) {
+			// 	for (NosologyAnalysis nosologyAnalysis : nosologyAnalyses) {
+			// 		if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
+			// 			surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
+			// 			break;
+			// 		}
+			// 	}
+			// }
 			if (surveyAnalysis.multiplier != null) {
 				val += surveyAnalysis.value * surveyAnalysis.multiplier;
 				maxVal += 3 * surveyAnalysis.multiplier;
@@ -846,12 +844,12 @@ public class SurveyView extends Controller {
 		double val = 0;
 		double maxVal = 0;
 		int difficultyDegree = 0;
-		List<NosologyClinicalManifestation> nosologyClinicalManifestations = null;
+		List<ClinicalManifestationComplaint> nosologyClinicalManifestations = null;
 		ClinicalManifestationNorm clinicalManifestationNorm = null;
 		SurveyClinicalManifestation surveyClinicalManifestation = null;
 		List<SurveyClinicalManifestation> surveyClinicalManifestations = new ArrayList<SurveyClinicalManifestation>();
 		if (nosology != null) {
-			nosologyClinicalManifestations = nosology.nosologyClinicalManifestations;
+			nosologyClinicalManifestations = nosology.clinicalManifestationComplaints;
 
 			for (SurveyAnswer surveyAnswer : survey.surveyAnswers) {
 				if (surveyAnswer.multiplier != null) {
@@ -879,8 +877,8 @@ public class SurveyView extends Controller {
 			surveyClinicalManifestations.add(surveyClinicalManifestation);
 
 			if (nosologyClinicalManifestations != null) {
-				for (NosologyClinicalManifestation nosologyClinicalManifestation : nosologyClinicalManifestations) {
-					if (nosologyClinicalManifestation.clinicalManifestationId
+				for (ClinicalManifestationComplaint nosologyClinicalManifestation : nosologyClinicalManifestations) {
+					if (nosologyClinicalManifestation._key()
 							.equals(clinicalManifestationNorm.clinicalManifestation.id)) {
 						surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
 						break;
@@ -955,88 +953,88 @@ public class SurveyView extends Controller {
 	}
 
 	public static void updateNosology() {
-		String jsonString = request.params.get("body");
-		SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
-		Long surveyId = surveyWrapper.surveyId;
-		Long nosologyId = surveyWrapper.nosologyId;
+		// String jsonString = request.params.get("body");
+		// SurveyWrapper surveyWrapper = new Gson().fromJson(jsonString, SurveyWrapper.class);
+		// Long surveyId = surveyWrapper.surveyId;
+		// Long nosologyId = surveyWrapper.nosologyId;
 
-		double val = 0;
-		double maxVal = 0;
-		int difficultyDegree = 0;
-		int insufficiencyDegree = 0;
-		Survey survey = Survey.findById(surveyId);
-		List<SurveyAnswer> surveyAnswers = null;
-		ComplaintType complaintType = null;
-		if (nosologyId != null) {
-			// TODO get by syndrome
-			surveyAnswers = survey.surveyAnswers;
-			survey.nosology = Nosology.findById(nosologyId);
+		// double val = 0;
+		// double maxVal = 0;
+		// int difficultyDegree = 0;
+		// int insufficiencyDegree = 0;
+		// Survey survey = Survey.findById(surveyId);
+		// List<SurveyAnswer> surveyAnswers = null;
+		// ComplaintType complaintType = null;
+		// if (nosologyId != null) {
+		// 	// TODO get by syndrome
+		// 	surveyAnswers = survey.surveyAnswers;
+		// 	survey.nosology = Nosology.findById(nosologyId);
 
-			for (SurveyAnswer surveyAnswer : surveyAnswers) {
-				surveyAnswer.multiplier = null;
-				complaintType = surveyAnswer.complaint.complaintType;
-				for (NosologyComplaintType nosologyComplaintType : survey.nosology.nosologyComplaintTypes) {
-					if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
-						surveyAnswer.multiplier = nosologyComplaintType.multyplier;
-						break;
-					}
-				}
+		// 	for (SurveyAnswer surveyAnswer : surveyAnswers) {
+		// 		surveyAnswer.multiplier = null;
+		// 		complaintType = surveyAnswer.complaint.complaintType;
+		// 		for (NosologyComplaintType nosologyComplaintType : survey.nosology.nosologyComplaintTypes) {
+		// 			if (nosologyComplaintType.complaintTypeId.equals(complaintType.complaintTypeId)) {
+		// 				surveyAnswer.multiplier = nosologyComplaintType.multyplier;
+		// 				break;
+		// 			}
+		// 		}
 
-				if (surveyAnswer.multiplier != null && surveyAnswer.multiplier != 0) {
-					maxVal += 3 * surveyAnswer.multiplier;
-					val += surveyAnswer.answerValue * surveyAnswer.multiplier;
-				}
-			}
+		// 		if (surveyAnswer.multiplier != null && surveyAnswer.multiplier != 0) {
+		// 			maxVal += 3 * surveyAnswer.multiplier;
+		// 			val += surveyAnswer.answerValue * surveyAnswer.multiplier;
+		// 		}
+		// 	}
 
-			ClinicalManifestation clinicalManifestation = null;
-			for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
-				surveyClinicalManifestation.multiplier = 0.0;
-				clinicalManifestation = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation;
+		// 	ClinicalManifestation clinicalManifestation = null;
+		// 	for (SurveyClinicalManifestation surveyClinicalManifestation : survey.surveyClinicalManifestations) {
+		// 		surveyClinicalManifestation.multiplier = 0.0;
+		// 		clinicalManifestation = surveyClinicalManifestation.clinicalManifestationNorm.clinicalManifestation;
 
-				for (NosologyClinicalManifestation nosologyClinicalManifestation : survey.nosology.nosologyClinicalManifestations) {
-					if (nosologyClinicalManifestation.clinicalManifestationId.equals(clinicalManifestation.id)) {
-						surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
-						break;
-					}
-				}
+		// 		for (NosologyClinicalManifestation nosologyClinicalManifestation : survey.nosology.nosologyClinicalManifestations) {
+		// 			if (nosologyClinicalManifestation.clinicalManifestationId.equals(clinicalManifestation.id)) {
+		// 				surveyClinicalManifestation.multiplier = nosologyClinicalManifestation.multyplier;
+		// 				break;
+		// 			}
+		// 		}
 
-				if (surveyClinicalManifestation.multiplier != null) {
-					maxVal += 3 * surveyClinicalManifestation.multiplier;
-					val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
-				}
-			}
+		// 		if (surveyClinicalManifestation.multiplier != null) {
+		// 			maxVal += 3 * surveyClinicalManifestation.multiplier;
+		// 			val += surveyClinicalManifestation.value * surveyClinicalManifestation.multiplier;
+		// 		}
+		// 	}
 
-			difficultyDegree = (int) (val / maxVal * 100);
-			survey.alergeticDifficultyDegree = difficultyDegree;
+		// 	difficultyDegree = (int) (val / maxVal * 100);
+		// 	survey.alergeticDifficultyDegree = difficultyDegree;
 
-			val = 0;
-			maxVal = 0;
-			Analysis analysis = null;
-			List<SurveyAnalysis> surveyAnalyses = survey.surveyAnalyses;
-			for (SurveyAnalysis surveyAnalysis : surveyAnalyses) {
-				if (surveyAnalysis.isChecked) {
-					surveyAnalysis.multiplier = null;
-					analysis = surveyAnalysis.analysisNorm.analysis;
-					for (NosologyAnalysis nosologyAnalysis : survey.nosology.nosologyAnalysis) {
-						if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
-							surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
-							break;
-						}
-					}
+		// 	val = 0;
+		// 	maxVal = 0;
+		// 	Analysis analysis = null;
+		// 	List<SurveyAnalysis> surveyAnalyses = survey.surveyAnalyses;
+		// 	for (SurveyAnalysis surveyAnalysis : surveyAnalyses) {
+		// 		if (surveyAnalysis.isChecked) {
+		// 			surveyAnalysis.multiplier = null;
+		// 			analysis = surveyAnalysis.analysisNorm.analysis;
+		// 			for (NosologyAnalysis nosologyAnalysis : survey.nosology.nosologyAnalysis) {
+		// 				if (nosologyAnalysis.analysisId.equals(analysis.analysisId)) {
+		// 					surveyAnalysis.multiplier = nosologyAnalysis.multyplier;
+		// 					break;
+		// 				}
+		// 			}
 
-					if (surveyAnalysis.multiplier != null && surveyAnalysis.multiplier != 0) {
-						maxVal += 3 * surveyAnalysis.multiplier;
-						val += surveyAnalysis.value * surveyAnalysis.multiplier;
-					}
-				}
-			}
+		// 			if (surveyAnalysis.multiplier != null && surveyAnalysis.multiplier != 0) {
+		// 				maxVal += 3 * surveyAnalysis.multiplier;
+		// 				val += surveyAnalysis.value * surveyAnalysis.multiplier;
+		// 			}
+		// 		}
+		// 	}
 
-			insufficiencyDegree = (int) (val / maxVal * 100);
-			survey.alergeticInsufficiencyDegree = insufficiencyDegree;
-			System.out.println("degree: " + insufficiencyDegree);
-		}
+		// 	insufficiencyDegree = (int) (val / maxVal * 100);
+		// 	survey.alergeticInsufficiencyDegree = insufficiencyDegree;
+		// 	System.out.println("degree: " + insufficiencyDegree);
+		// }
 
-		survey.save();
-		renderJSON(survey.surveyId);
+		// survey.save();
+		// renderJSON(survey.surveyId);
 	}
 }

@@ -1,0 +1,26 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('objects.clinicalmanifestationnorms') /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'objects.clinicalmanifestationnorms'}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+        #{crud.form fields:['description', 'updateDate','value']}
+        	#{crud.custom 'updateDate'}
+        		<label for="${object_updateDate}">&{'updateDate'}</label>
+        		%{date = new Date()}%
+        		<input type="text" disabled="disabled" value=${date.format()}>
+        		<input id="object_updateDate" type="hidden" name="object.updateDate" value=${date.format()}>
+        	#{/crud.custom}
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

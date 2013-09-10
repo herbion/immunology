@@ -1,7 +1,8 @@
 %{ nbPages = _caller.count.page(controllers.CRUD.getPageSize()) }%
 
 #{if nbPages > 1}
-    <p class="crudPages">
+<div class="pagination pagination-small pagination-centered">
+    <ul>
 
         %{
             limit = (_limit != null ? _limit : 10)
@@ -20,39 +21,40 @@
         }%
 
         #{if _caller.page > 1}
-            <span class="previous">
+            <li class="previous">
                 #{a @list().add('page', _caller.page-1).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.previous'}#{/a}
-            </span>
+            </li>
         #{/if}
 
         #{if start > 1}
-            <span class="first">
+            <li class="first">
                 #{a @list().add('page', 1).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.first'}#{/a}
-            </span>
+            </li>
         #{/if}
 
         %{ for (i in start..end) { }%
-            <span class="page">
+            <li class="page">
                 #{if _caller.page == i}
-                    <strong>${i}</strong>
+                    <a href="#"><strong>${i}</strong></a>
                 #{/if}
                 #{else}
                     #{a @list().add('page', i).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}${i}#{/a}
                 #{/else}
-            </span>
+            </li>
         %{ } }%
 
         #{if end < nbPages}
-            <span class="last">
+            <li class="last">
                 #{a @list().add('page', nbPages).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.last'}#{/a}
-            </span>
+            </li>
         #{/if}
 
         #{if _caller.page < nbPages}
-            <span class="next">
+            <li class="next">
                 #{a @list().add('page', _caller.page+1).add('search', _caller.params.search).add('orderBy', _caller.orderBy).add('order', _caller.order)}&{'crud.pagination.next'}#{/a}
-            </span>
+            </li>
         #{/if}
 
-    </p>
+    </ul>
+</div>
 #{/if}

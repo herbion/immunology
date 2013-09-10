@@ -1,0 +1,9 @@
+models.User(models_User_2):
+ "firstName": "Лікар"
+ "lastName": "User"
+ "middleName": "Лікар"
+ "login": "user"
+ "password": "user"
+ "post": "Лікар"
+ "roles":
+ - "models_Role_3"

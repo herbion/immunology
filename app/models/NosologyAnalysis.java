@@ -1,54 +1,49 @@
 package models;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
 
-import com.immunology.enums.AnalysisType;
-
 @Entity
 @Table(name = "nosology_analysis")
 @SequenceGenerator(name = "nosology_analysis_sequence", sequenceName = "nosology_analysis_sequence", allocationSize = 1)
 public class NosologyAnalysis extends GenericModel {
 
-    @Id
-    @Column(name = "nosology_analysis_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nosology_analysis_sequence")
-    public Long Id;
+	@Id
+	@Column(name = "nosology_analysis_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nosology_analysis_sequence")
+	public Long Id;
 
-    @Required
-    @Column(name = "analysis_id")
-    public Long analysisId;
-    
-    @Required
-    @Column(name = "multyplier")
-    public Double multyplier;
-    
-    @ManyToOne
-    public Nosology nosology;
+	@Required
+	@Column(name = "analysis_id")
+	public Long analysisId;
+
+	@Required
+	@Column(name = "multyplier")
+	public Double multyplier;
+
+	@ManyToOne
+	public Nosology nosology;
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
-		result = prime * result + ((analysisId == null) ? 0 : analysisId.hashCode());
-		result = prime * result + ((multyplier == null) ? 0 : multyplier.hashCode());
-		result = prime * result + ((nosology == null) ? 0 : nosology.hashCode());
+		result = prime * result
+				+ ((analysisId == null) ? 0 : analysisId.hashCode());
+		result = prime * result
+				+ ((multyplier == null) ? 0 : multyplier.hashCode());
+		result = prime * result
+				+ ((nosology == null) ? 0 : nosology.hashCode());
 		return result;
 	}
 
@@ -89,5 +84,5 @@ public class NosologyAnalysis extends GenericModel {
 		return "Id=" + Id + ", analysisId=" + analysisId + ", multyplier="
 				+ multyplier + "]";
 	}
-    
+
 }

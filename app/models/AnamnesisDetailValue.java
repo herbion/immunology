@@ -1,23 +1,16 @@
 package models;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
-
-import com.immunology.enums.AnamnesisType;
 
 @Entity
 @Table(name = "anamnesis_detail_value")
@@ -44,10 +37,20 @@ public class AnamnesisDetailValue extends GenericModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((anamnesisDetail == null) ? 0 : anamnesisDetail.hashCode());
-		result = prime * result + ((anamnesisDetailValueId == null) ? 0 : anamnesisDetailValueId.hashCode());
-		result = prime * result + ((anamnesisDetailValueName == null) ? 0 : anamnesisDetailValueName.hashCode());
-		result = prime * result + ((anamnesisDetailValueValue == null) ? 0 : anamnesisDetailValueValue.hashCode());
+		result = prime * result
+				+ ((anamnesisDetail == null) ? 0 : anamnesisDetail.hashCode());
+		result = prime
+				* result
+				+ ((anamnesisDetailValueId == null) ? 0
+						: anamnesisDetailValueId.hashCode());
+		result = prime
+				* result
+				+ ((anamnesisDetailValueName == null) ? 0
+						: anamnesisDetailValueName.hashCode());
+		result = prime
+				* result
+				+ ((anamnesisDetailValueValue == null) ? 0
+						: anamnesisDetailValueValue.hashCode());
 		return result;
 	}
 
@@ -73,12 +76,14 @@ public class AnamnesisDetailValue extends GenericModel {
 		if (anamnesisDetailValueName == null) {
 			if (other.anamnesisDetailValueName != null)
 				return false;
-		} else if (!anamnesisDetailValueName.equals(other.anamnesisDetailValueName))
+		} else if (!anamnesisDetailValueName
+				.equals(other.anamnesisDetailValueName))
 			return false;
 		if (anamnesisDetailValueValue == null) {
 			if (other.anamnesisDetailValueValue != null)
 				return false;
-		} else if (!anamnesisDetailValueValue.equals(other.anamnesisDetailValueValue))
+		} else if (!anamnesisDetailValueValue
+				.equals(other.anamnesisDetailValueValue))
 			return false;
 		return true;
 	}

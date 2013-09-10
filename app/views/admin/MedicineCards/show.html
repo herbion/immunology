@@ -1,0 +1,185 @@
+#{extends 'CRUD/layout.html' /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
+#{set title:messages.get('crud.show.title', translatedTitle) /}
+
+<div id="crudShow" class="${type.name}">
+    #{set 'block-title'}
+        ${ messages.get('crud.show.title', translatedTitle ) }
+    #{/set}
+
+    #{set 'info'}
+        Edit id:${object._key()}
+    #{/set}
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data', class:'form-horizontal'}
+        #{crud.form fields: ['patient', 'creationDate', 'surveys', 'otherInfo']}
+        	#{crud.custom 'patient'}
+				<div class="control-group">
+				    <label class="control-label" for="survey.patient.id">
+				        &{'patient'}
+				    </label>
+				    <div class="controls">
+					    <input id="survey.patient.id" 
+					    	class="input-xlarge focused" 
+					    	type="text" name="${object.patient}" 
+					    	value="${object.patient}" size="50" />
+					    #{ifError 'patient'}
+				        	<span class="help-inline error"></span>
+				    	#{/ifError}
+					</div>
+				</div>
+        	#{/crud.custom}
+        	#{crud.custom 'surveys'}
+        		<div class="control-group">
+				    <label class="control-label" for="survey.patient.id">
+				        &{'objects.surveys'}
+				    </label>
+				    <div class="controls">
+						#{if object.surveys.isEmpty()}
+							<span class="label label-important">&{'crud.list.empty'}</span>
+		    			#{/if}
+		    			#{else}
+		    				<ul>
+			    				#{list object.surveys}
+									<li>
+										#{a @admin.Surveys.show(_.key())}
+											&{_.surveyDate.format()}
+										#{/a}
+									</li>	    					
+			    				#{/list}
+		    				</ul>
+		    			#{/else}
+					</div>
+				</div>
+
+        	#{/crud.custom}
+        #{/crud.form}
+        <div class="form-actions">
+           <button type="submit" 
+                   name="_save" 
+                   class="btn btn-primary">
+                   &{'crud.save', type.modelName}
+           </button>
+           <button type="button" class="btn">
+            &{'crud.cancel', type.modelName}
+           </button>
+           <button type="submit" 
+                  class="btn btn-danger pull-right" 
+                  name="_delete" 
+                  onclick="if (confirm('&{'crud.delete', object}')) { $('#deleteObject').submit();} return false;  "
+                value="" > &{'crud.delete', ''}
+            </button> 
+        </div>
+    #{/form}
+    </div>
+    #{form @delete(object._key()), 
+           id:"deleteObject", 
+           class: "invisible"}
+    #{/form}
+</div>
+
+
+
+
+*{
+
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('medicineCard.edit.title') /}
+<script>
+    #{include '/public/javascripts/medicine-cards-show.js'/}
+</script>
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">&{'medicineCard.edit.title'}</h2>
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data'}
+    	#{crud.form fields:['creationDate', 'otherInfo', 'surveys', 'patient', 'medicineCardAnamneses', 'medicineCardAnamnesisDiseases',  'medicineCardNosologies']}
+           	#{crud.custom 'surveys'}
+		    	%{surveyList = controllers.Surveys.getSurveysListByMedicineCardId(object);}%
+		    	<label>&{'surveys'}</label>
+				#{surveysTable surveyList: surveyList/}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'patient'}
+		    	%{patientId = controllers.MedicineCards.getPatientIdByCardId(object.medicineCardId);}%
+		    	<label>&{'patient'}</label>
+		    	%{patient = models.Patient.find("byPatientId", patientId).first()}%
+		    	<a href="@{admin.Patients.show(patientId)}">${patient}</a>
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'medicineCardAnamneses'}
+	    		<label for="medicineCardAnamneses"><a href="@{admin.MedicineCardAnamnesiss.list()}" class="nonUnderlined">&{'objects.medicinecardanamnesiss'}</a></label>
+	    		%{anamneses = models.MedicineCardAnamnesis.find("byMedicineCard", object).fetch()}%
+	    		#{if anamneses != null && !anamneses.isEmpty()}
+	    		<div class="list">
+					#{list items:anamneses, as:'anamnesis'}
+			           	<li>
+			           		<span id="${anamnesis.medicineCardAnamnesisId}" class="hiddenLinks">
+								@{admin.MedicineCardAnamnesiss.show(anamnesis.medicineCardAnamnesisId)}
+			        		</span>
+			        		${anamnesis.description}
+		        		</li>
+				    #{/list}
+				</div>
+				#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'medicineCardAnamnesisDiseases'}
+	    		<label for="medicineCardAnamnesisDiseases"><a href="@{admin.MedicineCardAnamnesisDiseases.list()}" class="nonUnderlined">&{'objects.medicinecardanamnesisdiseases'}</a></label>
+	    		%{diseases = models.MedicineCardAnamnesisDisease.find("byMedicineCard", object).fetch()}%
+	    		#{if diseases != null && !diseases.isEmpty()}
+	    		<div class="list">
+					#{list items:diseases, as:'disease'}
+			           	<li>
+			           		<span id="${disease.medicineCardAnamnesisDiseaseId}" class="hiddenLinks">
+								@{admin.MedicineCardAnamnesisDiseases.show(disease.medicineCardAnamnesisDiseaseId)}
+			        		</span>
+			        		${disease.description}
+		        		</li>
+				    #{/list}
+				</div>
+				#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        	
+        	#{crud.custom 'medicineCardNosologies'}
+	    		<label for="medicineCardNosologys"><a href="@{admin.MedicineCardNosologys.list()}" class="nonUnderlined">&{'objects.medicinecardnosologys'}</a></label>
+	    		%{nosologies = models.MedicineCardNosology.find("byMedicineCard", object).fetch()}%
+	    		#{if nosologies != null && !nosologies.isEmpty()}
+	    		<div class="list">
+					#{list items:nosologies, as:'nosology'}
+			           	<li>
+			           		<span id="${nosology.medicineCardNosologyId}" class="hiddenLinks">
+								@{admin.MedicineCardNosologys.show(nosology.medicineCardNosologyId)}
+			        		</span>
+			        		${nosology.description}
+		        		</li>
+				    #{/list}
+				</div>
+				#{/if}
+	    		#{else}
+					&{'crud.list.empty'}	    		
+	    		#{/else}
+        	#{/crud.custom}
+        #{/crud.form}
+
+
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+</div>
+
+}*

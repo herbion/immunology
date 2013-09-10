@@ -1,3 +1,7 @@
+# crud sections
+crud.objects=Objects
+crud.settings=Settings
+
 # EN locale CRUD messages
 crud.title=Administration
 crud.home=Home
@@ -6,6 +10,7 @@ crud.index.title=Choose the object to edit
 crud.index.objectType=Object type
 crud.index.action=
 crud.index.add=Add
+crud.index.list=List
 crud.add=Add &{%s}
 crud.list.title=&{%s}
 crud.list.size=%d &{%s}
@@ -47,6 +52,7 @@ crud.help.before=Before %s.
 crud.help.range=Between %d and %d
 
 # ================= CRUD Main Page =====================
+objects.counters = Counters
 objects.complaints=Complaints
 objects.complainttypes=Complaint types
 objects.medicinecards=Medicine cards
@@ -152,7 +158,7 @@ syndrome.autoimmune=Autoimmune
 syndrome.immunodeficiencyInfective=Immunodeficiency-infective
 syndrome=syndrome
 
-# ================ Complaints ================
+# ================ __Complaints ================
 complaints=Complaints
 complaints.add=Add complaint
 complaints.edit.title=Complaint editing

@@ -1,0 +1,35 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('syndromes') /}
+
+<script>
+    #{include '/public/javascripts/syndromes-list.js'/}
+</script>
+
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'syndromes'}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['title']}
+        #{crud.custom 'title'}
+				<span class="hiddenLinks">@{admin.Syndromes.show(object._key())}</span>
+				&{object.title}
+		#{/crud.custom} 
+        #{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        &{'total', models.Syndrome.count()}
+        #{pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'syndrome.add'}</a>
+    </p>
+
+</div>

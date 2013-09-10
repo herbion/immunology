@@ -1,0 +1,42 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.blank.title', type.modelName) /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
+
+<div id="crudBlank" class="${type.name}">    
+    #{set 'block-title'}
+        ${ messages.get('crud.blank.title', translatedTitle ) }
+    #{/set}
+
+    #{set 'info'}
+        New
+    #{/set}
+
+    <div class="objectForm">
+        #{form action:@create(), enctype:'multipart/form-data', class:'form-horizontal'}
+            #{crud.form }
+                #{crud.custom 'updateDate'}
+                    <div class="control-group">
+                        <label class="control-label" for="${object_updateDate}">&{'updateDate'}</label>
+                        %{date = new Date()}%
+                        <div class="controls">
+                            <input type="text" disabled="disabled" value=${date.format()}>
+                            <input id="object_updateDate" type="hidden" name="object.updateDate" value=${date.format()}>
+                        </div>
+                    </div>
+                #{/crud.custom}
+            #{/crud.form}
+            <div class="form-actions">
+               <button type="submit" 
+                       name="_save" 
+                       class="btn btn-primary">
+                       &{'crud.save', type.modelName}
+               </button>
+               <button type="button" class="btn">
+                &{'crud.cancel', type.modelName}
+               </button>
+            </div>
+        #{/form}
+    </div>
+</div>

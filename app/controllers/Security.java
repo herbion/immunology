@@ -1,42 +1,30 @@
 package controllers;
 
-import play.i18n.Messages;
+import models.Role;
 import models.User;
 
 public class Security extends Secure.Security {
-    static boolean authentify(String username, String password) {
-        return User.connect(username, password) != null;
-    }
+	public static boolean authenticate(String username, String password) {
+		User user = User.find("byLogin", username).first();
+		return user != null && user.password.equals(password);
+	}
 
-   /*static boolean check(String profile) {
-        if ("admin".equals(profile)) {
-            return User.find("byLogin", connected()).<User> first().isAdminRole();
-        } else {
-        	return false;
-        }
-    }*/
-
-    static void onDisconnected() {
-        Application.index();
-    }
-
-    static void onAuthenticated() {
-        Application.index();
-    }
-    
-    static void isAdmin() {
-        User user = User.find("byLogin", Security.connected()).first();
-        if (!user.isAdminRole()) {
-            renderTemplate("tags/forbidden.html");
-        }
-    }
-
-	static void isUser() {
+	public static boolean check(String profile) {
 		User user = User.find("byLogin", Security.connected()).first();
-		if(user != null) {
-			if (!user.isUserRole()) {
-				renderTemplate("tags/forbidden.html");
+
+		for (Role role : user.roles) {
+			if (role.roleName.equalsIgnoreCase(profile)) {
+				return true;
 			}
 		}
+		return false;
+	}
+
+	public static void onDisconnected() {
+		Application.index();
+	}
+
+	public static void onAuthenticated() {
+		Application.index();
 	}
 }

@@ -33,43 +33,37 @@ var saveAnalyses = function () {
 	var id = null;
 	var isChecked = null;
 	var description = null;
-	var jsonObject = "";
-	var surveyId = $("#hidden-survey-id").val();
-	var medicineCardId = $("#hidden-med-card-id").val();
-	var syndromeId = $("input[name='synd_radio']:checked").attr('value');
-
-	jsonObject = jsonObject + "{'surveyId':" + surveyId + ",";
-	jsonObject = jsonObject + "'medicineCardId':" + medicineCardId + ",";
-	jsonObject = jsonObject + "'syndromeId':" + syndromeId + ",";
-	jsonObject = jsonObject + "'analysesNorms':[";
+	var jsonObject = {
+		surveyId: $("#hidden-survey-id").val(),
+		medicineCardId: $("#hidden-med-card-id").val(),
+		syndromeId: $('#choose-survey-obj').val(),
+		analysesNorms: []
+	};
 
 	$(".analysis-checkbox").each(function() {
+		var answer = {};
+
 		isChecked = $(this).is(":checked");
 		id = $(this).next(".analysisDescription").find(".analysisNormsSelect option:selected").val();
 		if(id == "" || id == undefined) {
 			id = $(this).next(".analysisDescription").find(".analysis-description").attr("name");
 		}
-		description = $(this).next(".analysisDescription").find(".analysis-description").val();
-		if(description != "" && description != undefined) {
-			description = "'" + description + "'";
-		}else{
-			description = null;
-		}
-		jsonObject = jsonObject + "{'id':" + id;
-		jsonObject = jsonObject + ",'isChecked': " + isChecked;
-		jsonObject = jsonObject + ",'description': " + description + "},";
-		
-		
+		description = $(this).next(".analysisDescription").find(".analysis-description").val() || null;
+
+		jsonObject.analysesNorms.push({
+			id: id,
+			isChecked: isChecked,
+			description: description,
+
+		});		
 	});
-	jsonObject = jsonObject.substring(0, jsonObject.length - 1);
-	jsonObject = jsonObject + "]}";
 
 	console.log(jsonObject);
 	
 	$.ajax({
 		type : "POST",
 		url : "/surveyView/saveAnalyses",
-		data : jsonObject,
+		data : JSON.stringify(jsonObject),
 		dataType : "json",
 		contentType : "application/json",
 		success : function(id) {
