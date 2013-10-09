@@ -24,13 +24,14 @@
     #{/set}
     
     <div id="crudListTable">
-        #{crud.table fields:['analysis', 'description', 'unit'] }
+        #{crud.table fields:['analysis', 'description', 'unit', 'minValue', 'maxValue'] }
            #{crud.custom 'analysis'}
               <a href="@{admin.Analysiss.show(object.analysis.analysisId)}">${object.analysis.analysisName}</a>          
        #{/crud.custom}
            #{crud.custom 'description'}
               <a href="@{admin.AnalysisNorms.show(object.analysisNormId)}">${object.description}</a>
        #{/crud.custom}
+
     #{/ crud.table}
     </div>
 

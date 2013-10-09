@@ -52,7 +52,7 @@ crud.help.before=Before %s.
 crud.help.range=Between %d and %d
 
 # ================= CRUD Main Page =====================
-objects.counters = Counters
+objects.counters = Stats
 objects.complaints=Complaints
 objects.complainttypes=Complaint types
 objects.medicinecards=Medicine cards
@@ -63,6 +63,8 @@ objects.surveyanswers=Survey answers
 objects.syndromes=Syndromes
 objects.users=Users
 objects.analysiss=Analysis
+objects.analysiss_block=Laboratory data
+objects.treatment_types_block=Лікування
 objects.anamnesiss=Anamnesis
 objects.analysisnorms=Analysis norms
 objects.nosologys=Nosologies
@@ -246,7 +248,7 @@ allergen.delete=Delete allergen
 
 # ==================== Analysis ====================
 analysisName=Analysis name
-analysisType=Analysis type
+analysisType=Analysis render type
 
 analysis.add=Add analysis
 analysis.edit=Analysis editing
@@ -449,7 +451,7 @@ nosology.save.error=Cannot save nosology
 
 # ==================== ClinicalManifestation ====================
 clinicalManifestationName=Clinical manifestation name
-clinicalManifestationType=Clinical manifestation type
+clinicalManifestationType=Clinical manifestation render type
 clinicalManifestationNorms=Clinical manifestation norms
 clinicalManifestationComplaint=Clinical manifestation complaint
 

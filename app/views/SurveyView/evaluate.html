@@ -1,0 +1,42 @@
+#{stylesheet 'survey-view-evaluate.css' /}
+
+<script>
+    #{include '/public/javascripts/survey-view-evaluate.js'/}
+</script>
+%{
+	evaluations = survey.surveyEvaluations;
+}%	
+<!-- <h2>Evaluation form</h2> -->
+<div class="quiz-container">
+	<div class="evaluate-form" id="${survey._key()}">
+		#{list items: questions, as: 'question'}
+			<div class="question-block">
+				<label for="${question._key()}">${question.question}</label>	
+				#{select 'question._key()', 
+					items:question.choices, 
+					valueProperty:'id', 
+					labelProperty:'value', 
+					value:0, 
+					id: question._key() /}
+				%{ 
+					def found = false; 
+					for (evaluation in evaluations) {
+						if (evaluation.question.id.equals(question._key())) {
+							out.write('<label class="answer">' + evaluation.choice.value + '</label>');
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						out.write("No answer");
+					}
+				}%
+			</div>
+		#{/list}		
+	</div>
+
+<!-- 	<div class="controls">
+		<button class="" onclick="submitForm()">Submit form</button>
+		<a href="@{PatientView.show(survey.medicineCard.patient._key())}">Go back</a>
+	</div> -->
+</div>

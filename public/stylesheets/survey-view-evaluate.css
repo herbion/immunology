@@ -1,0 +1,37 @@
+.quiz-container {
+	border-radius: 1px;
+	border: 1px solid #2191C0;
+	padding: 10px;
+}
+.quiz-container label {
+	background-color: #2191C0;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 5px 10px;
+	width: 200px;
+	float: left;
+	font-size: 12px;
+	margin-right: 20px;
+}
+
+.quiz-container select {
+	line-height: 24px;
+	height: 24px;
+	width: 300px;
+}
+
+.quiz-container .controls {
+	margin-top: 20px;
+	width: 100%;
+	background: #eee;
+	text-align: center;
+}
+
+.quiz-container .question-block {
+	margin-bottom: 10px;
+}
+
+.quiz-container .answer {
+	float: right;
+	background: green;
+}

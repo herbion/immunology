@@ -26,15 +26,12 @@
 
         <div id="crudListTable">
             #{crud.table fields: type.fields.collect { it.name  } }
-                #{crud.custom 'anamnesis'}
-                    <a class="muted details" href="@{admin.Anamnesiss.show(object.anamnesis._key())}">${object.anamnesis}</a>            
+                #{crud.custom 'analysisId'}
+                    <a href="@{admin.NosologyAnalysiss.show(object.Id)}">${object.analysisId}</a>
+                    (<a href="@{admin.Analysiss.show(object.analysisId)}">${models.Analysis.findById(object.analysisId)?.analysisName}</a>)
                 #{/crud.custom}
-                #{crud.custom 'anamnesisDetailValues'}
-                    <ul>
-                        #{list object.anamnesisDetailValues}
-                            <li><a class="muted details" href="@{admin.AnamnesisDetailValues.show(_._key())}">${_}</a></li>
-                        #{/list}
-                    </ul>
+                #{crud.custom 'nosology'}
+                    <a href="@{admin.Nosologys.show(object.nosology._key())}">${object.nosology}</a>
                 #{/crud.custom}
             #{/crud.table}
         </div>

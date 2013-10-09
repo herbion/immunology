@@ -62,6 +62,9 @@ public class User extends GenericModel {
 	@JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
 	public List<Role> roles;
 
+	@ManyToMany
+	public List<SurveyObject> availiableSurveyObjects; 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

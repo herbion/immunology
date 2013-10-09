@@ -8,7 +8,7 @@ import play.mvc.With;
 import wrappers.*;
 import play.mvc.*;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.immunology.enums.TherapyType;
 
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class SurveyView extends Controller {
 
 	public static void add(Long id) {
 		User user = User.find("byLogin", Security.connected()).first();
-		List<SurveyObject> surveyObjects = SurveyObject.findAll();
+		List<SurveyObject> surveyObjects = user.availiableSurveyObjects; //SurveyObject.findAll();
 		MedicineCard medicineCard = MedicineCard.findById(id);
 		render(user, surveyObjects, medicineCard);
 	}
@@ -64,7 +64,7 @@ public class SurveyView extends Controller {
 		User user = User.find("byLogin", Security.connected()).first();
 		Survey survey = Survey.findById(id);
 
-		List<SurveyObject> syndromes = SurveyObject.findAll();
+		List<SurveyObject> syndromes = user.availiableSurveyObjects;//SurveyObject.findAll();
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("user", user);
@@ -1036,5 +1036,54 @@ public class SurveyView extends Controller {
 
 		// survey.save();
 		// renderJSON(survey.surveyId);
+	}
+
+	public static void evaluate(Long surveyId) {
+		Survey survey = Survey.findById(surveyId);
+		List<Question> questions = Question.findAll();
+		User user = User.find("byLogin", Security.connected()).first();
+		log.info("'Questions: '" + questions);
+		log.info("Searching for evaluate survey - > " + surveyId);
+		render(user, survey, questions);	
+	}
+
+	public static void postEvaluateResults(Long surveyId) {
+		log.info("Updating evaluations for survey -> " + surveyId);
+		Survey survey = Survey.findById(surveyId);
+		String jsonString = request.params.get("body");
+		List<SurveyEvaluation> evaluations = new ArrayList<SurveyEvaluation>();
+
+		JsonElement root = new JsonParser().parse(jsonString);
+
+		for (JsonElement question : root.getAsJsonArray()) {
+			JsonObject object = question.getAsJsonObject();
+			Long questionId = object.get("question").getAsJsonObject().get("id").getAsLong();
+			Long choiceId = object.get("choice").getAsJsonObject().get("id").getAsLong();			
+
+			evaluations.add(new SurveyEvaluation(
+				(Question) Question.findById(questionId), 
+				(Choice) Choice.findById(choiceId), 
+				survey));
+
+			log.debug("Q: " + questionId + " -- A: " + choiceId);
+		}
+		// update eveluations
+		log.info("SAVED EVALS SIZE: " + survey.surveyEvaluations.size());
+		if (survey.surveyEvaluations == null || survey.surveyEvaluations.isEmpty()) {
+			survey.surveyEvaluations = evaluations;
+		} else {
+			for (SurveyEvaluation eval : evaluations ) {
+				for (SurveyEvaluation savedEval : survey.surveyEvaluations ) {
+					if (savedEval.question.id.equals(eval.question.id)) {
+						savedEval.choice = eval.choice;
+					}
+				}
+			}
+		}
+		log.info("Before save: " + survey.surveyEvaluations.toString());
+		survey.save();
+		log.info("After save: " + survey.surveyEvaluations.toString());
+		// renderJSON("OK");
+		// show(surveyId);
 	}
 }
