@@ -53,6 +53,9 @@ public class Survey extends GenericModel {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "survey")
 	public List<SurveyAnswer> surveyAnswers;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "survey", orphanRemoval=true)
+	public List<SurveyEvaluation> surveyEvaluations;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "survey")
 	public List<SurveyAnalysis> surveyAnalyses;
 

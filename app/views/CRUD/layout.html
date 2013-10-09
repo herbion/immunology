@@ -143,7 +143,21 @@
                     }
                     return false;
                 });
-            })
+            });
+
+            $('ul.big-data').each(function(){
+                if ( $(this).children().length > 3 ) {
+                    $(this).children('li:gt(3)').hide(); 
+                    $(this).after('<a href="#" class="showhideul">More</a>');
+                }
+            });
+            $('.showhideul').click(function(e){
+                e.preventDefault();
+                $(this).prev('ul.big-data').children('li:gt(3)').toggle('fast');
+                $('ul.big-data').not($(this).prev('ul.big-data')).each(function(){
+                  $(this).children('li:gt(3)').hide();
+              });
+            });
         </script>
     </body>
 

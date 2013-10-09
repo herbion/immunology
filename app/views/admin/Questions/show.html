@@ -1,0 +1,60 @@
+#{extends 'CRUD/layout.html' /}
+%{
+    translatedTitle = messages.get('objects.' + type.modelName.toLowerCase() + 's');
+}%
+#{set title:messages.get('crud.show.title', translatedTitle) /}
+
+<div id="crudShow" class="${type.name}">
+    #{set 'block-title'}
+        ${ messages.get('crud.show.title', translatedTitle ) }
+    #{/set}
+
+    #{set 'info'}
+        Edit
+    #{/set}
+
+    <div class="objectForm">
+    #{form action:@save(object._key()), enctype:'multipart/form-data', class:'form-horizontal'}
+        #{crud.form fields: ['question', 'choices'] }
+          #{crud.custom 'choices'}
+            <div class="control-group">   
+                <label class="control-label">
+                  Choices 
+                </label>
+                <div class="controls">
+                  <ul class="muted details">
+                      #{list object.choices}
+                        <li>${_} <a href="#" class="btn btn-mini"><i class="icon icon-minus icon-black"></i></a></li>
+                      #{/list}
+                  </ul>
+                <a href="@{admin.Choices.blank()}" class="btn btn-mini btn-success popup-add" 
+                    rel="tooltip" title="" data-original-title="Додати новий обєкт"
+      onclick="openModal(this); return false;"><i class="icon icon-plus icon-white"></i></a> 
+                </div>
+            </div>
+          #{/crud.custom}
+        #{/crud.form }
+        <div class="form-actions">
+           <button type="submit" 
+                   name="_save" 
+                   class="btn btn-primary">
+                   &{'crud.save', type.modelName}
+           </button>
+           <button type="button" class="btn">
+            &{'crud.cancel', type.modelName}
+           </button>
+           <button type="submit" 
+                  class="btn btn-danger pull-right" 
+                  name="_delete" 
+                  onclick="if (confirm('&{'crud.delete', object}')) { $('#deleteObject').submit();} return false;  "
+                value="" > &{'crud.delete', '"' + object.toString() + '"'}
+            </button> 
+        </div>
+    #{/form}
+    </div>
+    #{form @delete(object._key()), 
+           id:"deleteObject", 
+           class: "invisible"}
+    #{/form}
+</div>
+

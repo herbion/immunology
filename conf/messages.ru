@@ -64,6 +64,8 @@ objects.surveyanswers=Результаты обследования
 objects.syndromes=Синдромы
 objects.users=Пользователи
 objects.analysiss=Анализы
+objects.analysiss_block=Лабораторные данные
+objects.treatment_types_block=Лікування
 objects.anamnesiss=Анамнез
 objects.analysisnorms=Лабораторные Нормы
 objects.nosologys=Нозологии
@@ -246,7 +248,7 @@ allergen.delete=Удалить аллерген
 
 # ==================== Analysis ====================
 analysisName=Назва анализа
-analysisType=Тип анализа
+analysisType=Тип отображения данних
 
 analysis.add=Добавить анализ
 analysis.edit=Редактирование анализа
@@ -388,7 +390,7 @@ anamnesis.save.success=Анамнестические данные успешн�
 anamnesis.save.error=Ошибка при сохранении анамнестических данных
 
 # ==================== Anamnesis ====================
-anamnesisName=Назва анамнеза
+anamnesisName=Вид анамнеза
 anamnesisType=Тип анамнеза
 anamnesisDetails=Детали анамнеза
 
@@ -413,7 +415,7 @@ nosology.save.error=Ошибка при сохранении нозологии
 
 # ==================== ClinicalManifestation ====================
 clinicalManifestationName=Назва клинического проявления
-clinicalManifestationType=Тип клинического проявления
+clinicalManifestationType=Тип отображения данних
 clinicalManifestationNorms=Нормы клинического проявления
 clinicalManifestationComplaint=Жалоба клинического проявления
 

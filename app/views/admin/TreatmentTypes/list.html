@@ -1,0 +1,43 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('treatmentType') /}
+
+
+<div id="crudList" class="${type.name}">
+    <!-- Block title -->
+    #{set 'block-title'}
+        <a href="@{blank()}" class="tooltip-top" data-original-title="&{'treatmentType.add'}">
+            <i class="icon-plus-sign"></i>
+        </a>
+        &{'treatmentType'}
+    #{/set}
+
+    <!-- Add additional info about entity to block -->
+    #{set 'info' }
+        &{'total', models.TreatmentType.count()}
+    #{/set}
+
+    <!-- Add search input to block -->
+    #{set 'search'}
+        #{crud.search /}
+                <a href="@{blank()}" class="btn btn-success tooltip-top" data-original-title="&{'treatmentType.add'}" style="margin-left:20px">
+            <i class="icon-plus-sign"></i> &{'treatmentType.add'}
+        </a>
+    #{/set}
+
+    <div id="crudListTable">
+        #{crud.table fields: type.fields.collect { it.name  } }
+            #{crud.custom 'medications'}
+                <ul>
+                    #{list items:object.medications}
+                        <li>
+                            <a class="muted details " 
+                               
+                               href="@{admin.Medications.show(_._key())}">${_}</a> <i class="icon-search tooltip-right" data-original-title="Відкрити деталі"></i>
+                        </li>
+                    #{/list}
+                </ul>
+            #{/crud.custom}
+        #{/crud.table}
+    </div>    
+    #{crud.pagination /}
+</div>

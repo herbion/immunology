@@ -1,10 +1,13 @@
 %{ pName = 'object.' + _name + '.' + play.db.Model.Manager.factoryFor(_field.property.relationType).keyName() }%
+%{ 
+    relationFieldAddUrl = "/admin/" + _field.property.relationType.getSimpleName().toLowerCase() + "s" + '/new';
+}%
 
 #{field 'object.' + _name}
  <div class="control-group">   
     <label for="${field.id}" class="control-label">
-         &{_name}
-     </label>
+         &{_name} 
+    </label>
  
   <div class="controls">
      #{if _field.multiple}
@@ -55,6 +58,38 @@
       #{ifError field.name}
         <span class="help-inline error">${field.error.raw()}</span>
       #{/ifError}
+      <a href="${relationFieldAddUrl}" 
+      class="btn btn-mini btn-success popup-add" 
+      rel="tooltip" title="" 
+      data-original-title="Додати новий обєкт"
+      onclick="openModal(this); return false;">
+        <i class="icon icon-plus icon-white"></i> 
+      </a> 
   </div>
 </div>
+
 #{/field}
+<script >
+  function openModal (elem) {
+      var url = $(elem).attr('href');
+      console.log(url);
+      // $.get(url, function(response, status, xhr) {
+      //   var $html = $(response);
+      //   $html.find('.label').remove();
+      //   $('#modal-window .modal-header').html($html.find('.block-header .pull-left').html());
+      //   $('#modal-window .modal-body').html($html.find('#crudBlank').html());
+      //   $('#modal-window').modal({});    
+      // });
+      if (window.showModalDialog) {
+        window.showModalDialog(url, url);
+      } else {
+        window.open(url, url, "modal=yes");
+      }
+  }
+</script>
+
+<div class="modal hide fade" id="modal-window">
+    <div class="modal-header">modal header</div>
+    <div class="modal-body">modal body</div>
+    <!-- <div class="modal-footer">modal footer</div> -->
+</div>

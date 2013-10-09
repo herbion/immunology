@@ -41,6 +41,11 @@
         </div>
     <!-- </div> -->
             <div class="row">
+                #{ admin.block title:'complaints', span:4}
+                    #{admin.mini type: attrs.get('Complaint') /}
+                    #{admin.mini type: attrs.get('ComplaintType') /}
+                #{/admin.block }
+
                 #{ admin.block title:'patients' }
                     #{admin.mini type: attrs.get('Patient') /}
                     #{admin.mini type: attrs.get('User') /}
@@ -53,11 +58,6 @@
                     #{admin.mini type: attrs.get('ClinicalManifestationNorm') /}
                 #{/admin.block }
 
-                #{ admin.block title:'insertions' }
-                    #{admin.mini type: attrs.get('Insertion') /}
-                    #{admin.mini type: attrs.get('Medication') /}
-                    #{admin.mini type: attrs.get('MedicationDetail') /}
-                #{/admin.block }
             </div>
             <div class="row">            
                 #{ admin.block title:'medicinecards' }
@@ -67,13 +67,11 @@
                     #{admin.mini type: attrs.get('MedicineCardNosology') /}
                 #{/admin.block }
 
-                #{ admin.block title:'surveys' }
-                    #{admin.mini type: attrs.get('Survey') /}
-                    #{admin.mini type: attrs.get('SurveyAnalysis') /}
-                    #{admin.mini type: attrs.get('SurveyAnswer') /}
-                    #{admin.mini type: attrs.get('SurveyClinicalManifestation') /}
-                    #{admin.mini type: attrs.get('SurveyTreatment') /}
-                #{/admin.block }
+                #{ admin.block title:'treatment_types_block' }
+                    #{admin.mini type: attrs.get('Medication') /}
+                    #{admin.mini type: attrs.get('MedicationDetail') /}
+                    #{admin.mini type: attrs.get('Insertion') /}
+                #{/admin.block }        
 
                 #{ admin.block title:'anamnesiss' }
                     #{admin.mini type: attrs.get('Anamnesis') /}
@@ -97,7 +95,7 @@
                     #{admin.mini type: attrs.get('Syndrome') /}
                     #{admin.mini type: attrs.get('TreatmentType') /}
                 #{/admin.block }
-                #{ admin.block title:'analysiss', span:4}
+                #{ admin.block title:'analysiss_block', span:4}
                     #{admin.mini type: attrs.get('Analysis') /}
                     #{admin.mini type: attrs.get('AnalysisDetail') /}
                     #{admin.mini type: attrs.get('AnalysisNorm') /}
@@ -108,11 +106,14 @@
                 #{ admin.block title:'allergens', span:4}
                     #{admin.mini type: attrs.get('Allergen') /}
                 #{/admin.block }
-                
-                #{ admin.block title:'complaints', span:4}
-                    #{admin.mini type: attrs.get('Complaint') /}
-                    #{admin.mini type: attrs.get('ComplaintType') /}
-                #{/admin.block }
+
+                #{ admin.block title:'surveys' }
+                    #{admin.mini type: attrs.get('Survey') /}
+                    #{admin.mini type: attrs.get('SurveyAnalysis') /}
+                    #{admin.mini type: attrs.get('SurveyAnswer') /}
+                    #{admin.mini type: attrs.get('SurveyClinicalManifestation') /}
+                    #{admin.mini type: attrs.get('SurveyTreatment') /}
+                #{/admin.block }        
             </div>
         </div>
         #{set 'moreSideBars'}

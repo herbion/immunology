@@ -6,7 +6,7 @@ $(document).ready(function() {
 		"oLanguage": {
             "sUrl": "/public/jquery/dataTable.localize/dataTable." + "${lang}" + ".txt"
         },
-        "aoColumns": [ { }, { }, { }, { }, { }, { bSortable: false } ]
+        "aoColumns": [ { }, { }, { }, { }, { }, {}, { bSortable: false } ]
 	});
 
 	
@@ -26,6 +26,34 @@ $(document).ready(function() {
 			});
 		};
 	});
+
+
+$('.evalSurveyButton').each(function() {
+	var $this = $(this);
+	$this.click(function(e) {
+		$('#dialog').load($this.attr('href'), function() {
+
+		});
+		$('#dialog').dialog({
+			modal: true,
+			width: '850px',
+			buttons: [{
+				text: 'Save',
+				click: function() {
+							submitForm(); // loaded from url
+							$(this).dialog('close');
+						}
+					}, {
+						text: 'Close',
+						click: function() {
+							$(this).dialog('close');							
+						}
+					}]
+				});
+		return false;
+	});
+});
+
 	
 });
 
@@ -39,9 +67,6 @@ $(document).ready(function() {
 <div id="surveyAddLink">
   	<a href="@{SurveyView.add(medicineCardId)}">&{'survey.add'}</a>
 </div>
-<div id="surveyAddLink">
-    <a href="@{SurveyView.addNosology(medicineCardId)}">Додати обстеження (нозологія)</a>
-</div>
 <table id="surveysTable">
 	<thead>
 		<tr>
@@ -50,7 +75,8 @@ $(document).ready(function() {
 			<th style="width: 145px">&{'difficultyDegree'} %</th>
 			<th style="width: 155px">&{'insufficiencyDegree'} %</th>
 			<th style="width: 150px">&{'doctor'}</th>
-			<th style="width: 180px"></th>
+			<th style="">Efficiency</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -61,6 +87,15 @@ $(document).ready(function() {
 			<td>${survey.alergeticDifficultyDegree}</td>
 			<td>${survey.alergeticInsufficiencyDegree}</td>
 			<td>${survey.user.firstName} ${survey.user.lastName}</td>
+			<td>
+				<div class="button_85X13 buttonShow">
+	   				<a class="evalSurveyButton " 
+	   					href="@{SurveyView.evaluate(survey.surveyId)}">
+	   					Eфективність
+						%{ if (survey.surveyEvaluations == null || survey.surveyEvaluations.isEmpty() ) { out.write('(Незаповнено)')} }%
+	   				</a>
+   				</div>				
+			</td>
 			<td align="center">
 				<div class="button_85X13 buttonShow">
 	   				<a class="showSurveyButton" href="@{SurveyView.show(survey.surveyId)}">&{'view'}</a>
@@ -73,3 +108,4 @@ $(document).ready(function() {
 		#{/list}
 	</tbody>
 </table>
+<div id="dialog" title="Evaluation form"></div>
