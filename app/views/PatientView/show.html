@@ -309,9 +309,65 @@
 		#{include 'tags/survey/charts.html' /}
 	</div>
 	<div id="tabs-5">
-		<h1>
-			Nothing TODO here
-		</h1>
+		<!-- God, forgive me for inline styles, rly -->
+		%{  
+			questions = models.Question.all().fetch();
+			// Under construction
+			treatments = []
+			for ( survey in surveys ) {
+				for (treament in survey.surveyTreatments) {
+					out.write(treament?.medicationDetail)
+					if ( !treaments.contains(treament.medicationDetail) ) {
+						treatments.add(treament.medicationDetail);
+					}
+		   		}
+			}
+	    }%
+	    <div style="line-height: 22px; float: right;">
+			<label for="selectMedicine" style="width:initial;">Виберіть препарат: </label>
+			<select name="selectMedicine" id="">
+				<option value="0">All</option>
+				#{list items: treatments }
+					<option value="${_._key()}">${ _.toString() }</option>
+				#{/list}
+			</select>	    	
+	    </div>
+	    <div style="clear:both;"></div>
+  		<table border="1">
+   			<tr>
+   				<th>Дата обстеження</th>
+   				#{list items: questions}
+   					<th>${_.toString() }</th>
+   				#{/list}
+   				<th>Препарат</th>
+   			</tr>
+   			#{list items: patient.medicineCard.surveys, as:'survey'}
+	   			<tr>
+	   				<td><a href="@{SurveyView.show(survey._key())}"> ${ survey.surveyDate.toString() } </a></td>
+	   			%{ 
+	   				    for (q in questions) {
+	   				      found = false;
+						  for (e in survey.surveyEvaluations) {
+								if (e.question._key().equals(q._key())) {
+									out.write('<td>' + e.choice.toString() + '</td>');
+									found = true; break;
+								}  
+							}
+							if (found == false) { out.write('<td></td>') }
+	   				   } 
+	   			}%
+	   			<td>
+	   				<ul style="margin: 0; list-style: none;"> 
+		   				%{
+		   					for (treament in survey.surveyTreatments) {
+								out.write('<li>' + treament.medicationDetail.toString() + '</li>');
+		   					}
+		   				}%	   					
+	   				</ul>
+	   			</td>
+	   			</tr>
+   			#{/list}
+		</table>
 	</div>
 	
 </div>

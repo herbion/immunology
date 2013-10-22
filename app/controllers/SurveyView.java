@@ -1070,7 +1070,7 @@ public class SurveyView extends Controller {
 		// update eveluations
 		log.info("SAVED EVALS SIZE: " + survey.surveyEvaluations.size());
 		if (survey.surveyEvaluations == null || survey.surveyEvaluations.isEmpty()) {
-			survey.surveyEvaluations = evaluations;
+			survey.surveyEvaluations.addAll(evaluations);
 		} else {
 			for (SurveyEvaluation eval : evaluations ) {
 				for (SurveyEvaluation savedEval : survey.surveyEvaluations ) {
