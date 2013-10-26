@@ -169,3 +169,30 @@ var saveMedicineCard = function () {
 		}
 	});
 }
+
+$(document).ready(function($) {
+    $('select').change(function() {
+    	var keyword = $(this).val();
+    	var rows = $('.survey-evaluations-table tr');
+    	var meds = rows.find('td:last');
+    	
+    	if (keyword == '0') {
+    		meds.each(function() { 
+    			$(this).parent().show();
+    		});
+    		return;
+    	}
+
+    	meds.each(function() {
+    		medsTitles = $(this).find('li').map(function() {
+    			return $(this).data('value')
+    		});
+
+    		if (! ( $.inArray(+keyword, medsTitles) > -1 ) ) {
+    			$(this).parent().hide();
+    		} else {
+    			$(this).parent().show();
+    		}
+    	});
+    });
+}); 

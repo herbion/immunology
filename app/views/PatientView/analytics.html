@@ -1,0 +1,42 @@
+#{extends 'main.html' /}
+#{set title:'Analytics' /}
+#{stylesheet 'patients_view.css'/}	
+
+<div class="container">
+	<h2>Блок аналітики</h2>
+	<div class="filter" style="float: right;">
+		<label for="filter-meds" style="width:initial;">Виберіть препарат: </label>
+		<select name="filter-meds" id="">
+			<option value="0">Усі</option>
+			#{list items: analytics.keySet() }
+				<option value="${_._key()}">${ _.toString() }</option>
+			#{/list}
+		</select>	    	
+	</div>
+	<div style="clear: both"></div>
+	<table border="1" style="width: 100%;">
+		<tr>
+			<th>Назва препарату</th>
+			#{list items: questions }
+				<th>${_.toString()}</th>
+			#{/list}
+		</tr>
+		#{list items: analytics, as: 'medicine'}
+			<tr>
+				<td> ${medicine.getKey()} </td>
+				#{list items: questions, as: 'question'}
+					<td>
+						<table style="width: 100%; height: 100%;">
+							#{list items: medicine.getValue().get(question), as: 'choice'}
+								<tr>
+									<td>${choice.getKey()}</td>
+									<td>${choice.getValue()}</td>
+								</tr>
+							#{/list}							
+						</table>						
+					</td>
+				#{/list}
+			</tr>
+		#{/list}
+	</table>
+</div>

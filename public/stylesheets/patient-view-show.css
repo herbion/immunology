@@ -187,3 +187,18 @@
     float: left;
     width: 200px;
 }
+
+.select-treatment {
+    line-height: 22px; 
+    float: right;
+}
+
+.survey-evaluations-table {
+    width: 100%;
+}
+
+.survey-evaluations-table ul {
+    margin: 0; 
+    padding: 0;
+    list-style: none;
+}

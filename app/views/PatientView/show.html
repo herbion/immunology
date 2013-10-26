@@ -6,9 +6,6 @@
     #{include '/public/javascripts/patient-view-show.js'/}
 </script>
 
-
-
-
 #{if flash.success}
     <div class="crudFlash flashSuccess">
         ${flash.success}
@@ -309,40 +306,39 @@
 		#{include 'tags/survey/charts.html' /}
 	</div>
 	<div id="tabs-5">
-		<!-- God, forgive me for inline styles, rly -->
 		%{  
-			questions = models.Question.all().fetch();
-			// Under construction
-			treatments = []
-			for ( survey in surveys ) {
+			questions = models.Question.all().fetch();		
+			medications = []
+			for ( survey in patient.medicineCard.surveys ) {
 				for (treament in survey.surveyTreatments) {
-					out.write(treament?.medicationDetail)
-					if ( !treaments.contains(treament.medicationDetail) ) {
-						treatments.add(treament.medicationDetail);
+					if ( !medications?.contains(treament.medicationDetail) ) {
+						medications?.add(treament.medicationDetail);
 					}
 		   		}
 			}
 	    }%
-	    <div style="line-height: 22px; float: right;">
+	    <div class="select-treatment">
 			<label for="selectMedicine" style="width:initial;">Виберіть препарат: </label>
 			<select name="selectMedicine" id="">
-				<option value="0">All</option>
-				#{list items: treatments }
+				<option value="0">Усі</option>
+				#{list items: medications }
 					<option value="${_._key()}">${ _.toString() }</option>
 				#{/list}
 			</select>	    	
 	    </div>
 	    <div style="clear:both;"></div>
-  		<table border="1">
+  		<table border="1" class="survey-evaluations-table">
    			<tr>
+   				<th>#</th>
    				<th>Дата обстеження</th>
    				#{list items: questions}
    					<th>${_.toString() }</th>
    				#{/list}
    				<th>Препарат</th>
    			</tr>
-   			#{list items: patient.medicineCard.surveys, as:'survey'}
+   			#{list items: patient.medicineCard.surveys.sort{it.surveyDate}, as:'survey'}
 	   			<tr>
+	   				<td>${survey_index}</td>
 	   				<td><a href="@{SurveyView.show(survey._key())}"> ${ survey.surveyDate.toString() } </a></td>
 	   			%{ 
 	   				    for (q in questions) {
@@ -357,12 +353,12 @@
 	   				   } 
 	   			}%
 	   			<td>
-	   				<ul style="margin: 0; list-style: none;"> 
-		   				%{
-		   					for (treament in survey.surveyTreatments) {
-								out.write('<li>' + treament.medicationDetail.toString() + '</li>');
-		   					}
-		   				}%	   					
+	   				<ul> 
+	   					#{list items: survey.surveyTreatments, as: 'treatment'}
+	   						<li data-value="${treatment.medicationDetail?._key()}">
+	   							${treatment.medicationDetail?.toString()}
+	   						</li>
+	   					#{/list}
 	   				</ul>
 	   			</td>
 	   			</tr>

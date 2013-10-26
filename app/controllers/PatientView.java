@@ -6,13 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import models.AnamnesisDetailValue;
-import models.AnamnesisDiseaseDetail;
-import models.MedicineCard;
-import models.MedicineCardAnamnesis;
-import models.MedicineCardAnamnesisDisease;
-import models.Patient;
-import models.User;
+import models.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +55,46 @@ public class PatientView extends Controller {
 		renderTemplate("PatientView/patients.html", model);
 	}
 
+	public static void analytics() {
+		user = User.find("byLogin", Security.connected()).first();
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("user", user);
+
+		List<Survey> surveys = Survey.all().fetch();
+		Map<MedicationDetail, Map<Question, Map<Choice, Integer>>> stats 
+			= new HashMap<MedicationDetail, Map<Question, Map<Choice, Integer>>>(); 
+		for (Survey survey : surveys) {
+			for (SurveyTreatment treament : survey.surveyTreatments ) {
+				if (stats.containsKey(treament.medicationDetail)) {
+					updateStats(stats.get(treament.medicationDetail), survey.surveyEvaluations);
+				} else {
+					stats.put(treament.medicationDetail, new HashMap<Question, Map<Choice, Integer>>());
+				}
+			}
+		}
+		model.put("questions", Question.all().fetch());
+		model.put("analytics", stats);
+		renderTemplate("PatientView/analytics.html", model);
+	}
+
+	private static void updateStats(Map<Question, Map<Choice, Integer>> stats, 
+		List<SurveyEvaluation> evaluations) {
+		logger.info("update stats invoked.");
+		for (SurveyEvaluation evaluation : evaluations) {
+			if (stats.containsKey(evaluation.question)) {
+				logger.info("Found one, updating with +1 ");
+				Map<Choice, Integer> choices = stats.get(evaluation.question);
+				choices.put(evaluation.choice, choices.get(evaluation.choice) + 1);
+			} else {
+				Map<Choice, Integer> choices = new HashMap<Choice, Integer>();
+				for (Choice choice : evaluation.question.choices ) {
+					choices.put(choice, choice.value.equals(evaluation.choice.value) ? 1: 0);
+				}
+				stats.put(evaluation.question, choices);
+			}
+		}
+	}
+
 	public static void show(Long id) {
 		logger.info("show(" + id + ")");
 		Patient patient = Patient.findById(id);
@@ -89,6 +123,7 @@ public class PatientView extends Controller {
 		model.put("patient", patient);
 		model.put("contentMap", contentMap);
 		model.put("diseaseContentMap", diseaseContentMap);
+		
 		renderTemplate(model);
 	}
 

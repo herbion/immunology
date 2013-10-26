@@ -27,6 +27,14 @@
         	   #{if type == 'ALL'} checked #{/if}
         	   onchange="document.location.href='@{PatientView.updatePatientsTable('ALL')}'"/>
         <label for="all" class="surveyAnswerBtn">&{'patient.all'}</label>
+        <input class="radio-button" 
+               type="radio" 
+               id="analytics" 
+               name="switcher" 
+               value="ANALYTICS" 
+               #{if type == 'ANALYTICS'} checked #{/if}
+               onchange="document.location.href='@{PatientView.analytics()}'"/>
+        <label for="analytics" class="surveyAnswerBtn">Аналітика</label>
 	</div>
 </div>
 	#{if flash.success}
