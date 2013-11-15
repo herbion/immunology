@@ -202,3 +202,20 @@
     padding: 0;
     list-style: none;
 }
+
+.survey-evaluations-table tr:hover {
+    background-color: rgba(212, 239, 248, 0.45) !important;
+}
+
+.survey-evaluations-table tr:nth-child(odd) { 
+    background-color:#fbfbfb;
+}
+
+.survey-evaluations-table td {
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+.survey-evaluations-table th {
+    border: none;
+}
